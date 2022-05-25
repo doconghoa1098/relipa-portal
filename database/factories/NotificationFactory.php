@@ -14,6 +14,7 @@ class NotificationFactory extends Factory
      */
     public function definition()
     {
+        
         return [
             'published_date' => $this->faker->date(),
             'subject' => $this->faker->name(),

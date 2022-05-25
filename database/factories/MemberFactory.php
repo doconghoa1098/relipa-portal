@@ -15,6 +15,7 @@ class MemberFactory extends Factory
      */
     public function definition()
     {
+        
         return [
             'member_code' => $this->faker->regexify('[A-Z0-9]{10}'),
             'full_name' => $this->faker->name(),
@@ -48,6 +49,7 @@ class MemberFactory extends Factory
     public function unverified()
     {
         return $this->state(function (array $attributes) {
+
             return [
                 'email_verified_at' => null,
             ];
