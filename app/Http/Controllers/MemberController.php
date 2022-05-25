@@ -3,30 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\MemberResource;
-use App\Models\Member;
+use App\Services\MemberService;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
+    protected $memberService;
+
+    public function __construct(MemberService $memberService)
+    {
+        $this->memberService = $memberService;
+    }
+
     /**
-    * @OA\Get(
-    *   path="/api/members",
-    *   summary="Show Members",
-    *   operationId="index",
-    *   tags={"Members"},
-    *   security={
-    *       {"ApiKeyAuth": {}}
-    *   },
-    *
-    *   @OA\Response(response=200, description="successful operation"),
-    *   @OA\Response(response=406, description="not acceptable"),
-    *   @OA\Response(response=500, description="internal server error")
-    * )
-    *
-    */
+     * @OA\Get(
+     *   path="/api/members",
+     *   summary="Show Members",
+     *   operationId="index",
+     *   tags={"Members"},
+     *   @OA\Response(response=200, description="Successful operation"),
+     *   @OA\Response(response=403, description="Forbidden"),
+     *   @OA\Response(response=404, description="Not found"),
+     *   @OA\Response(response=500, description="Internal server error")
+     * )
+     */
     public function index()
     {
-        return MemberResource::collection(Member::all());
+
+        return MemberResource::collection($this->memberService->get());
     }
 
     public function create()
@@ -39,9 +43,30 @@ class MemberController extends Controller
         //
     }
 
+    /**
+     * @OA\Get(
+     *   path="/api/members/{id}",
+     *   summary="Detail members",
+     *   tags={"Members"},
+     *   operationId="show",
+     *   @OA\Parameter(
+     *       name="id",
+     *       required=true,
+     *       in="path",
+     *       @OA\Schema(
+     *           type="integer" 
+     *       )
+     *   ),
+     *   @OA\Response(response=200, description="Successful operation"),
+     *   @OA\Response(response=403, description="Forbidden"),
+     *   @OA\Response(response=404, description="Not found"),
+     *   @OA\Response(response=500, description="Internal server error")
+     * )
+     */
     public function show($id)
     {
-        //
+
+        return new MemberResource($this->memberService->findOrFail($id));
     }
 
     public function edit($id)

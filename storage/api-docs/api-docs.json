@@ -15,20 +15,51 @@
                 "operationId": "index",
                 "responses": {
                     "200": {
-                        "description": "successful operation"
+                        "description": "Successful operation"
                     },
-                    "406": {
-                        "description": "not acceptable"
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not found"
                     },
                     "500": {
-                        "description": "internal server error"
+                        "description": "Internal server error"
                     }
-                },
-                "security": [
+                }
+            }
+        },
+        "/api/members/{id}": {
+            "get": {
+                "tags": [
+                    "Members"
+                ],
+                "summary": "Detail members",
+                "operationId": "show",
+                "parameters": [
                     {
-                        "ApiKeyAuth": []
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
                     }
-                ]
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
             }
         }
     }
