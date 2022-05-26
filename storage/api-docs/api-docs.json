@@ -40,9 +40,206 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "required": true,
                         "schema": {
                             "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Members"
+                ],
+                "summary": "Update",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "avatar_official",
+                        "in": "path",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    {
+                        "name": "avatar",
+                        "in": "path",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    {
+                        "name": "gender",
+                        "in": "path",
+                        "schema": {
+                            "type": "radio"
+                        }
+                    },
+                    {
+                        "name": "nick_name",
+                        "in": "path",
+                        "schema": {
+                            "type": "text"
+                        }
+                    },
+                    {
+                        "name": "birth_date",
+                        "in": "path",
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "schema": {
+                            "type": "email"
+                        }
+                    },
+                    {
+                        "name": "identity_number",
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "identity_card_date",
+                        "in": "path",
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "identity_card_place",
+                        "in": "path",
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "skype",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "facebook",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "passport_number",
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "passport_expiration",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "nationality",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "bank_name",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "bank_account",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "marital_status",
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "academic_level",
+                        "in": "path",
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "permanent_address",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "temporary_address",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "tax_identification",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "healthcare_provider",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "emergency_contact_name",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "emergency_contact_relationship",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "emergency_contact_number",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 ],

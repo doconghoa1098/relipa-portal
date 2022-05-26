@@ -16,6 +16,7 @@ class MemberRequest extends FormRequest
      */
     public function authorize()
     {
+
         return true;
     }
 
@@ -26,13 +27,14 @@ class MemberRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
             'avatar' => 'mimes:jpg,png|max:4096',
             'avatar_official' => 'mimes:jpg,png|max:4096',
             'gender' => 'required',
             'birth_date' => 'required|date',
-            'other_email' => 'required|email',
-            'identity_number' => 'required|numeric|max:12',
+            'email' => 'required|email',
+            'identity_number' => 'required|numeric|digits_between:9,12',
             'identity_card_date' => 'required|date',
             'identity_card_place' => 'required|max:50',
             'skype' => 'nullable|max:30',

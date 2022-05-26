@@ -16,6 +16,7 @@ class Member extends Model
         'member_code',
         'full_name',
         'email',
+        'other_email',
         'password',
         'gender',
         'marital_status',

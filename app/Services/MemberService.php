@@ -22,7 +22,7 @@ class MemberService extends BaseService
                 'uploads/members',
                 uniqid() . $request->avatar_official->getClientOriginalName()
             );
-            $avatar = uniqid() . $request->avatar->getClientOriginalName();
+            $avatar = uniqid() . $request->avatar_official->getClientOriginalName();
         } else {
             $avatar = $members->avatar_official;
         }
@@ -43,7 +43,7 @@ class MemberService extends BaseService
             'gender' => $request->gender,
             'nick_name' => $request->nick_name,
             'birth_date' => $request->birth_date,
-            'email' => $request->email,
+            'other_email' => $request->other_email,
             'identity_number' => $request->identity_number,
             'identity_card_date' => $request->identity_card_date,
             'identity_card_place' => $request->identity_card_place,
@@ -63,9 +63,8 @@ class MemberService extends BaseService
             'emergency_contact_name' => $request->emergency_contact_name,
             'emergency_contact_relationship' => $request->emergency_contact_relationship,
             'emergency_contact_number' => $request->emergency_contact_number,
-
+            'start_date_official' => $request->start_date_official,
         ];
-
         return  $this->findOrFail($id)->fill($data)->save();
     }
 }
