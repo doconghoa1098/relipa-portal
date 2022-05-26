@@ -31,6 +31,7 @@ abstract class BaseService
     {
 
         return $this->model->findOrFail($id);
+
     }
 
     public function store($values = [])

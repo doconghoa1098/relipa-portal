@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MemberRequest;
 use App\Http\Resources\MemberResource;
 use App\Services\MemberService;
 use Illuminate\Http\Request;
@@ -54,7 +55,7 @@ class MemberController extends Controller
      *       required=true,
      *       in="path",
      *       @OA\Schema(
-     *           type="integer" 
+     *           type="integer"
      *       )
      *   ),
      *   @OA\Response(response=200, description="Successful operation"),
@@ -74,9 +75,11 @@ class MemberController extends Controller
         //
     }
 
-    public function update(Request $request, $id)
+    public function update(MemberRequest $request, $id)
     {
-        //
+        $this->memberService->updateMember($id, $request);
+
+        return response()->json(['message' => 'Update member successfully!']);
     }
 
     public function destroy($id)

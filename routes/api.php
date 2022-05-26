@@ -19,4 +19,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('members', MemberController::class);
+Route::prefix('/members')->group( function() {
+    Route::get('/edit/{id}',[MemberController::class,'show'])->name('edit');
+    Route::post('/update/{id}',[MemberController::class,'update'])->name('update');
+});
+
+// Route::apiResource('members', MemberController::class);
