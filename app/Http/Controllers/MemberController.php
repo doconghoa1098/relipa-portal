@@ -29,8 +29,9 @@ class MemberController extends Controller
      */
     public function index()
     {
+        $users = MemberResource::collection($this->memberService->get());
 
-        return MemberResource::collection($this->memberService->get());
+        return $this->successResponse($users);
     }
 
     public function create()
@@ -65,7 +66,7 @@ class MemberController extends Controller
      */
     public function show($id)
     {
-
+        
         return new MemberResource($this->memberService->findOrFail($id));
     }
 
