@@ -7,9 +7,11 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
+use App\Traits\ResfulResourceTrait;
 
-class MemberRequest extends FormRequest
+class MemberFormRequest extends FormRequest
 {
+    use ResfulResourceTrait;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -64,6 +66,6 @@ class MemberRequest extends FormRequest
 
     protected function failedValidation(Validator $validator): void
     {
-        throw new HttpResponseException(response()->json(['errors' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY));
+        throw new HttpResponseException($this->errorResponse($validator->errors(), Response::HTTP_UNPROCESSABLE_ENTITY));
     }
 }

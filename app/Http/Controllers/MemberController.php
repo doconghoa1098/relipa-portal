@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\MemberRequest;
+use App\Http\Requests\MemberFormRequest;
 use App\Http\Resources\MemberResource;
 use App\Services\MemberService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class MemberController extends Controller
 {
@@ -67,7 +69,12 @@ class MemberController extends Controller
     public function show($id)
     {
 
-        return new MemberResource($this->memberService->findOrFail($id));
+        if(Auth::user()->id == $id){
+
+            return new MemberResource($this->memberService->findOrFail($id));
+        }
+
+        return $this->errorResponse('Unauthorized!', Response::HTTP_UNAUTHORIZED);
     }
 
     public function edit($id)
@@ -265,11 +272,16 @@ class MemberController extends Controller
      * )
      */
 
-    public function update(MemberRequest $request, $id)
+    public function update(MemberFormRequest $request, $id)
     {
-        $this->memberService->updateMember($id, $request);
+        if(Auth::user()->id == $id){
+            $this->memberService->updateMember($id, $request);
 
-        return $this->successResponse(null, 'Update member successfully!');
+            return $this->successResponse(null, 'Update member successfully!');
+        }else{
+
+            return $this->errorResponse('Unauthorized!', Response::HTTP_UNAUTHORIZED);
+        }
     }
 
     public function destroy($id)
