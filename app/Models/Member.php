@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Member extends Model
 {
     use HasFactory, SoftDeletes;
+
     const TOOK_A_BREAK = -1;
     const OFFICIAL = 1;
     const COLLABORATORS = 2;
@@ -16,9 +17,8 @@ class Member extends Model
     const PARTIME = 4;
     const FRESHER = 5;
 
-
     protected $table = 'members';
-
+    
     protected $fillable = [
         'member_code',
         'full_name',
