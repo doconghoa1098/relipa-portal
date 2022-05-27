@@ -15,7 +15,7 @@ class MemberFactory extends Factory
      */
     public function definition()
     {
-        
+
         return [
             'member_code' => $this->faker->regexify('[A-Z0-9]{10}'),
             'full_name' => $this->faker->name(),
@@ -28,8 +28,8 @@ class MemberFactory extends Factory
             'temporary_address' => $this->faker->address(),
             'identity_number' => $this->faker->regexify('[0-9]{9,12}'),
             'identity_card_date' => $this->faker->date(),
-            'identity_card_place' => 'long đẹp trai',
-            'nationality' => 'Việt Nam',
+            'identity_card_place' => $this->faker->name(),
+            'nationality' => $this->faker->name(),
             'emergency_contact_name' => $this->faker->name(),
             'emergency_contact_relationship' => $this->faker->name(),
             'emergency_contact_number' => rand(1,100),

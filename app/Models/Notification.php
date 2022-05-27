@@ -10,6 +10,11 @@ class Notification extends Model
 {
     use HasFactory, SoftDeletes;
 
+    const DRAFT = 0;
+    const PUBLISHED = 1;
+    const SCHEDULED = 2;
+
+
     protected $table = 'notifications';
 
     protected $fillable = [
