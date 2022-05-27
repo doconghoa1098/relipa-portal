@@ -8,7 +8,6 @@ abstract class BaseService
 
     public function __construct()
     {
-
         return $this->setModel();
     }
 
@@ -23,13 +22,11 @@ abstract class BaseService
 
     public function get()
     {
-
         return $this->model->latest()->get();
     }
 
     public function findOrFail($id)
     {
-
         return $this->model->findOrFail($id);
     }
 
