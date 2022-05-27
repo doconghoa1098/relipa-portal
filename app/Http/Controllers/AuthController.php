@@ -59,6 +59,18 @@ class AuthController extends Controller
     }
 
     /**
+     * Log the member out (Invalidate the token).
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout()
+    {
+        auth()->logout();
+
+        return $this->successResponse(null, ['message' => 'Member successfully signed out']);
+    }
+
+    /**
      * Get the token array structure.
      *
      * @param  string $token
@@ -71,7 +83,34 @@ class AuthController extends Controller
 
         return $this->successResponse([
             'access_token' => $token,
+            'id' => auth()->user()->id,
+            'email' => auth()->user()->email,
             'fullname' => auth()->user()->full_name,
-        ], 'login succes' ,Response::HTTP_OK);
+            'role' => auth()->user()->memberId->role_id,
+        ], 'login succes', Response::HTTP_OK);
+    }
+
+    public function changePassWord(AuthFormRequest $request)
+    {
+        $memberId = auth()->user()->id;
+        $member = Member::where('id', $memberId)->first();
+        if (Hash::check($request->old_password, $member->password)) {
+            if (!Hash::check($request->new_password, $member->password)) {
+                $member = Member::where('id', $memberId)->update(
+                    ['password' => bcrypt($request->new_password)]
+                );
+
+                return $this->successResponse([
+                    'message' => 'Member successfully changed password',
+                    'member' => $member,
+                ], Response::HTTP_CREATED);
+            } else {
+
+                return $this->errorResponse('New password can not be the old password!', Response::HTTP_BAD_REQUEST);
+            }
+        } else {
+
+            return $this->errorResponse('Old password is incorrect!', Response::HTTP_BAD_REQUEST);
+        }
     }
 }
