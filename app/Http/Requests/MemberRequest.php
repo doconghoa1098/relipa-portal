@@ -6,6 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
+use Illuminate\Validation\Rule;
 
 class MemberRequest extends FormRequest
 {
@@ -33,7 +34,11 @@ class MemberRequest extends FormRequest
             'avatar_official' => 'mimes:jpg,png|max:4096',
             'gender' => 'required',
             'birth_date' => 'required|date',
-            'email' => 'required|email',
+            'other_email' => [
+                'required',
+                'email',
+                Rule::unique('members')->ignore($this->id),
+            ],
             'identity_number' => 'required|numeric|digits_between:9,12',
             'identity_card_date' => 'required|date',
             'identity_card_place' => 'required|max:50',

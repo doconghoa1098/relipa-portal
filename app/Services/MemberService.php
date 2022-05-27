@@ -16,7 +16,7 @@ class MemberService extends BaseService
     public function updateMember($id, $request)
     {
 
-        $members = Member::findOrFail($id);
+        $members = $this->findOrFail($id);
         if ($request->has('avatar_official')) {
             $image = $request->file('avatar_official')->storeAs(
                 'uploads/members',
@@ -65,6 +65,7 @@ class MemberService extends BaseService
             'emergency_contact_number' => $request->emergency_contact_number,
             'start_date_official' => $request->start_date_official,
         ];
-        return  $this->findOrFail($id)->fill($data)->save();
+
+        return  $this->model->fill($data)->save();
     }
 }
