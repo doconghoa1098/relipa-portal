@@ -22,16 +22,15 @@ class Member extends Authenticatable implements JWTSubject
     const FRESHER = 5;
 
     protected $table = 'members';
-    
+
     protected $fillable = [
         'member_code',
         'full_name',
         'email',
+        'other_email',
         'password',
-        'remember_token',
         'gender',
         'marital_status',
-        'birth_date',
         'permanent_address',
         'temporary_address',
         'identity_number',
@@ -44,6 +43,17 @@ class Member extends Authenticatable implements JWTSubject
         'bank_name',
         'bank_account',
         'status',
+        'avatar_official',
+        'avatar',
+        'nick_name',
+        'birth_date',
+        'skype',
+        'facebook',
+        'passport_number',
+        'passport_expiration',
+        'academic_level',
+        'tax_identification',
+        'healthcare_provider',
     ];
 
     /**

@@ -22,4 +22,9 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::put('/change-pass', [AuthController::class, 'changePassWord']);    
 });
 
-Route::apiResource('members', MemberController::class);
+Route::prefix('/members')->group( function() {
+    Route::get('/edit/{id}',[MemberController::class,'show'])->name('edit');
+    Route::post('/update/{id}',[MemberController::class,'update'])->name('update');
+});
+
+// Route::apiResource('members', MemberController::class);

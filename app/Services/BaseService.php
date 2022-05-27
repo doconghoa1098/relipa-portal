@@ -2,13 +2,17 @@
 
 namespace App\Services;
 
+use App\Traits\UploadableTrait;
+
 abstract class BaseService
 {
+
+    use UploadableTrait;
+
     protected $model;
 
     public function __construct()
     {
-
         return $this->setModel();
     }
 
@@ -29,7 +33,6 @@ abstract class BaseService
 
     public function findOrFail($id)
     {
-
         return $this->model->findOrFail($id);
     }
 
