@@ -8,6 +8,7 @@ class MemberService extends BaseService
 {
     public function getModel()
     {
+
         return Member::class;
     }
 }

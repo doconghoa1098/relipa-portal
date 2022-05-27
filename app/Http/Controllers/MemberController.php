@@ -66,6 +66,7 @@ class MemberController extends Controller
      */
     public function show($id)
     {
+        
         return new MemberResource($this->memberService->findOrFail($id));
     }
 

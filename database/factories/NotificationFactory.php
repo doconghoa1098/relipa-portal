@@ -14,14 +14,14 @@ class NotificationFactory extends Factory
      */
     public function definition()
     {
-
+        
         return [
             'published_date' => $this->faker->date(),
             'subject' => $this->faker->name(),
             'message' => $this->faker->text(),
             'status' => 0,
             'attachment' => $this->faker->name(),
-            'published_to' => json_encode($this->faker->name()),
+            'published_to' => json_encode('longdeptrai'),
             'created_by' => rand(1,100),
         ];
     }
