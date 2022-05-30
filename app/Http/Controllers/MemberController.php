@@ -68,7 +68,6 @@ class MemberController extends Controller
      */
     public function show($id)
     {
-
         if(Auth::user()->id == $id){
 
             return new MemberResource($this->memberService->findOrFail($id));
@@ -84,18 +83,9 @@ class MemberController extends Controller
 
 
     /**
-     * @OA\Post(
-     *   path="/api/members/{id}",
-     *   summary="Update",
-     *   tags={"Members"},
-     *   operationId="update",
-     *   @OA\Parameter(
-     *       name="avatar_official",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="file"
-     *       )
-     *   ),
+     * @OA\Put(
+     *     path="/api/members/update/{id}",
+     *     summary="Updates a member",
      *
      *   @OA\Parameter(
      *       name="avatar",
@@ -105,11 +95,19 @@ class MemberController extends Controller
      *       )
      *   ),
      *   @OA\Parameter(
-     *       name="gender",
+     *       name="avatar_official",
      *       in="path",
      *       @OA\Schema(
-     *           type="radio"
+     *           type="file"
      *       )
+     *   ),
+     *   @OA\Parameter(
+     *         description="Gender",
+     *         in="path",
+     *         name="gender",
+     *         @OA\Schema(type="radio"),
+     *         @OA\Examples(example="int", value="1", summary="male"),
+     *         @OA\Examples(example="uuid", value="2", summary="female"),
      *   ),
      *   @OA\Parameter(
      *       name="nick_name",
@@ -202,12 +200,17 @@ class MemberController extends Controller
      *           type="string"
      *       )
      *   ),
-     *   @OA\Parameter(
-     *       name="marital_status",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="number"
-     *       )
+     * @OA\Parameter(
+     *         description="Gender",
+     *         in="path",
+     *         name="marital_status",
+     *         @OA\Schema(type="radio"),
+     *         @OA\Examples(example="int", value="-1", summary="male"),
+     *         @OA\Examples(example="uuid", value="1", summary="female"),
+     *         @OA\Examples(example="uuid", value="2", summary="female"),
+     *         @OA\Examples(example="uuid", value="3", summary="female"),
+     *         @OA\Examples(example="uuid", value="4", summary="female"),
+     *         @OA\Examples(example="uuid", value="5", summary="female"),
      *   ),
      *   @OA\Parameter(
      *       name="academic_level",
@@ -274,14 +277,15 @@ class MemberController extends Controller
 
     public function update(MemberFormRequest $request, $id)
     {
-        if(Auth::user()->id == $id){
-            $this->memberService->updateMember($id, $request);
+        if(Auth::check()){
+            if(Auth::user()->id == $id){
+                $this->memberService->updateMember($id, $request);
 
-            return $this->successResponse(null, 'Update member successfully!');
-        }else{
-
-            return $this->errorResponse('Unauthorized!', Response::HTTP_UNAUTHORIZED);
+                return $this->successResponse(null, 'Update member successfully!');
+            }
         }
+
+        return $this->errorResponse('Unauthorized!', Response::HTTP_UNAUTHORIZED);
     }
 
     public function destroy($id)

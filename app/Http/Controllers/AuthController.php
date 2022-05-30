@@ -33,14 +33,14 @@ class AuthController extends Controller
      *   security={
      *       {"ApiKeyAuth": {}}
      *   },
-     *  
-     *  @OA\RequestBody( 
+     *
+     *  @OA\RequestBody(
      *      required=true,
-     *      @OA\JsonContent( 
-     *      required={"email","password"}, 
-     *      @OA\Property(property="email", type="string", example="anhhn@vnext.vn"), 
-     *      @OA\Property(property="password", type="string", example="123456"), 
-     *      ), 
+     *      @OA\JsonContent(
+     *      required={"email","password"},
+     *      @OA\Property(property="email", type="string", example="anhhn@vnext.vn"),
+     *      @OA\Property(property="password", type="string", example="123456"),
+     *      ),
      *    ),
      *   @OA\Response(response=200, description="Successful operation"),
      *   @OA\Response(response=403, description="Forbidden"),
@@ -65,6 +65,12 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
+    public function logout()
+    {
+        auth()->logout();
+
+        return $this->successResponse(null, ['message' => 'Member successfully signed out']);
+    }
 
     protected function createNewToken($token)
     {

@@ -111,21 +111,13 @@
                         "description": "Internal server error"
                     }
                 }
-            },
-            "post": {
-                "tags": [
-                    "Members"
-                ],
-                "summary": "Update",
-                "operationId": "update",
+            }
+        },
+        "/api/members/update/{id}": {
+            "put": {
+                "summary": "Updates a member",
+                "operationId": "3512f9e37526504f12b1f142a76bebda",
                 "parameters": [
-                    {
-                        "name": "avatar_official",
-                        "in": "path",
-                        "schema": {
-                            "type": "file"
-                        }
-                    },
                     {
                         "name": "avatar",
                         "in": "path",
@@ -134,10 +126,28 @@
                         }
                     },
                     {
-                        "name": "gender",
+                        "name": "avatar_official",
                         "in": "path",
                         "schema": {
+                            "type": "file"
+                        }
+                    },
+                    {
+                        "name": "gender",
+                        "in": "path",
+                        "description": "Gender",
+                        "schema": {
                             "type": "radio"
+                        },
+                        "examples": {
+                            "int": {
+                                "summary": "male",
+                                "value": "1"
+                            },
+                            "uuid": {
+                                "summary": "female",
+                                "value": "2"
+                            }
                         }
                     },
                     {
