@@ -68,7 +68,7 @@ class MemberController extends Controller
      */
     public function show($id)
     {
-        if(Auth::user()->id == $id){
+        if (Auth::user()->id == $id) {
 
             return new MemberResource($this->memberService->findOrFail($id));
         }
@@ -84,35 +84,29 @@ class MemberController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/members/update/{id}",
+     *     path="/api/members/update/1",
      *     summary="Updates a member",
      *     tags={"Members"},
      *     operationId="update",
      *
-     *   @OA\Parameter(
-     *       name="id",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="string"
-     *       )
-     *   ),
+
      *   @OA\Parameter(
      *       name="avatar",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
      *           type="file"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="avatar_official",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
      *           type="file"
      *       )
      *   ),
      *   @OA\Parameter(
      *         description="Gender",
-     *         in="path",
+     *         in="query",
      *         name="gender",
      *         @OA\Schema(type="radio"),
      *         @OA\Examples(example="int", value="1", summary="male"),
@@ -120,25 +114,181 @@ class MemberController extends Controller
      *   ),
      *   @OA\Parameter(
      *       name="nick_name",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="text"
+     *           type="text",
+     *           example="long"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="birth_date",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="date"
+     *           type="date",
+     *           example="1999/02/02"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="other_email",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="email"
+     *           type="email",
+     *           example="long@gmail.com"
      *       )
      *   ),
+     *    *   @OA\Parameter(
+     *       name="identity_number",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="number",
+     *           example="1234567899"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="identity_card_date",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="date",
+     *           example="2000/12/02"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="identity_card_place",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="date",
+     *           example="Việt Nam"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="skype",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="longtt"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="facebook",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="Long Bầu"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="passport_number",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="number",
+     *           example="213123123123123"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="passport_expiration",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="2022/01/01"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="nationality",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="Việt Nam"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="bank_name",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="Techcombank"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="bank_account",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="longtt"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="marital_status",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="number",
+     *           example="1"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="academic_level",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="date",
+     *           example="12/12"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="permanent_address",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="Hạ Bằng - Thạch Thất - Hà Nội"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="temporary_address",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="32/80 - Đỗ Đức Dục - Mễ Trì - Hà Nội"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="tax_identification",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="0123456789"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="healthcare_provider",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="Hà Nội"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="emergency_contact_name",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="Phương Anh"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="emergency_contact_relationship",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="0359146002"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="emergency_contact_number",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="0359146004"
+     *       )
+     *   ),
+
      *   @OA\Response(response=200, description="Successful operation"),
      *   @OA\Response(response=403, description="Forbidden"),
      *   @OA\Response(response=404, description="Not found"),
@@ -150,9 +300,9 @@ class MemberController extends Controller
     {
         if(Auth::check()){
             if(Auth::user()->id == $id){
-                $this->memberService->updateMember($id, $request);
+        $this->memberService->updateMember($id, $request);
 
-                return $this->successResponse(null, 'Update member successfully!');
+        return $this->successResponse(null, 'Update member successfully!');
             }
         }
 
