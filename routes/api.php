@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\RegisterForgetController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,9 @@ Route::group(['middleware' => 'api'], function ($router) {
 Route::prefix('/members')->group( function() {
     Route::get('/edit/{id}',[MemberController::class,'show'])->name('edit');
     Route::post('/update/{id}',[MemberController::class,'update'])->name('update');
+
+    Route::get('/register-forget',[RegisterForgetController::class,'create'])->name('add');
+    Route::post('/register-forget',[RegisterForgetController::class,'store'])->name('create');
 });
 
 // Route::apiResource('members', MemberController::class);
