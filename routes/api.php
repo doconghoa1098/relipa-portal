@@ -27,4 +27,6 @@ Route::prefix('/members')->group( function() {
     Route::put('/update/{id}',[MemberController::class,'update'])->name('update');
 });
 
+
+
 // Route::apiResource('members', MemberController::class);

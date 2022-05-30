@@ -86,7 +86,16 @@ class MemberController extends Controller
      * @OA\Put(
      *     path="/api/members/update/{id}",
      *     summary="Updates a member",
+     *     tags={"Members"},
+     *     operationId="update",
      *
+     *   @OA\Parameter(
+     *       name="id",
+     *       in="path",
+     *       @OA\Schema(
+     *           type="string"
+     *       )
+     *   ),
      *   @OA\Parameter(
      *       name="avatar",
      *       in="path",
@@ -124,148 +133,10 @@ class MemberController extends Controller
      *       )
      *   ),
      *   @OA\Parameter(
-     *       name="email",
+     *       name="other_email",
      *       in="path",
      *       @OA\Schema(
      *           type="email"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="identity_number",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="number"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="identity_card_date",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="date"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="identity_card_place",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="date"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="skype",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="string"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="facebook",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="string"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="passport_number",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="number"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="passport_expiration",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="string"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="nationality",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="string"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="bank_name",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="string"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="bank_account",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="string"
-     *       )
-     *   ),
-     * @OA\Parameter(
-     *         description="Gender",
-     *         in="path",
-     *         name="marital_status",
-     *         @OA\Schema(type="radio"),
-     *         @OA\Examples(example="int", value="-1", summary="male"),
-     *         @OA\Examples(example="uuid", value="1", summary="female"),
-     *         @OA\Examples(example="uuid", value="2", summary="female"),
-     *         @OA\Examples(example="uuid", value="3", summary="female"),
-     *         @OA\Examples(example="uuid", value="4", summary="female"),
-     *         @OA\Examples(example="uuid", value="5", summary="female"),
-     *   ),
-     *   @OA\Parameter(
-     *       name="academic_level",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="date"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="permanent_address",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="string"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="temporary_address",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="string"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="tax_identification",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="string"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="healthcare_provider",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="string"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="emergency_contact_name",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="string"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="emergency_contact_relationship",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="string"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="emergency_contact_number",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="string"
      *       )
      *   ),
      *   @OA\Response(response=200, description="Successful operation"),

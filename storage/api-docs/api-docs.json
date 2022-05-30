@@ -115,9 +115,19 @@
         },
         "/api/members/update/{id}": {
             "put": {
+                "tags": [
+                    "Members"
+                ],
                 "summary": "Updates a member",
-                "operationId": "3512f9e37526504f12b1f142a76bebda",
+                "operationId": "update",
                 "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
                     {
                         "name": "avatar",
                         "in": "path",
@@ -165,143 +175,10 @@
                         }
                     },
                     {
-                        "name": "email",
+                        "name": "other_email",
                         "in": "path",
                         "schema": {
                             "type": "email"
-                        }
-                    },
-                    {
-                        "name": "identity_number",
-                        "in": "path",
-                        "schema": {
-                            "type": "number"
-                        }
-                    },
-                    {
-                        "name": "identity_card_date",
-                        "in": "path",
-                        "schema": {
-                            "type": "date"
-                        }
-                    },
-                    {
-                        "name": "identity_card_place",
-                        "in": "path",
-                        "schema": {
-                            "type": "date"
-                        }
-                    },
-                    {
-                        "name": "skype",
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "facebook",
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "passport_number",
-                        "in": "path",
-                        "schema": {
-                            "type": "number"
-                        }
-                    },
-                    {
-                        "name": "passport_expiration",
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "nationality",
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "bank_name",
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "bank_account",
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "marital_status",
-                        "in": "path",
-                        "schema": {
-                            "type": "number"
-                        }
-                    },
-                    {
-                        "name": "academic_level",
-                        "in": "path",
-                        "schema": {
-                            "type": "date"
-                        }
-                    },
-                    {
-                        "name": "permanent_address",
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "temporary_address",
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "tax_identification",
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "healthcare_provider",
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "emergency_contact_name",
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "emergency_contact_relationship",
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "emergency_contact_number",
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
                         }
                     }
                 ],
