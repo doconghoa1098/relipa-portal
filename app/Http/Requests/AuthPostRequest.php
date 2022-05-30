@@ -8,7 +8,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
 use App\Traits\ResfulResourceTrait;
 
-class AuthFormRequest extends FormRequest
+class AuthPostRequest extends FormRequest
 {
     use ResfulResourceTrait;
     /**
@@ -33,13 +33,6 @@ class AuthFormRequest extends FormRequest
             return [
                 'email' => 'required|email',
                 'password' => 'required|string|min:6',
-            ];
-        }
-        if ($this->method() == "PUT") {
-
-            return [
-                'old_password' => 'required|string|min:6',
-                'new_password' => 'required|string|confirmed|min:6',
             ];
         }
     }

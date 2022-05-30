@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Member;
-use App\Http\Requests\AuthFormRequest;
+use App\Http\Requests\AuthPostRequest;
+use App\Http\Requests\AuthPutRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
-
 
 class AuthController extends Controller
 {
@@ -26,7 +26,7 @@ class AuthController extends Controller
 
     /**
      * @OA\Post(
-     *   path="/api/auth/login",
+     *   path="/api/login",
      *   summary="Login",
      *   operationId="login",
      *   tags={"Login"},
@@ -48,14 +48,14 @@ class AuthController extends Controller
      *   @OA\Response(response=500, description="Internal server error")
      * )
      */
-    public function login(AuthFormRequest $request)
+    public function login(AuthPostRequest $request)
     {
         if (!$token = auth()->attempt($request->validated())) {
 
             return $this->errorResponse('Unauthorized',  Response::HTTP_UNAUTHORIZED);
         }
 
-        return $this->createNewToken($token);
+        return $this->createNewToken($token, auth()->user());
     }
 
     /**
@@ -67,7 +67,7 @@ class AuthController extends Controller
     {
         auth()->logout();
 
-        return $this->successResponse(null, ['message' => 'Member successfully signed out']);
+        return $this->successResponse(null, ['message' => trans('message.signed_out')]);
     }
 
     /**
@@ -78,39 +78,64 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
 
-    protected function createNewToken($token)
+    protected function createNewToken($token, $auth)
     {
 
         return $this->successResponse([
             'access_token' => $token,
-            'id' => auth()->user()->id,
-            'email' => auth()->user()->email,
-            'fullname' => auth()->user()->full_name,
-            'role' => auth()->user()->memberId->role_id,
-        ], 'login succes', Response::HTTP_OK);
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60,
+            'id' => $auth->id,
+            'email' => $auth->email,
+            'role' => $auth->memberId->role_id,
+        ], 'login succes');
     }
 
-    public function changePassWord(AuthFormRequest $request)
+    /**
+     * @OA\PUT(
+     *   path="/api/change-pass/{id}",
+     *   summary="ChangePass",
+     *   operationId="ChangePass",
+     *   tags={"ChangePass"},
+     *   security={
+     *      {"ApiKeyAuth": {}}
+     *   },
+     *  
+     *  @OA\RequestBody( 
+     *      required=true,
+     *      @OA\JsonContent( 
+     *      required={"old_password","new_password", "new_password_confirmation"},  
+     *      @OA\Property(property="old_password", type="string", example="123456"), 
+     *      @OA\Property(property="new_password", type="string", example="123456"), 
+     *      @OA\Property(property="new_password_confirmation"), 
+     *      ), 
+     *    ),
+     *   @OA\Response(response=200, description="Successful operation"),
+     *   @OA\Response(response=400, description="Bad Request"),
+     *   @OA\Response(response=403, description="Forbidden"),
+     *   @OA\Response(response=404, description="Not found"),
+     *   @OA\Response(response=500, description="Internal server error")
+     * )
+     */
+    public function changePassword(AuthPutRequest $request, $memberId)
     {
         $memberId = auth()->user()->id;
         $member = Member::where('id', $memberId)->first();
+
         if (Hash::check($request->old_password, $member->password)) {
             if (!Hash::check($request->new_password, $member->password)) {
                 $member = Member::where('id', $memberId)->update(
                     ['password' => bcrypt($request->new_password)]
                 );
 
-                return $this->successResponse([
-                    'message' => 'Member successfully changed password',
-                    'member' => $member,
-                ], Response::HTTP_CREATED);
+                return $this->successResponse(null ,[trans('message.change_pass')]); 
             } else {
 
-                return $this->errorResponse('New password can not be the old password!', Response::HTTP_BAD_REQUEST);
+                return $this->errorResponse(trans('message.old_pass'), Response::HTTP_BAD_REQUEST);
             }
         } else {
 
-            return $this->errorResponse('Old password is incorrect!', Response::HTTP_BAD_REQUEST);
+            return $this->errorResponse(trans('message.not_same_pass'), Response::HTTP_BAD_REQUEST);
         }
     }
 }
