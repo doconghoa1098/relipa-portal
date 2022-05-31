@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class MemberRole extends Model
 {
     use HasFactory;
+
+    protected $table = 'member_role';
 }
