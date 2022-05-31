@@ -10,6 +10,15 @@ use Illuminate\Routing\Controller as BaseController;
 
 /**
  * @OA\Info(  version="1.0.0",  title="L5 OpenApi",  description="L5 Swagger OpenApi description" )
+ * @OA\SecurityScheme(
+ *     type="http",
+ *     description="Login with email and password to get the authentication token",
+ *     name="Token based Based",
+ *     in="header",
+ *     scheme="bearer",
+ *     bearerFormat="JWT",
+ *     securityScheme="bearerAuth",
+ * )
  */
 class Controller extends BaseController
 {
