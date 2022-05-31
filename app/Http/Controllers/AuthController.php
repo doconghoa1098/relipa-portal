@@ -29,7 +29,7 @@ class AuthController extends Controller
      *   path="/api/login",
      *   summary="Login",
      *   operationId="login",
-     *   tags={"Login"},
+     *   tags={"Auth"},
      *   security={
      *       {"ApiKeyAuth": {}}
      *   },
@@ -52,7 +52,7 @@ class AuthController extends Controller
     {
         if (!$token = auth()->attempt($request->validated())) {
 
-            return $this->errorResponse('Unauthorized',  Response::HTTP_UNAUTHORIZED);
+            return $this->errorResponse(trans('message.unauthorized'),  Response::HTTP_UNAUTHORIZED);
         }
 
         return $this->createNewToken($token, auth()->user());
@@ -63,11 +63,34 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
+
+    /**
+     * @OA\DELETE(
+     *   path="/api/logout",
+     *   summary="Logout",
+     *   operationId="Logout",
+     *   tags={"Auth"},
+     *   security={{"bearerAuth": {}}},
+     *  
+     *  @OA\RequestBody( 
+     *      required=true,
+     *      @OA\JsonContent( 
+     *      required={"bearer"},  
+     *      @OA\Property(property="bearer", type="string"),
+     *      ), 
+     *    ),
+     *   @OA\Response(response=200, description="Successful operation"),
+     *   @OA\Response(response=400, description="Bad Request"),
+     *   @OA\Response(response=403, description="Forbidden"),
+     *   @OA\Response(response=404, description="Not found"),
+     *   @OA\Response(response=500, description="Internal server error")
+     * )
+     */
     public function logout()
     {
         auth()->logout();
 
-        return $this->successResponse(null, ['message' => trans('message.signed_out')]);
+        return $this->successResponse(null, trans('message.signed_out'));
     }
 
     /**
@@ -96,15 +119,15 @@ class AuthController extends Controller
      *   path="/api/change-pass/{id}",
      *   summary="ChangePass",
      *   operationId="ChangePass",
-     *   tags={"ChangePass"},
-     *   security={
-     *      {"ApiKeyAuth": {}}
-     *   },
+     *   tags={"Auth"},
+     *   security={{"bearerAuth": {}}},
      *  
      *  @OA\RequestBody( 
      *      required=true,
      *      @OA\JsonContent( 
-     *      required={"old_password","new_password", "new_password_confirmation"},  
+     *      required={"id", "bearer", "old_password","new_password", "new_password_confirmation"},  
+     *      @OA\Property(property="id", type="string", example="1"), 
+     *      @OA\Property(property="bearer", type="string"), 
      *      @OA\Property(property="old_password", type="string", example="123456"), 
      *      @OA\Property(property="new_password", type="string", example="123456"), 
      *      @OA\Property(property="new_password_confirmation"), 
@@ -128,7 +151,7 @@ class AuthController extends Controller
                     ['password' => bcrypt($request->new_password)]
                 );
 
-                return $this->successResponse(null ,[trans('message.change_pass')]); 
+                return $this->successResponse(null ,trans('message.change_pass')); 
             } else {
 
                 return $this->errorResponse(trans('message.old_pass'), Response::HTTP_BAD_REQUEST);

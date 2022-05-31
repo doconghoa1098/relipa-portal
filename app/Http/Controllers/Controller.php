@@ -17,7 +17,7 @@ use Illuminate\Routing\Controller as BaseController;
  *     in="header",
  *     scheme="bearer",
  *     bearerFormat="JWT",
- *     securityScheme="apiAuth",
+ *     securityScheme="bearerAuth",
  * )
  */
 class Controller extends BaseController

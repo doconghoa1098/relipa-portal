@@ -9,7 +9,7 @@
         "/api/login": {
             "post": {
                 "tags": [
-                    "Login"
+                    "Auth"
                 ],
                 "summary": "Login",
                 "operationId": "login",
@@ -58,10 +58,59 @@
                 ]
             }
         },
+        "/api/logout": {
+            "delete": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout",
+                "operationId": "Logout",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "bearer"
+                                ],
+                                "properties": {
+                                    "bearer": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/change-pass/{id}": {
             "put": {
                 "tags": [
-                    "ChangePass"
+                    "Auth"
                 ],
                 "summary": "ChangePass",
                 "operationId": "ChangePass",
@@ -71,11 +120,20 @@
                         "application/json": {
                             "schema": {
                                 "required": [
+                                    "id",
+                                    "bearer",
                                     "old_password",
                                     "new_password",
                                     "new_password_confirmation"
                                 ],
                                 "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "example": "1"
+                                    },
+                                    "bearer": {
+                                        "type": "string"
+                                    },
                                     "old_password": {
                                         "type": "string",
                                         "example": "123456"
@@ -110,7 +168,7 @@
                 },
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -174,7 +232,7 @@
     },
     "components": {
         "securitySchemes": {
-            "apiAuth": {
+            "bearerAuth": {
                 "type": "http",
                 "description": "Login with email and password to get the authentication token",
                 "name": "Token based Based",
