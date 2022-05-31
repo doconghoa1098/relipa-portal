@@ -11,4 +11,11 @@ class RegisterOTService extends BaseService
         return Request::class;
     }
 
+    public function getRegisterOT()
+    {
+
+        return $this->model->latest()->get();
+    }
 }
+
+

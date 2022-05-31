@@ -288,7 +288,7 @@ class MemberController extends Controller
      *           example="0359146004"
      *       )
      *   ),
-
+     * 
      *   @OA\Response(response=200, description="Successful operation"),
      *   @OA\Response(response=403, description="Forbidden"),
      *   @OA\Response(response=404, description="Not found"),

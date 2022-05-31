@@ -27,7 +27,6 @@ abstract class BaseService
 
     public function get()
     {
-
         return $this->model->latest()->get();
     }
 
