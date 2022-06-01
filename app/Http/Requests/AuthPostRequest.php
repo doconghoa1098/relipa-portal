@@ -6,9 +6,11 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
+use App\Traits\ResfulResourceTrait;
 
-class AuthFormRequest extends FormRequest
+class AuthPostRequest extends FormRequest
 {
+    use ResfulResourceTrait;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,7 +28,8 @@ class AuthFormRequest extends FormRequest
      */
     public function rules()
     {
-        if ($this->method() == "POST"){
+        if ($this->method() == "POST") {
+
             return [
                 'email' => 'required|email',
                 'password' => 'required|string|min:6',
@@ -34,7 +37,8 @@ class AuthFormRequest extends FormRequest
         }
     }
 
-    public function failedValidation(Validator $validator) {
-        throw new HttpResponseException(response()->json($validator->errors(), Response::HTTP_UNPROCESSABLE_ENTITY));
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException($this->errorResponse($validator->errors(), Response::HTTP_UNPROCESSABLE_ENTITY));
     }
 }
