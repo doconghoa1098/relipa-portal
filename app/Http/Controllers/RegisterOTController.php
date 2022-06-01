@@ -3,12 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\RegisterOTResource;
+use App\Services\RegisterOTService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class RegisterOTController extends Controller
 {
+
+    protected $registerOTService;
+
+    public function __construct(RegisterOTService $registerOTService)
+    {
+        $this->registerOTService = $registerOTService;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,22 +32,36 @@ class RegisterOTController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-            return new RegisterOTResource($this->memberService->getRegisterOT());
+        $formForget = $this->registerOTService->getForm($id);
 
+        if (empty($formForget)) {
+
+            return $this->errorResponse('No more requests in day!', Response::HTTP_BAD_REQUEST);
+        };
+
+        return $this->successResponse($formForget);
     }
-
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+    public function store(Request $request, $id)
     {
-        //
+        $registerOT = $this->registerOTService->create($request, $id);
+
+        if (empty($registerOT))
+        {
+            return $this->errorResponse('No more requests in day!', Response::HTTP_BAD_REQUEST);
+        };
+
+        return $this->successResponse($registerOT, 'Register overtime successfully');
     }
+
 
     /**
      * Display the specified resource.

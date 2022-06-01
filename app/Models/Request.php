@@ -12,10 +12,17 @@ class Request extends Model
 
     protected $table = 'requests';
 
+    protected $dates = ['checkin', 'checkout'];
+
     protected $fillable = [
+        'member_id',
+        'request_type',
+        'request_for_date',
+        'request_ot_time',
         'checkin',
         'checkout',
         'error_count',
         'reason',
+        'status',
     ];
 }

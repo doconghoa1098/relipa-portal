@@ -13,6 +13,8 @@ class Worksheet extends Model
 
     public $timestamps = FALSE;
 
+    protected $dates = ['work_date', 'checkin_original', 'checkout_original'];
+
     protected $fillable = [
         'id',
         'member_id',

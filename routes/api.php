@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\RegisterOTController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,10 @@ Route::prefix('/members')->group( function() {
     Route::put('/update/{id}',[MemberController::class,'update'])->name('update');
 });
 
+
+Route::get('/register-ot/{id}',[RegisterOTController::class,'create'])->name('create');
+Route::post('/register-ot/{id}',[RegisterOTController::class,'store'])->name('store');
+Route::put('/register-ot/edit/{id}',[RegisterOTController::class,'update'])->name('update');
 
 
 // Route::apiResource('members', MemberController::class);
