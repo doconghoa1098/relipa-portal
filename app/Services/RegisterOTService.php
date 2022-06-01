@@ -79,4 +79,12 @@ class RegisterOTService extends BaseService
         // return $data;
         return $this->model->fill($data)->save();
     }
+
+    public function update($value, $id)
+    {
+        $this->findOrFail($id);
+        $this->model->fill($value);
+
+        return $this->model->save();
+    }
 }

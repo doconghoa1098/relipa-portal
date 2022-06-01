@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Response;
 
 class RegisterOTFormRequest extends FormRequest
 {
@@ -24,7 +27,13 @@ class RegisterOTFormRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'reason' => 'required',
+            'request_ot_time' => 'required|date_format:H:i',
         ];
+    }
+
+    protected function failedValidation(Validator $validator): void
+    {
+        throw new HttpResponseException($this->errorResponse($validator->errors(), Response::HTTP_UNPROCESSABLE_ENTITY));
     }
 }

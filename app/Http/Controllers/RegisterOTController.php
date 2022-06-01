@@ -36,11 +36,6 @@ class RegisterOTController extends Controller
     {
         $formForget = $this->registerOTService->getForm($id);
 
-        if (empty($formForget)) {
-
-            return $this->errorResponse('No more requests in day!', Response::HTTP_BAD_REQUEST);
-        };
-
         return $this->successResponse($formForget);
     }
     /**
@@ -94,7 +89,7 @@ class RegisterOTController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $registerOT = $this->registerOTService->update($request, $id);
     }
 
     /**

@@ -71,13 +71,13 @@ class AuthController extends Controller
      *   operationId="Logout",
      *   tags={"Auth"},
      *   security={{"bearerAuth": {}}},
-     *  
-     *  @OA\RequestBody( 
+     *
+     *  @OA\RequestBody(
      *      required=true,
-     *      @OA\JsonContent( 
-     *      required={"bearer"},  
+     *      @OA\JsonContent(
+     *      required={"bearer"},
      *      @OA\Property(property="bearer", type="string"),
-     *      ), 
+     *      ),
      *    ),
      *   @OA\Response(response=200, description="Successful operation"),
      *   @OA\Response(response=400, description="Bad Request"),
@@ -91,20 +91,6 @@ class AuthController extends Controller
         auth()->logout();
 
         return $this->successResponse(null, trans('message.signed_out'));
-    }
-
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function logout()
-    {
-        auth()->logout();
-
-        return $this->successResponse(null, ['message' => 'Member successfully signed out']);
     }
 
     protected function createNewToken($token, $auth)
@@ -127,17 +113,17 @@ class AuthController extends Controller
      *   operationId="ChangePass",
      *   tags={"Auth"},
      *   security={{"bearerAuth": {}}},
-     *  
-     *  @OA\RequestBody( 
+     *
+     *  @OA\RequestBody(
      *      required=true,
-     *      @OA\JsonContent( 
-     *      required={"id", "bearer", "old_password","new_password", "new_password_confirmation"},  
-     *      @OA\Property(property="id", type="string", example="1"), 
-     *      @OA\Property(property="bearer", type="string"), 
-     *      @OA\Property(property="old_password", type="string", example="123456"), 
-     *      @OA\Property(property="new_password", type="string", example="123456"), 
-     *      @OA\Property(property="new_password_confirmation"), 
-     *      ), 
+     *      @OA\JsonContent(
+     *      required={"id", "bearer", "old_password","new_password", "new_password_confirmation"},
+     *      @OA\Property(property="id", type="string", example="1"),
+     *      @OA\Property(property="bearer", type="string"),
+     *      @OA\Property(property="old_password", type="string", example="123456"),
+     *      @OA\Property(property="new_password", type="string", example="123456"),
+     *      @OA\Property(property="new_password_confirmation"),
+     *      ),
      *    ),
      *   @OA\Response(response=200, description="Successful operation"),
      *   @OA\Response(response=400, description="Bad Request"),
@@ -157,7 +143,7 @@ class AuthController extends Controller
                     ['password' => bcrypt($request->new_password)]
                 );
 
-                return $this->successResponse(null ,trans('message.change_pass')); 
+                return $this->successResponse(null ,trans('message.change_pass'));
             } else {
 
                 return $this->errorResponse(trans('message.old_pass'), Response::HTTP_BAD_REQUEST);
