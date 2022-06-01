@@ -19,12 +19,14 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'api'], function ($router) {
     Route::post('/login', [AuthController::class, 'login']);
     Route::delete('/logout', [AuthController::class, 'logout']);
-    Route::put('/change-pass/{id}', [AuthController::class, 'changePassword']);    
+    Route::put('/change-pass/{id}', [AuthController::class, 'changePassword']);
 });
 
 Route::prefix('/members')->group( function() {
     Route::get('/edit/{id}',[MemberController::class,'show'])->name('edit');
-    Route::post('/update/{id}',[MemberController::class,'update'])->name('update');
+    Route::put('/update/{id}',[MemberController::class,'update'])->name('update');
 });
+
+
 
 // Route::apiResource('members', MemberController::class);
