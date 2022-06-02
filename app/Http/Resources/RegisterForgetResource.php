@@ -15,17 +15,15 @@ class RegisterForgetResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'member_id' => $this->member_id,
-            'request_type' => $this->request_type,
-            'request_for_date' => $this->request_for_date,
-            'checkin' => $this->checkin,
-            'checkout' => $this->checkout,
-            'reason' => $this->reason,
-            'status' => $this->status,
-            'manager_confirmed_status' => $this->manager_confirmed_status,
-            'admin_approved_status' => $this->admin_approved_status,
-            'error_count' => $this->error_count,
-            'created_at' => $this->created_at,
+            'registrationDate' => ( isset($this->created_at) ? $this->created_at : now()  )->format('Y-m-d H:i'),
+            'registerForDate' => $this->workDate,
+            'checkInWorkSheet' => $this->checkInWorkSheet,
+            'checkOutWorkSheet' => $this->checkOutWorkSheet,
+            'status' => isset($this->status) ? $this->status : 0,
+            'checkin' => isset($this->checkin) ? $this->checkin->format('H:i') : null,
+            'checkout' => isset($this->checkout) ? $this->checkout->format('H:i') : null,
+            'special_reason' => isset($this->special_reason) ? $this->special_reason : null,
+            'reason' => isset($this->reason) ? $this->reason : null,
         ];
     }
 }

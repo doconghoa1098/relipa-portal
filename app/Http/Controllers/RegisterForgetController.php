@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterForgetFormRequest;
 use App\Http\Resources\RegisterForgetResource;
 use App\Services\RegisterForgetService;
 use Illuminate\Http\Response;
@@ -31,9 +32,11 @@ class RegisterForgetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $formForget = new RegisterForgetResource($this->registerForgetService->getForm($id));
+
+        return $this->successResponse($formForget);
     }
 
     /**
@@ -42,9 +45,15 @@ class RegisterForgetController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RegisterForgetFormRequest $request)
     {
-        //
+        $registerForget = $this->registerForgetService->create($request);
+
+        if (empty($registerForget)) {
+            return $this->errorResponse('No more request in day', Response::HTTP_BAD_REQUEST);
+        };
+
+        return $this->successResponse($registerForget, 'Register forget check-In/check-Out successfully');
     }
 
     /**
@@ -76,9 +85,15 @@ class RegisterForgetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RegisterForgetFormRequest $request, $id)
     {
-        //
+        $registerForget = $this->registerForgetService->updateRegisterForget($id, $request);
+
+        if (empty($registerForget)) {
+            return $this->errorResponse('The request cannot be edited once the manager/admin has confirmed/approved ', Response::HTTP_BAD_REQUEST);
+        };
+
+        return $this->successResponse([], 'Update register forget check-In/check-Out successfully');
     }
 
     /**

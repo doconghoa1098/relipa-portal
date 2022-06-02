@@ -11,7 +11,7 @@ class Request extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'requests';
-
+    protected $dates = ['checkin', 'checkout'];
     protected $fillable = [        
         'member_id',
         'request_type',

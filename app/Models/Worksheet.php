@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,13 +14,15 @@ class Worksheet extends Model
 
     public $timestamps = FALSE;
 
+    protected $dates = ['work_date', 'checkin', 'checkout'];
+
     protected $fillable = [
         'id',
         'member_id',
         'work_date',
         'checkin',
         'checkin_original',
-        'chekout',
+        'checkout',
         'checkout_original',
         'late',
         'early',
@@ -32,4 +35,5 @@ class Worksheet extends Model
         'unpaid_leave',
         'note'
     ];
+
 }
