@@ -20,39 +20,19 @@ class MemberController extends Controller
 
     /**
      * @OA\Get(
-     *   path="/api/members",
-     *   summary="Show Members",
-     *   operationId="index",
-     *   tags={"Members"},
-     *   @OA\Response(response=200, description="Successful operation"),
-     *   @OA\Response(response=403, description="Forbidden"),
-     *   @OA\Response(response=404, description="Not found"),
-     *   @OA\Response(response=500, description="Internal server error")
-     * )
-     */
-    public function index()
-    {
-        $users = MemberResource::collection($this->memberService->get());
-
-        return $this->successResponse($users);
-    }
-
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * @OA\Get(
-     *   path="/api/members/{id}",
+     *   path="/api/members/edit/{id}",
      *   summary="Detail members",
      *   tags={"Members"},
      *   operationId="show",
+     *   security={{"bearerAuth": {}}},
+     *
+     *   @OA\Parameter(
+     *       name="bearer",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string"
+     *       )
+     *   ),
      *   @OA\Parameter(
      *       name="id",
      *       in="path",
@@ -68,8 +48,7 @@ class MemberController extends Controller
      */
     public function show($id)
     {
-
-        if(Auth::user()->id == $id){
+        if (Auth::user()->id == $id) {
 
             return new MemberResource($this->memberService->findOrFail($id));
         }
@@ -77,194 +56,227 @@ class MemberController extends Controller
         return $this->errorResponse('Unauthorized!', Response::HTTP_UNAUTHORIZED);
     }
 
-    public function edit($id)
-    {
-        //
-    }
-
-
     /**
-     * @OA\Post(
-     *   path="/api/members/{id}",
-     *   summary="Update",
-     *   tags={"Members"},
-     *   operationId="update",
-     *   @OA\Parameter(
-     *       name="avatar_official",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="file"
-     *       )
-     *   ),
+     * @OA\Put(
+     *     path="/api/members/update/{id}",
+     *     summary="Updates a member",
+     *     tags={"Members"},
+     *     operationId="update",
+     *     security={{"bearerAuth": {}}},
      *
      *   @OA\Parameter(
+     *       name="bearer",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="id",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer"
+     *       )
+     *   ),
+     *   @OA\Parameter(
      *       name="avatar",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
      *           type="file"
      *       )
      *   ),
      *   @OA\Parameter(
-     *       name="gender",
-     *       in="path",
+     *       name="avatar_official",
+     *       in="query",
      *       @OA\Schema(
-     *           type="radio"
+     *           type="file"
      *       )
+     *   ),
+     *   @OA\Parameter(
+     *         description="Gender",
+     *         in="query",
+     *         name="gender",
+     *         @OA\Schema(type="radio"),
+     *         @OA\Examples(example="int", value="1", summary="male"),
+     *         @OA\Examples(example="uuid", value="2", summary="female"),
      *   ),
      *   @OA\Parameter(
      *       name="nick_name",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="text"
+     *           type="string",
+     *           example="long"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="birth_date",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="date"
+     *           type="date",
+     *           example="1999/02/02"
      *       )
      *   ),
      *   @OA\Parameter(
-     *       name="email",
-     *       in="path",
+     *       name="other_email",
+     *       in="query",
      *       @OA\Schema(
-     *           type="email"
+     *           type="email",
+     *           example="long@gmail.com"
      *       )
      *   ),
-     *   @OA\Parameter(
+     *    *   @OA\Parameter(
      *       name="identity_number",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="number"
+     *           type="number",
+     *           example="1234567899"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="identity_card_date",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="date"
+     *           type="date",
+     *           example="2000/12/02"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="identity_card_place",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="date"
+     *           type="string",
+     *           example="Việt Nam"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="skype",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="string"
+     *           type="string",
+     *           example="longtt"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="facebook",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="string"
+     *           type="string",
+     *           example="Long Bầu"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="passport_number",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="number"
+     *           type="number",
+     *           example="213123123123123"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="passport_expiration",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="string"
+     *           type="string",
+     *           example="2022/01/01"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="nationality",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="string"
+     *           type="string",
+     *           example="Việt Nam"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="bank_name",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="string"
+     *           type="string",
+     *           example="Techcombank"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="bank_account",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="string"
+     *           type="string",
+     *           example="longtt"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="marital_status",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="number"
+     *           type="number",
+     *           example="1"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="academic_level",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="date"
+     *           type="string",
+     *           example="12/12"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="permanent_address",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="string"
+     *           type="string",
+     *           example="Hạ Bằng - Thạch Thất - Hà Nội"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="temporary_address",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="string"
+     *           type="string",
+     *           example="32/80 - Đỗ Đức Dục - Mễ Trì - Hà Nội"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="tax_identification",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="string"
+     *           type="string",
+     *           example="0123456789"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="healthcare_provider",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="string"
+     *           type="string",
+     *           example="Hà Nội"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="emergency_contact_name",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="string"
+     *           type="string",
+     *           example="Phương Anh"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="emergency_contact_relationship",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="string"
+     *           type="string",
+     *           example="0359146002"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="emergency_contact_number",
-     *       in="path",
+     *       in="query",
      *       @OA\Schema(
-     *           type="string"
+     *           type="string",
+     *           example="0359146004"
      *       )
      *   ),
+
      *   @OA\Response(response=200, description="Successful operation"),
      *   @OA\Response(response=403, description="Forbidden"),
      *   @OA\Response(response=404, description="Not found"),
@@ -274,18 +286,14 @@ class MemberController extends Controller
 
     public function update(MemberFormRequest $request, $id)
     {
-        if(Auth::user()->id == $id){
-            $this->memberService->updateMember($id, $request);
+        if (Auth::check()) {
+            if (Auth::user()->id == $id) {
+                $this->memberService->updateMember($id, $request);
 
-            return $this->successResponse(null, 'Update member successfully!');
-        }else{
-
-            return $this->errorResponse('Unauthorized!', Response::HTTP_UNAUTHORIZED);
+                return $this->successResponse(null, 'Update member successfully!');
+            }
         }
-    }
 
-    public function destroy($id)
-    {
-        //
+        return $this->errorResponse('Unauthorized!', Response::HTTP_UNAUTHORIZED);
     }
 }

@@ -33,15 +33,23 @@ class AuthController extends Controller
      *   security={
      *       {"ApiKeyAuth": {}}
      *   },
-     *  
-     *  @OA\RequestBody( 
-     *      required=true,
-     *      @OA\JsonContent( 
-     *      required={"email","password"}, 
-     *      @OA\Property(property="email", type="string", example="anhhn@vnext.vn"), 
-     *      @OA\Property(property="password", type="string", example="123456"), 
-     *      ), 
-     *    ),
+     *  @OA\Parameter(
+     *       name="email",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="anhhn@vnext.vn"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="password",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="123456"
+     *       )
+     *   ),
+     * 
      *   @OA\Response(response=200, description="Successful operation"),
      *   @OA\Response(response=403, description="Forbidden"),
      *   @OA\Response(response=404, description="Not found"),
@@ -72,13 +80,14 @@ class AuthController extends Controller
      *   tags={"Auth"},
      *   security={{"bearerAuth": {}}},
      *  
-     *  @OA\RequestBody( 
-     *      required=true,
-     *      @OA\JsonContent( 
-     *      required={"bearer"},  
-     *      @OA\Property(property="bearer", type="string"),
-     *      ), 
-     *    ),
+     *   @OA\Parameter(
+     *       name="bearer",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string"
+     *       )
+     *   ),
+     * 
      *   @OA\Response(response=200, description="Successful operation"),
      *   @OA\Response(response=400, description="Bad Request"),
      *   @OA\Response(response=403, description="Forbidden"),
@@ -122,17 +131,38 @@ class AuthController extends Controller
      *   tags={"Auth"},
      *   security={{"bearerAuth": {}}},
      *  
-     *  @OA\RequestBody( 
-     *      required=true,
-     *      @OA\JsonContent( 
-     *      required={"id", "bearer", "old_password","new_password", "new_password_confirmation"},  
-     *      @OA\Property(property="id", type="string", example="1"), 
-     *      @OA\Property(property="bearer", type="string"), 
-     *      @OA\Property(property="old_password", type="string", example="123456"), 
-     *      @OA\Property(property="new_password", type="string", example="123456"), 
-     *      @OA\Property(property="new_password_confirmation"), 
-     *      ), 
-     *    ),
+     *   @OA\Parameter(
+     *       name="bearer",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="old_password",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="123456"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="new_password",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="123456"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="new_password_confirmation",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="123456"
+     *       )
+     *   ),
+     * 
      *   @OA\Response(response=200, description="Successful operation"),
      *   @OA\Response(response=400, description="Bad Request"),
      *   @OA\Response(response=403, description="Forbidden"),

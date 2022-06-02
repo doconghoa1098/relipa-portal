@@ -25,7 +25,7 @@ Route::group(['middleware' => 'api'], function ($router) {
 
 Route::prefix('/members')->group( function() {
     Route::get('/edit/{id}',[MemberController::class,'show'])->name('edit');
-    Route::post('/update/{id}',[MemberController::class,'update'])->name('update');
+    Route::put('/update/{id}',[MemberController::class,'update'])->name('update');
 
     Route::get('/register-forget/{id}',[RegisterForgetController::class,'create'])->name('add');
     Route::post('/register-forget',[RegisterForgetController::class,'store'])->name('create');
