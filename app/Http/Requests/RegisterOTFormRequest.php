@@ -6,9 +6,11 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
+use App\Traits\ResfulResourceTrait;
 
 class RegisterOTFormRequest extends FormRequest
 {
+    use ResfulResourceTrait;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -16,7 +18,7 @@ class RegisterOTFormRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**

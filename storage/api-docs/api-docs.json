@@ -244,6 +244,13 @@
                         }
                     },
                     {
+                        "name": "bearer",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "name": "avatar_official",
                         "in": "query",
                         "schema": {
@@ -458,7 +465,12 @@
                     "500": {
                         "description": "Internal server error"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         }
     },

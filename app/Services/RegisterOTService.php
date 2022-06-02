@@ -30,23 +30,17 @@ class RegisterOTService extends BaseService
             $actual_OT = date("H:i", $actualOT);
         }
 
-        $workDate = $this->workSheet($id)->work_date->format('Y-m-d');
+        $workDate = $this->workSheet($id)->work_date;
         $view = $this->model->where('request_for_date', $workDate)
         ->where('request_type', 5)
-        ->first(['status', 'checkin', 'checkout', 'reason', 'request_ot_time']);
+        ->first() ?? (object) [];
 
-        return  [
-            'actual_overtime' => $actual_OT,
-            'registrationDate' => now()->format('Y-m-d H:i'),
-            'registerForDate' => $this->workSheet($id)->work_date->format('Y-m-d'),
-            'checkinOriginal' => $this->workSheet($id)->checkin_original->format('H:i'),
-            'checkoutOriginal' => $this->workSheet($id)->checkout_original->format('H:i'),
-            'status' =>  empty($view) ? 0 : $view->status,
-            'checkin' =>empty($view) ? null : $view->checkin->format('H:i'),
-            'checkout' =>empty($view) ? null : $view->checkout->format('H:i'),
-            'reason' =>empty($view) ? null : $view->reason,
-            'request_ot_time' =>empty($view) ? null : $view->request_ot_time,
-        ];
+        $view->workDate = $workDate->format('Y-m-d');
+        $view->checkinWorkSheet = $this->workSheet($id)->checkin_original->format('H:i');
+        $view->checkoutWorkSheet = $this->workSheet($id)->checkout_original->format('H:i');
+        $view->actual_OT = $actual_OT;
+
+        return $view;
     }
 
     public function create($request, $id)
@@ -80,11 +74,21 @@ class RegisterOTService extends BaseService
         return $this->model->fill($data)->save();
     }
 
-    public function update($value, $id)
+    public function update($request, $id)
     {
-        $this->findOrFail($id);
-        $this->model->fill($value);
+        $view = $this->getForm($id);
 
-        return $this->model->save();
+        if (isset($view->status) && $view->status == 0) {
+            $data = [
+                'checkin' => strtotime($view->request_for_date . $request->checkin),
+                'checkout' => strtotime($view->request_for_date . $request->checkout),
+                'actual_OT' => $view->actual_OT,
+                'request_ot_time' => $request->request_ot_time,
+                'reason' => $request->reason,
+            ];
+            return $this->findOrFail($view->id)->fill($data)->save();
+            // return $this->update($viewform->id, $data);
+        }
+        return [];
     }
 }

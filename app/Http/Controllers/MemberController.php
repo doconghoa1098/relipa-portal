@@ -88,6 +88,7 @@ class MemberController extends Controller
      *     summary="Updates a member",
      *     tags={"Members"},
      *     operationId="update",
+     *     security={{"bearerAuth": {}}},
      *
 
      *   @OA\Parameter(
@@ -95,6 +96,13 @@ class MemberController extends Controller
      *       in="query",
      *       @OA\Schema(
      *           type="file"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="bearer",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string"
      *       )
      *   ),
      *   @OA\Parameter(
@@ -288,7 +296,7 @@ class MemberController extends Controller
      *           example="0359146004"
      *       )
      *   ),
-     * 
+
      *   @OA\Response(response=200, description="Successful operation"),
      *   @OA\Response(response=403, description="Forbidden"),
      *   @OA\Response(response=404, description="Not found"),

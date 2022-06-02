@@ -15,13 +15,15 @@ class RegisterOTResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'member_id' => $this->member_id,
-            'request_type' => $this->request_type,
-            'request_for_date' => $this->request_for_date,
-            'checkin' => $this->checkin,
-            'checkout' => $this->checkout,
-            'reason' => $this->reason,
-
+            'registrationDate' => ( isset($this->created_at) ? $this->created_at : now()  )->format('Y-m-d H:i'),
+            'registerForDate' => $this->workDate,
+            'checkinWorkSheet' => $this->checkinWorkSheet,
+            'checkoutWorkSheet' => $this->checkoutWorkSheet,
+            'status' => isset($this->status) ? $this->status : 0,
+            'checkin' => isset($this->checkin) ? $this->checkin->format('H:i') : null,
+            'checkout' => isset($this->checkout) ? $this->checkout->format('H:i') : null,
+            'reason' => isset($this->reason) ? $this->reason : null,
+            'actual_overtime' => isset($this->actual_OT) ? $this->actual_OT : null,
         ];
     }
 }
