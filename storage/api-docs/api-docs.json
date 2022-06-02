@@ -196,7 +196,7 @@
                 }
             }
         },
-        "/api/members/{id}": {
+        "/api/members/edit/{id}": {
             "get": {
                 "tags": [
                     "Members"
@@ -204,6 +204,13 @@
                 "summary": "Detail members",
                 "operationId": "show",
                 "parameters": [
+                    {
+                        "name": "bearer",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
                     {
                         "name": "id",
                         "in": "path",
@@ -225,7 +232,12 @@
                     "500": {
                         "description": "Internal server error"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/members/update/1": {
