@@ -50,7 +50,9 @@ class MemberController extends Controller
     {
         if (Auth::user()->id == $id) {
 
-            return new MemberResource($this->memberService->findOrFail($id));
+            $memberInfo =  new MemberResource($this->memberService->findOrFail($id));
+
+            return $this->successResponse($memberInfo);
         }
 
         return $this->errorResponse('Unauthorized!', Response::HTTP_UNAUTHORIZED);
@@ -65,6 +67,13 @@ class MemberController extends Controller
      *     security={{"bearerAuth": {}}},
      *
      *   @OA\Parameter(
+     *       name="id",
+     *       in="path",
+     *       @OA\Schema(
+     *           type="integer"
+     *       )
+     *   ),
+     *   @OA\Parameter(
      *       name="bearer",
      *       in="query",
      *       @OA\Schema(
@@ -72,17 +81,10 @@ class MemberController extends Controller
      *       )
      *   ),
      *   @OA\Parameter(
-     *       name="id",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="integer"
-     *       )
-     *   ),
-     *   @OA\Parameter(
      *       name="avatar",
      *       in="query",
      *       @OA\Schema(
-     *           type="string"
+     *           type="file"
      *       )
      *   ),
      *   @OA\Parameter(

@@ -35,7 +35,7 @@ class RegisterForgetController extends Controller
      *   ),
      *   @OA\Parameter(
      *       name="id",
-     *       in="query",
+     *       in="path",
      *       @OA\Schema(
      *           type="integer"
      *       )
@@ -62,17 +62,17 @@ class RegisterForgetController extends Controller
      *   security={{"bearerAuth": {}}},
      * 
      *   @OA\Parameter(
+     *       name="id",
+     *       in="path",
+     *       @OA\Schema(
+     *           type="integer"
+     *       )
+     *   ),
+     *   @OA\Parameter(
      *       name="bearer",
      *       in="query",
      *       @OA\Schema(
      *           type="string"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="id",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="integer"
      *       )
      *   ),
      *   @OA\Parameter(
@@ -134,18 +134,18 @@ class RegisterForgetController extends Controller
      *   security={{"bearerAuth": {}}},
      *
      *   @OA\Parameter(
+     *       name="id",
+     *       in="path",
+     *       @OA\Schema(
+     *           type="integer",
+     *           example="1"
+     *       )
+     *   ),
+     *   @OA\Parameter(
      *       name="bearer",
      *       in="query",
      *       @OA\Schema(
      *           type="string"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="id",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="integer",
-     *           example="1"
      *       )
      *   ),
      *   @OA\Parameter(
