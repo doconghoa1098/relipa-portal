@@ -205,13 +205,6 @@
                 "operationId": "show",
                 "parameters": [
                     {
-                        "name": "bearer",
-                        "in": "query",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
                         "name": "id",
                         "in": "path",
                         "schema": {
@@ -232,12 +225,7 @@
                     "500": {
                         "description": "Internal server error"
                     }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
+                }
             }
         },
         "/api/members/update/1": {
@@ -461,6 +449,175 @@
                         "schema": {
                             "type": "string",
                             "example": "0359146004"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/register-ot/{id}": {
+            "get": {
+                "tags": [
+                    "Register overtime"
+                ],
+                "summary": "Detail register overtime",
+                "operationId": "create",
+                "parameters": [
+                    {
+                        "name": "bearer",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/register-ot/1": {
+            "post": {
+                "tags": [
+                    "Register overtime"
+                ],
+                "summary": "Create register overtime",
+                "operationId": "store",
+                "parameters": [
+                    {
+                        "name": "bearer",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "request_for_date",
+                        "in": "query",
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "checkin",
+                        "in": "query",
+                        "schema": {
+                            "type": "date",
+                            "example": "08:35"
+                        }
+                    },
+                    {
+                        "name": "checkout",
+                        "in": "query",
+                        "schema": {
+                            "type": "date",
+                            "example": "17:35"
+                        }
+                    },
+                    {
+                        "name": "request_ot_time",
+                        "in": "query",
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "reason",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/register-ot/edit/1": {
+            "put": {
+                "tags": [
+                    "Register overtime"
+                ],
+                "summary": "Edit register overtime",
+                "operationId": "updateRegisterOT",
+                "parameters": [
+                    {
+                        "name": "bearer",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "request_ot_time",
+                        "in": "query",
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "reason",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 ],

@@ -19,19 +19,31 @@ class RegisterOTController extends Controller
         $this->registerOTService = $registerOTService;
     }
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *   path="/api/register-ot/{id}",
+     *   summary="Detail register overtime",
+     *   tags={"Register overtime"},
+     *   operationId="create",
+     *   security={{"bearerAuth": {}}},
+     *   @OA\Parameter(
+     *       name="bearer",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="id",
+     *       in="path",
+     *       @OA\Schema(
+     *           type="integer"
+     *       )
+     *   ),
+     *   @OA\Response(response=200, description="Successful operation"),
+     *   @OA\Response(response=403, description="Forbidden"),
+     *   @OA\Response(response=404, description="Not found"),
+     *   @OA\Response(response=500, description="Internal server error")
+     * )
      */
     public function create($id)
     {
@@ -40,12 +52,62 @@ class RegisterOTController extends Controller
         return $this->successResponse($formForget);
     }
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @OA\post(
+     *   path="/api/register-ot/1",
+     *   summary="Create register overtime",
+     *   tags={"Register overtime"},
+     *   operationId="store",
+     *   security={{"bearerAuth": {}}},
+     *   @OA\Parameter(
+     *       name="bearer",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="request_for_date",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="date"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="checkin",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="date",
+     *           example="08:35"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="checkout",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="date",
+     *           example="17:35"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="request_ot_time",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="date"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="reason",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string"
+     *       )
+     *   ),
+     *   @OA\Response(response=200, description="Successful operation"),
+     *   @OA\Response(response=403, description="Forbidden"),
+     *   @OA\Response(response=404, description="Not found"),
+     *   @OA\Response(response=500, description="Internal server error")
+     * )
      */
-
     public function store(Request $request, $id)
     {
         $registerOT = $this->registerOTService->create($request, $id);
@@ -58,42 +120,42 @@ class RegisterOTController extends Controller
         return $this->successResponse($registerOT, 'Register overtime successfully');
     }
 
-
     /**
-     * Display the specified resource.
+     * @OA\put(
+     *   path="/api/register-ot/edit/1",
+     *   summary="Edit register overtime",
+     *   tags={"Register overtime"},
+     *   operationId="updateRegisterOT",
+     *   security={{"bearerAuth": {}}},
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     *   @OA\Parameter(
+     *       name="bearer",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="request_ot_time",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="date"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="reason",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string"
+     *       )
+     *   ),
+     *   @OA\Response(response=200, description="Successful operation"),
+     *   @OA\Response(response=403, description="Forbidden"),
+     *   @OA\Response(response=404, description="Not found"),
+     *   @OA\Response(response=500, description="Internal server error")
+     * )
      */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    // public function update(Request $request, $id)
-    // {
-    //     $registerOT = $this->registerOTService->update($request, $id);
-    // }
-
-    public function update(RegisterOTFormRequest $request, $id)
+    public function updateRegisterOT(RegisterOTFormRequest $request, $id)
     {
         $registerOT = $this->registerOTService->update($request, $id);
 
@@ -103,12 +165,7 @@ class RegisterOTController extends Controller
 
         return $this->successResponse([], 'Update register forget check-In/check-Out successfully');
     }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         //

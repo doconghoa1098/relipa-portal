@@ -24,14 +24,16 @@ Route::group(['middleware' => 'api'], function ($router) {
 });
 
 Route::prefix('/members')->group( function() {
-    Route::get('/edit/{id}',[MemberController::class,'show'])->name('edit');
-    Route::put('/update/{id}',[MemberController::class,'update'])->name('update');
+    Route::get('/edit/{id}',[MemberController::class,'show'])->name('members.edit');
+    Route::put('/update/{id}',[MemberController::class,'update'])->name('members.update');
 });
 
+Route::prefix('/register-ot')->group( function() {
+    Route::get('/{id}',[RegisterOTController::class,'create'])->name('register-ot.create');
+    Route::post('/{id}',[RegisterOTController::class,'store'])->name('register-ot.store');
+    Route::put('/edit/{id}',[RegisterOTController::class,'updateRegisterOT'])->name('register-ot.update');
+});
 
-Route::get('/register-ot/{id}',[RegisterOTController::class,'create'])->name('create');
-Route::post('/register-ot/{id}',[RegisterOTController::class,'store'])->name('store');
-Route::put('/register-ot/edit/{id}',[RegisterOTController::class,'update'])->name('update');
 
 
 // Route::apiResource('members', MemberController::class);
