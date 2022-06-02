@@ -49,10 +49,19 @@ class MemberController extends Controller
 
     /**
      * @OA\Get(
-     *   path="/api/members/{id}",
+     *   path="/api/members/edit/{id}",
      *   summary="Detail members",
      *   tags={"Members"},
      *   operationId="show",
+     *   security={{"bearerAuth": {}}},
+     *
+     *   @OA\Parameter(
+     *       name="bearer",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string"
+     *       )
+     *   ),
      *   @OA\Parameter(
      *       name="id",
      *       in="path",
