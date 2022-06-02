@@ -82,7 +82,7 @@ class MemberController extends Controller
      *       name="avatar",
      *       in="query",
      *       @OA\Schema(
-     *           type="file"
+     *           type="string"
      *       )
      *   ),
      *   @OA\Parameter(

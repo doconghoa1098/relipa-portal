@@ -102,14 +102,6 @@ class AuthController extends Controller
         return $this->successResponse(null, trans('message.signed_out'));
     }
 
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-
     protected function createNewToken($token, $auth)
     {
 
@@ -181,7 +173,7 @@ class AuthController extends Controller
                     ['password' => bcrypt($request->new_password)]
                 );
 
-                return $this->successResponse(null ,trans('message.change_pass')); 
+                return $this->successResponse(null ,trans('message.change_pass'));
             } else {
 
                 return $this->errorResponse(trans('message.old_pass'), Response::HTTP_BAD_REQUEST);

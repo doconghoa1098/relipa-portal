@@ -582,7 +582,8 @@
                         "name": "bearer",
                         "in": "query",
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "example": "0359146004"
                         }
                     },
                     {

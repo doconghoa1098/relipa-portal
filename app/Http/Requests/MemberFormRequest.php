@@ -32,8 +32,8 @@ class MemberFormRequest extends FormRequest
     {
 
         return [
-            'avatar' => 'mimes:jpg,png|max:4096',
-            'avatar_official' => 'mimes:jpg,png|max:4096',
+            'avatar' => 'mimes:jpg,png|max:4096|dimensions:max_width=300,max_height=300',
+            'avatar_official' => 'mimes:jpg,png|max:4096|dimensions:max_width=500,max_height=500',
             'gender' => 'required',
             'birth_date' => 'required|date',
             'other_email' => [
@@ -60,7 +60,7 @@ class MemberFormRequest extends FormRequest
             'emergency_contact_name' => 'required|max:70',
             'emergency_contact_number' => 'required|max:20',
             'start_date_official' => 'nullable|date',
-            'start_date_probation' => 'nullable|date'
+            'start_date_probation' => 'nullable|date',
         ];
     }
 
