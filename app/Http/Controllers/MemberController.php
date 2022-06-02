@@ -17,24 +17,9 @@ class MemberController extends Controller
     {
         $this->memberService = $memberService;
     }
-
-    /**
-     * @OA\Get(
-     *   path="/api/members",
-     *   summary="Show Members",
-     *   operationId="index",
-     *   tags={"Members"},
-     *   @OA\Response(response=200, description="Successful operation"),
-     *   @OA\Response(response=403, description="Forbidden"),
-     *   @OA\Response(response=404, description="Not found"),
-     *   @OA\Response(response=500, description="Internal server error")
-     * )
-     */
     public function index()
     {
-        $users = MemberResource::collection($this->memberService->get());
-
-        return $this->successResponse($users);
+        //
     }
 
     public function create()

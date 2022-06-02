@@ -173,29 +173,6 @@
                 ]
             }
         },
-        "/api/members": {
-            "get": {
-                "tags": [
-                    "Members"
-                ],
-                "summary": "Show Members",
-                "operationId": "index",
-                "responses": {
-                    "200": {
-                        "description": "Successful operation"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not found"
-                    },
-                    "500": {
-                        "description": "Internal server error"
-                    }
-                }
-            }
-        },
         "/api/members/edit/{id}": {
             "get": {
                 "tags": [
