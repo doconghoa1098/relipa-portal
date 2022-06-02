@@ -17,22 +17,36 @@ class RegisterForgetController extends Controller
     {
         $this->registerForgetService = $registerForgetService;
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *   path="/api/members/register-forget/{id}",
+     *   summary="Viewform to create or update from worksheet ID",
+     *   tags={"Register Forget"},
+     *   operationId="viewForget",
+     *   security={{"bearerAuth": {}}},
+     * 
+     *   @OA\Parameter(
+     *       name="bearer",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="id",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer"
+     *       )
+     *   ),
+     *   @OA\Response(response=200, description="Successful operation"),
+     *   @OA\Response(response=403, description="Forbidden"),
+     *   @OA\Response(response=404, description="Not found"),
+     *   @OA\Response(response=500, description="Internal server error")
+     * )
      */
-    public function create($id)
+    public function viewForget($id)
     {
         $formForget = new RegisterForgetResource($this->registerForgetService->getForm($id));
 
@@ -40,14 +54,69 @@ class RegisterForgetController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @OA\post(
+     *   path="/api/members/register-forget/{id}",
+     *   summary="Create register forget from worksheet ID",
+     *   tags={"Register Forget"},
+     *   operationId="createForget",
+     *   security={{"bearerAuth": {}}},
+     * 
+     *   @OA\Parameter(
+     *       name="bearer",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="id",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="checkin",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="time",
+     *           example="09:35"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="checkout",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="time",
+     *           example="17:35"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="special_reason",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *           example="1"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="reason",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="Ngày đầu đi làm nên lấy vân tay muộn"
+     *       )
+     *   ),
+     * 
+     *   @OA\Response(response=200, description="Successful operation"),
+     *   @OA\Response(response=403, description="Forbidden"),
+     *   @OA\Response(response=404, description="Not found"),
+     *   @OA\Response(response=500, description="Internal server error")
+     * )
      */
-    public function store(RegisterForgetFormRequest $request)
+    public function createForget(RegisterForgetFormRequest $request, $id)
     {
-        $registerForget = $this->registerForgetService->create($request);
+        $registerForget = $this->registerForgetService->create($id, $request);
 
         if (empty($registerForget)) {
             return $this->errorResponse('No more request in day', Response::HTTP_BAD_REQUEST);
@@ -57,35 +126,68 @@ class RegisterForgetController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\put(
+     *   path="/api/members/register-forget/edit/{id}",
+     *   summary="Edit register forget from request ID",
+     *   tags={"Register Forget"},
+     *   operationId="updateForget",
+     *   security={{"bearerAuth": {}}},
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     *   @OA\Parameter(
+     *       name="bearer",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="id",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *           example="1"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="checkin",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="time",
+     *           example="09:35"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="checkout",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="time",
+     *           example="17:35"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="special_reason",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="integer",
+     *           example="1"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="reason",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="Ngày đầu đi làm nên lấy vân tay muộn"
+     *       )
+     *   ),
+     * 
+     *   @OA\Response(response=200, description="Successful operation"),
+     *   @OA\Response(response=403, description="Forbidden"),
+     *   @OA\Response(response=404, description="Not found"),
+     *   @OA\Response(response=500, description="Internal server error")
+     * )
      */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(RegisterForgetFormRequest $request, $id)
+    public function updateForget(RegisterForgetFormRequest $request, $id)
     {
         $registerForget = $this->registerForgetService->updateRegisterForget($id, $request);
 
@@ -94,16 +196,5 @@ class RegisterForgetController extends Controller
         };
 
         return $this->successResponse([], 'Update register forget check-In/check-Out successfully');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

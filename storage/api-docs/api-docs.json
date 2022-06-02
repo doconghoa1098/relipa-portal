@@ -13,30 +13,24 @@
                 ],
                 "summary": "Login",
                 "operationId": "login",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "email",
-                                    "password"
-                                ],
-                                "properties": {
-                                    "email": {
-                                        "type": "string",
-                                        "example": "anhhn@vnext.vn"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "example": "123456"
-                                    }
-                                },
-                                "type": "object"
-                            }
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "example": "anhhn@vnext.vn"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "example": "123456"
                         }
                     }
-                },
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful operation"
@@ -65,24 +59,15 @@
                 ],
                 "summary": "Logout",
                 "operationId": "Logout",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "bearer"
-                                ],
-                                "properties": {
-                                    "bearer": {
-                                        "type": "string"
-                                    }
-                                },
-                                "type": "object"
-                            }
+                "parameters": [
+                    {
+                        "name": "bearer",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
                         }
                     }
-                },
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful operation"
@@ -114,41 +99,39 @@
                 ],
                 "summary": "ChangePass",
                 "operationId": "ChangePass",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "id",
-                                    "bearer",
-                                    "old_password",
-                                    "new_password",
-                                    "new_password_confirmation"
-                                ],
-                                "properties": {
-                                    "id": {
-                                        "type": "string",
-                                        "example": "1"
-                                    },
-                                    "bearer": {
-                                        "type": "string"
-                                    },
-                                    "old_password": {
-                                        "type": "string",
-                                        "example": "123456"
-                                    },
-                                    "new_password": {
-                                        "type": "string",
-                                        "example": "123456"
-                                    },
-                                    "new_password_confirmation": {}
-                                },
-                                "type": "object"
-                            }
+                "parameters": [
+                    {
+                        "name": "bearer",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "old_password",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "example": "123456"
+                        }
+                    },
+                    {
+                        "name": "new_password",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "example": "123456"
+                        }
+                    },
+                    {
+                        "name": "new_password_confirmation",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "example": "123456"
                         }
                     }
-                },
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful operation"
@@ -173,30 +156,7 @@
                 ]
             }
         },
-        "/api/members": {
-            "get": {
-                "tags": [
-                    "Members"
-                ],
-                "summary": "Show Members",
-                "operationId": "index",
-                "responses": {
-                    "200": {
-                        "description": "Successful operation"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not found"
-                    },
-                    "500": {
-                        "description": "Internal server error"
-                    }
-                }
-            }
-        },
-        "/api/members/{id}": {
+        "/api/members/edit/{id}": {
             "get": {
                 "tags": [
                     "Members"
@@ -204,6 +164,13 @@
                 "summary": "Detail members",
                 "operationId": "show",
                 "parameters": [
+                    {
+                        "name": "bearer",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
                     {
                         "name": "id",
                         "in": "path",
@@ -225,188 +192,242 @@
                     "500": {
                         "description": "Internal server error"
                     }
-                }
-            },
-            "post": {
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/members/update/{id}": {
+            "put": {
                 "tags": [
                     "Members"
                 ],
-                "summary": "Update",
+                "summary": "Updates a member",
                 "operationId": "update",
                 "parameters": [
                     {
-                        "name": "avatar_official",
-                        "in": "path",
+                        "name": "bearer",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "avatar",
+                        "in": "query",
                         "schema": {
                             "type": "file"
                         }
                     },
                     {
-                        "name": "avatar",
-                        "in": "path",
+                        "name": "avatar_official",
+                        "in": "query",
                         "schema": {
                             "type": "file"
                         }
                     },
                     {
                         "name": "gender",
-                        "in": "path",
+                        "in": "query",
+                        "description": "Gender",
                         "schema": {
                             "type": "radio"
+                        },
+                        "examples": {
+                            "int": {
+                                "summary": "male",
+                                "value": "1"
+                            },
+                            "uuid": {
+                                "summary": "female",
+                                "value": "2"
+                            }
                         }
                     },
                     {
                         "name": "nick_name",
-                        "in": "path",
+                        "in": "query",
                         "schema": {
-                            "type": "text"
+                            "type": "string",
+                            "example": "long"
                         }
                     },
                     {
                         "name": "birth_date",
-                        "in": "path",
+                        "in": "query",
                         "schema": {
-                            "type": "date"
+                            "type": "date",
+                            "example": "1999/02/02"
                         }
                     },
                     {
-                        "name": "email",
-                        "in": "path",
+                        "name": "other_email",
+                        "in": "query",
                         "schema": {
-                            "type": "email"
+                            "type": "email",
+                            "example": "long@gmail.com"
                         }
                     },
                     {
                         "name": "identity_number",
-                        "in": "path",
+                        "in": "query",
                         "schema": {
-                            "type": "number"
+                            "type": "number",
+                            "example": "1234567899"
                         }
                     },
                     {
                         "name": "identity_card_date",
-                        "in": "path",
+                        "in": "query",
                         "schema": {
-                            "type": "date"
+                            "type": "date",
+                            "example": "2000/12/02"
                         }
                     },
                     {
                         "name": "identity_card_place",
-                        "in": "path",
+                        "in": "query",
                         "schema": {
-                            "type": "date"
+                            "type": "string",
+                            "example": "Việt Nam"
                         }
                     },
                     {
                         "name": "skype",
-                        "in": "path",
+                        "in": "query",
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "example": "longtt"
                         }
                     },
                     {
                         "name": "facebook",
-                        "in": "path",
+                        "in": "query",
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "example": "Long Bầu"
                         }
                     },
                     {
                         "name": "passport_number",
-                        "in": "path",
+                        "in": "query",
                         "schema": {
-                            "type": "number"
+                            "type": "number",
+                            "example": "213123123123123"
                         }
                     },
                     {
                         "name": "passport_expiration",
-                        "in": "path",
+                        "in": "query",
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "example": "2022/01/01"
                         }
                     },
                     {
                         "name": "nationality",
-                        "in": "path",
+                        "in": "query",
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "example": "Việt Nam"
                         }
                     },
                     {
                         "name": "bank_name",
-                        "in": "path",
+                        "in": "query",
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "example": "Techcombank"
                         }
                     },
                     {
                         "name": "bank_account",
-                        "in": "path",
+                        "in": "query",
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "example": "longtt"
                         }
                     },
                     {
                         "name": "marital_status",
-                        "in": "path",
+                        "in": "query",
                         "schema": {
-                            "type": "number"
+                            "type": "number",
+                            "example": "1"
                         }
                     },
                     {
                         "name": "academic_level",
-                        "in": "path",
+                        "in": "query",
                         "schema": {
-                            "type": "date"
+                            "type": "string",
+                            "example": "12/12"
                         }
                     },
                     {
                         "name": "permanent_address",
-                        "in": "path",
+                        "in": "query",
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "example": "Hạ Bằng - Thạch Thất - Hà Nội"
                         }
                     },
                     {
                         "name": "temporary_address",
-                        "in": "path",
+                        "in": "query",
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "example": "32/80 - Đỗ Đức Dục - Mễ Trì - Hà Nội"
                         }
                     },
                     {
                         "name": "tax_identification",
-                        "in": "path",
+                        "in": "query",
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "example": "0123456789"
                         }
                     },
                     {
                         "name": "healthcare_provider",
-                        "in": "path",
+                        "in": "query",
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "example": "Hà Nội"
                         }
                     },
                     {
                         "name": "emergency_contact_name",
-                        "in": "path",
+                        "in": "query",
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "example": "Phương Anh"
                         }
                     },
                     {
                         "name": "emergency_contact_relationship",
-                        "in": "path",
+                        "in": "query",
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "example": "0359146002"
                         }
                     },
                     {
                         "name": "emergency_contact_number",
-                        "in": "path",
+                        "in": "query",
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "example": "0359146004"
                         }
                     }
                 ],
@@ -423,7 +444,207 @@
                     "500": {
                         "description": "Internal server error"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/members/register-forget/{id}": {
+            "get": {
+                "tags": [
+                    "Register Forget"
+                ],
+                "summary": "Viewform to create or update from worksheet ID",
+                "operationId": "viewForget",
+                "parameters": [
+                    {
+                        "name": "bearer",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Register Forget"
+                ],
+                "summary": "Create register forget from worksheet ID",
+                "operationId": "createForget",
+                "parameters": [
+                    {
+                        "name": "bearer",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "checkin",
+                        "in": "query",
+                        "schema": {
+                            "type": "time",
+                            "example": "09:35"
+                        }
+                    },
+                    {
+                        "name": "checkout",
+                        "in": "query",
+                        "schema": {
+                            "type": "time",
+                            "example": "17:35"
+                        }
+                    },
+                    {
+                        "name": "special_reason",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "example": "1"
+                        }
+                    },
+                    {
+                        "name": "reason",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "example": "Ngày đầu đi làm nên lấy vân tay muộn"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/members/register-forget/edit/{id}": {
+            "put": {
+                "tags": [
+                    "Register Forget"
+                ],
+                "summary": "Edit register forget from request ID",
+                "operationId": "updateForget",
+                "parameters": [
+                    {
+                        "name": "bearer",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "example": "1"
+                        }
+                    },
+                    {
+                        "name": "checkin",
+                        "in": "query",
+                        "schema": {
+                            "type": "time",
+                            "example": "09:35"
+                        }
+                    },
+                    {
+                        "name": "checkout",
+                        "in": "query",
+                        "schema": {
+                            "type": "time",
+                            "example": "17:35"
+                        }
+                    },
+                    {
+                        "name": "special_reason",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "example": "1"
+                        }
+                    },
+                    {
+                        "name": "reason",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "example": "Ngày đầu đi làm nên lấy vân tay muộn"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         }
     },

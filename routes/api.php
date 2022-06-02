@@ -27,9 +27,9 @@ Route::prefix('/members')->group( function() {
     Route::get('/edit/{id}',[MemberController::class,'show'])->name('edit');
     Route::put('/update/{id}',[MemberController::class,'update'])->name('update');
 
-    Route::get('/register-forget/{id}',[RegisterForgetController::class,'create'])->name('add');
-    Route::post('/register-forget',[RegisterForgetController::class,'store'])->name('create');
-    Route::put('/register-forget/edit/{id}',[RegisterForgetController::class,'update'])->name('update');
+    Route::get('/register-forget/{id}',[RegisterForgetController::class,'viewForget'])->name('forget.view');
+    Route::post('/register-forget/{id}',[RegisterForgetController::class,'createForget'])->name('forget.create');
+    Route::put('/register-forget/edit/{id}',[RegisterForgetController::class,'updateForget'])->name('forget.update');
 });
 
 // Route::apiResource('members', MemberController::class);

@@ -33,9 +33,10 @@ class RegisterForgetService extends BaseService
         return $viewform;
     }
 
-    public function create($request)
+    public function create($id, $request)
     {
-        $requestOfDay = $this->model->where('request_for_date', $request->request_for_date)->pluck('request_type')->toArray();
+        $workDateWorkSheet = $this->getForm($id)->workDate;
+        $requestOfDay = $this->model->where('request_for_date', $workDateWorkSheet)->pluck('request_type')->toArray();
 
         if (in_array(1, $requestOfDay)) {
             return [];
@@ -44,7 +45,7 @@ class RegisterForgetService extends BaseService
         $data = [
             'member_id' => Auth::id(),
             'request_type' => 1,
-            'request_for_date' => $request->request_for_date,
+            'request_for_date' =>  $workDateWorkSheet,
             'checkin' => strtotime($request->request_for_date . $request->checkin),
             'checkout' => strtotime($request->request_for_date . $request->checkout),
             'special_reason' => $request->special_reason,
@@ -57,7 +58,7 @@ class RegisterForgetService extends BaseService
     public function updateRegisterForget($id, $request)
     {
         $viewform = $this->getForm($id);
- 
+
         if (isset($viewform->status) && $viewform->status == 0) {
 
             $data = [
@@ -66,8 +67,8 @@ class RegisterForgetService extends BaseService
                 'special_reason' => $request->special_reason,
                 'reason' => $request->reason,
             ];
+
             return $this->findOrFail($viewform->id)->fill($data)->save();
-            // return $this->update($viewform->id, $data);
         }
         return [];
     }
