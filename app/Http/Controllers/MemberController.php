@@ -49,7 +49,7 @@ class MemberController extends Controller
 
     /**
      * @OA\Get(
-     *   path="/api/members/{id}",
+     *   path="/api/members/edit/{id}",
      *   summary="Detail members",
      *   tags={"Members"},
      *   operationId="show",
