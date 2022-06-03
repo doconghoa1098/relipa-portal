@@ -173,29 +173,6 @@
                 ]
             }
         },
-        "/api/members": {
-            "get": {
-                "tags": [
-                    "Members"
-                ],
-                "summary": "Show Members",
-                "operationId": "index",
-                "responses": {
-                    "200": {
-                        "description": "Successful operation"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not found"
-                    },
-                    "500": {
-                        "description": "Internal server error"
-                    }
-                }
-            }
-        },
         "/api/members/edit/{id}": {
             "get": {
                 "tags": [
@@ -515,9 +492,7 @@
                         "bearerAuth": []
                     }
                 ]
-            }
-        },
-        "/api/register-ot/1": {
+            },
             "post": {
                 "tags": [
                     "Register overtime"
@@ -525,6 +500,13 @@
                 "summary": "Create register overtime",
                 "operationId": "store",
                 "parameters": [
+                    {
+                        "name": "member_id",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
                     {
                         "name": "bearer",
                         "in": "query",
@@ -591,7 +573,7 @@
                 ]
             }
         },
-        "/api/register-ot/edit/1": {
+        "/api/register-ot/edit/{id}": {
             "put": {
                 "tags": [
                     "Register overtime"
@@ -599,6 +581,13 @@
                 "summary": "Edit register overtime",
                 "operationId": "updateRegisterOT",
                 "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
                     {
                         "name": "bearer",
                         "in": "query",

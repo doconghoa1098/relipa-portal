@@ -53,11 +53,18 @@ class RegisterOTController extends Controller
     }
     /**
      * @OA\post(
-     *   path="/api/register-ot/1",
+     *   path="/api/register-ot/{id}",
      *   summary="Create register overtime",
      *   tags={"Register overtime"},
      *   operationId="store",
      *   security={{"bearerAuth": {}}},
+     *   @OA\Parameter(
+     *       name="member_id",
+     *       in="path",
+     *       @OA\Schema(
+     *           type="integer"
+     *       )
+     *   ),
      *   @OA\Parameter(
      *       name="bearer",
      *       in="query",
@@ -122,11 +129,18 @@ class RegisterOTController extends Controller
 
     /**
      * @OA\put(
-     *   path="/api/register-ot/edit/1",
+     *   path="/api/register-ot/edit/{id}",
      *   summary="Edit register overtime",
      *   tags={"Register overtime"},
      *   operationId="updateRegisterOT",
      *   security={{"bearerAuth": {}}},
+     *   @OA\Parameter(
+     *       name="id",
+     *       in="path",
+     *       @OA\Schema(
+     *           type="integer"
+     *       )
+     *   ),
      *
      *   @OA\Parameter(
      *       name="bearer",
