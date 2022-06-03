@@ -1,64 +1,79 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## Relipa portal API
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+### Prerequisites
+- [Install Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/) & [Post-installation steps for Linux](https://docs.docker.com/install/linux/linux-postinstall/)
+- [Install Docker compose](https://docs.docker.com/compose/install/)
+- Build docker on: Ubuntu / Linux or MacOS
 
-## About Laravel
+### Environment
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+|Software  |  Version |
+|---|---|
+| nginx  | 1.22.0  |
+| php  | 8.1.6  |
+| mysql  | 5.7  |
+| redis  | 7.0.0  |
+| laravel  | 8.83.12  |
+| composer  | 2.3.5  |
+| node  | 16.15  |
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Development
+```zsh
+$ chmod a+x ./app.sh
+$ ./app.sh start
+```
+Bringing up the Docker Compose network with `web` instead of just using up,
+ensures that only our web's containers are brought up at the start,
+instead of all of the command containers as well. The following are built for our web server,
+with their exposed ports detailed:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+|Service  |  Port |
+|---|---|
+| nginx  | 80, 443  |
+| mysql  | 3306  |
+| php  | 9000  |
+| redis  | 6379  |
+| mailhog  | 8025  |
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Attach to a running container
+```zsh
+$  ./app.sh exec {service_name}
+```
+- Running COMPOSER command from host machine
+```zsh
+$ ./app.sh composer -v
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Running ARTISAN command from host machine
+```zsh
+$ ./app.sh artisan config:cache
+```
 
-## Laravel Sponsors
+- Running NPM command from host machine
+```zsh
+$ ./app.sh npm -v
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Linter
+#### 1. Install Husky & Lint-staged
+- Install node dependencies
+```zsh
+$ ./app.sh npm install
+```
 
-### Premium Partners
+- Init husky hook pre-commit
+```zsh
+$ ./app.sh npm run postinstall
+```
+#### 2. Linter PHP coding standards
+Prerequisites: Install PHP >= 7.0 on host machine
+- Linter by PHP Coding Standard rules
+```zsh
+$ ./app.sh php_lint
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Fixed follow by PHP Coding Standard rules
+```zsh
+$ ./app.sh php_fix
+```

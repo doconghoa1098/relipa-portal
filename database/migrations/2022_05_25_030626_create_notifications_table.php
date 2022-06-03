@@ -20,7 +20,7 @@ class CreateNotificationsTable extends Migration
             $table->string('message');
             $table->tinyInteger('status')->default(0);
             $table->string('attachment');
-            $table->json('published_to')->default(json_encode('all'));
+            $table->json('published_to');
             $table->bigInteger('created_by');
             $table->softDeletes();
             $table->timestamps();

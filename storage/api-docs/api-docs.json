@@ -182,6 +182,13 @@
                 "operationId": "show",
                 "parameters": [
                     {
+                        "name": "bearer",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "name": "id",
                         "in": "path",
                         "schema": {
@@ -202,10 +209,15 @@
                     "500": {
                         "description": "Internal server error"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
-        "/api/members/update/1": {
+        "/api/members/update/{id}": {
             "put": {
                 "tags": [
                     "Members"
@@ -213,6 +225,13 @@
                 "summary": "Updates a member",
                 "operationId": "update",
                 "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
                     {
                         "name": "avatar",
                         "in": "query",
@@ -426,164 +445,6 @@
                         "schema": {
                             "type": "string",
                             "example": "0359146004"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not found"
-                    },
-                    "500": {
-                        "description": "Internal server error"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/register-ot/{id}": {
-            "get": {
-                "tags": [
-                    "Register overtime"
-                ],
-                "summary": "Detail register overtime",
-                "operationId": "create",
-                "parameters": [
-                    {
-                        "name": "bearer",
-                        "in": "query",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not found"
-                    },
-                    "500": {
-                        "description": "Internal server error"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "Register overtime"
-                ],
-                "summary": "Create register overtime",
-                "operationId": "store",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "bearer",
-                        "in": "query",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "request_ot_time",
-                        "in": "query",
-                        "schema": {
-                            "type": "date"
-                        }
-                    },
-                    {
-                        "name": "reason",
-                        "in": "query",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not found"
-                    },
-                    "500": {
-                        "description": "Internal server error"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/register-ot/edit/{id}": {
-            "put": {
-                "tags": [
-                    "Register overtime"
-                ],
-                "summary": "Edit register overtime",
-                "operationId": "updateRegisterOT",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "bearer",
-                        "in": "query",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "request_ot_time",
-                        "in": "query",
-                        "schema": {
-                            "type": "date"
-                        }
-                    },
-                    {
-                        "name": "reason",
-                        "in": "query",
-                        "schema": {
-                            "type": "string"
                         }
                     }
                 ],
