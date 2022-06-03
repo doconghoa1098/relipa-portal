@@ -217,7 +217,7 @@
                 ]
             }
         },
-        "/api/members/update/1": {
+        "/api/members/update/{id}": {
             "put": {
                 "tags": [
                     "Members"
@@ -225,6 +225,13 @@
                 "summary": "Updates a member",
                 "operationId": "update",
                 "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
                     {
                         "name": "avatar",
                         "in": "query",

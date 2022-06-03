@@ -64,7 +64,9 @@ class MemberController extends Controller
     {
         if (Auth::user()->id == $id) {
 
-            return new MemberResource($this->memberService->findOrFail($id));
+         $memberInfo =  new MemberResource($this->memberService->findOrFail($id));
+
+         return $this->successResponse($memberInfo);
         }
 
         return $this->errorResponse('Unauthorized!', Response::HTTP_UNAUTHORIZED);
@@ -78,13 +80,19 @@ class MemberController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/members/update/1",
+     *     path="/api/members/update/{id}",
      *     summary="Updates a member",
      *     tags={"Members"},
      *     operationId="update",
      *     security={{"bearerAuth": {}}},
      *
-
+     *   @OA\Parameter(
+     *       name="id",
+     *       in="path",
+     *       @OA\Schema(
+     *           type="integer"
+     *       )
+     *   ),
      *   @OA\Parameter(
      *       name="avatar",
      *       in="query",
