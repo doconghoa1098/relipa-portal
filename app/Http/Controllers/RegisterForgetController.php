@@ -49,6 +49,9 @@ class RegisterForgetController extends Controller
     public function viewForget($id)
     {
         $formForget = new RegisterForgetResource($this->registerForgetService->getForm($id));
+        if (empty($formForget->resource)) {
+            return $this->errorResponse('Unauthorized!', Response::HTTP_FORBIDDEN);
+        };
 
         return $this->successResponse($formForget);
     }
@@ -118,6 +121,10 @@ class RegisterForgetController extends Controller
     {
         $registerForget = $this->registerForgetService->create($id, $request);
 
+        if ($registerForget === "403_FORBIDDEN") {
+            return $this->errorResponse('Unauthorized!', Response::HTTP_FORBIDDEN);
+        };
+
         if (empty($registerForget)) {
             return $this->errorResponse('No more request in day', Response::HTTP_BAD_REQUEST);
         };
@@ -128,7 +135,7 @@ class RegisterForgetController extends Controller
     /**
      * @OA\put(
      *   path="/api/members/register-forget/edit/{id}",
-     *   summary="Edit register forget from request ID",
+     *   summary="Edit register forget from worksheet ID",
      *   tags={"Register Forget"},
      *   operationId="updateForget",
      *   security={{"bearerAuth": {}}},
@@ -190,6 +197,10 @@ class RegisterForgetController extends Controller
     public function updateForget(RegisterForgetFormRequest $request, $id)
     {
         $registerForget = $this->registerForgetService->updateRegisterForget($id, $request);
+
+        if ($registerForget === "403_FORBIDDEN") {
+            return $this->errorResponse('Unauthorized!', Response::HTTP_FORBIDDEN);
+        };
 
         if (empty($registerForget)) {
             return $this->errorResponse('The request cannot be edited once the manager/admin has confirmed/approved ', Response::HTTP_BAD_REQUEST);

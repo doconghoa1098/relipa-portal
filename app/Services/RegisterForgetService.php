@@ -16,27 +16,34 @@ class RegisterForgetService extends BaseService
 
     public function workSheet($id)
     {
-        return Worksheet::where('member_id', Auth::id())->findOrFail($id);
+        return  Worksheet::where('member_id', Auth::id())->find($id);
     }
 
     public function getForm($id)
     {
-        $workDate = $this->workSheet($id)->work_date;
+        $workSheet = $this->workSheet($id);
+        if (empty($workSheet)) {
+            return [];
+        };
+        $workDate = $workSheet->work_date;
         $viewform = $this->model->where('request_for_date', $workDate)
             ->where('request_type', 1)
             ->first() ?? (object) [];
 
         $viewform->workDate = $workDate->format('Y-m-d');
-        $viewform->checkInWorkSheet = $this->workSheet($id)->checkin->format('H:i');
-        $viewform->checkOutWorkSheet = $this->workSheet($id)->checkout->format('H:i');
+        $viewform->checkInWorkSheet = $workSheet->checkin->format('H:i');
+        $viewform->checkOutWorkSheet = $workSheet->checkout->format('H:i');
 
         return $viewform;
     }
 
     public function create($id, $request)
     {
-        $workDateWorkSheet = $this->getForm($id)->workDate;
-        $requestOfDay = $this->model->where('request_for_date', $workDateWorkSheet)->pluck('request_type')->toArray();
+        $workSheet = $this->getForm($id);
+        if (empty($workSheet)) {
+            return '403_FORBIDDEN';
+        };
+        $requestOfDay = $this->model->where('request_for_date', $workSheet->workDate)->pluck('request_type')->toArray();
 
         if (in_array(1, $requestOfDay)) {
             return [];
@@ -45,7 +52,7 @@ class RegisterForgetService extends BaseService
         $data = [
             'member_id' => Auth::id(),
             'request_type' => 1,
-            'request_for_date' =>  $workDateWorkSheet,
+            'request_for_date' =>  $workSheet->workDate,
             'checkin' => strtotime($request->request_for_date . $request->checkin),
             'checkout' => strtotime($request->request_for_date . $request->checkout),
             'special_reason' => $request->special_reason,
@@ -57,7 +64,14 @@ class RegisterForgetService extends BaseService
 
     public function updateRegisterForget($id, $request)
     {
-        $viewform = $this->getForm($id);
+        $workSheet = $this->getForm($id);
+        if (empty($workSheet)) {
+            return '403_FORBIDDEN';
+        };
+
+        $viewform = $this->model->where('request_for_date', $workSheet->workDate)
+                                ->where('request_type', 1)
+                                ->first();
 
         if (isset($viewform->status) && $viewform->status == 0) {
 
@@ -68,7 +82,7 @@ class RegisterForgetService extends BaseService
                 'reason' => $request->reason,
             ];
 
-            return $this->findOrFail($viewform->id)->fill($data)->save();
+            return $viewform->fill($data)->save();
         }
         return [];
     }
