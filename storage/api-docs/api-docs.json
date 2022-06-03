@@ -501,7 +501,7 @@
                 "operationId": "store",
                 "parameters": [
                     {
-                        "name": "member_id",
+                        "name": "id",
                         "in": "path",
                         "schema": {
                             "type": "integer"
@@ -512,29 +512,6 @@
                         "in": "query",
                         "schema": {
                             "type": "string"
-                        }
-                    },
-                    {
-                        "name": "request_for_date",
-                        "in": "query",
-                        "schema": {
-                            "type": "date"
-                        }
-                    },
-                    {
-                        "name": "checkin",
-                        "in": "query",
-                        "schema": {
-                            "type": "date",
-                            "example": "08:35"
-                        }
-                    },
-                    {
-                        "name": "checkout",
-                        "in": "query",
-                        "schema": {
-                            "type": "date",
-                            "example": "17:35"
                         }
                     },
                     {

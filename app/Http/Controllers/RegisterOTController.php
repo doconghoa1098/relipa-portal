@@ -59,7 +59,7 @@ class RegisterOTController extends Controller
      *   operationId="store",
      *   security={{"bearerAuth": {}}},
      *   @OA\Parameter(
-     *       name="member_id",
+     *       name="id",
      *       in="path",
      *       @OA\Schema(
      *           type="integer"
@@ -70,29 +70,6 @@ class RegisterOTController extends Controller
      *       in="query",
      *       @OA\Schema(
      *           type="string"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="request_for_date",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="date"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="checkin",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="date",
-     *           example="08:35"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="checkout",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="date",
-     *           example="17:35"
      *       )
      *   ),
      *   @OA\Parameter(

@@ -46,6 +46,7 @@ class RegisterOTService extends BaseService
     public function create($request, $id)
     {
 
+        $worksheet = $this->getForm($id);
         $in_office = $this->workSheet($id)->in_office;
         $time = explode(':', $in_office);
         $timeDefault = explode(':', "10:00");
@@ -54,8 +55,7 @@ class RegisterOTService extends BaseService
             $actual_OT = date("H:i", $actualOT);
         }
 
-        $requestOfDay = $this->model->where('request_for_date', $request->request_for_date)->pluck('request_type')->toArray();
-
+        $requestOfDay = $this->model->where('request_for_date', $worksheet->workDate)->pluck('request_type')->toArray();
         if (in_array(5, $requestOfDay) || $request->request_ot_time > $actual_OT) {
             return [];
         }
@@ -63,9 +63,9 @@ class RegisterOTService extends BaseService
         $data = [
             'member_id' => Auth::user()->id,
             'request_type' => 5,
-            'request_for_date' => $request->request_for_date,
-            'checkin' => $request->checkin,
-            'checkout' => $request->checkout,
+            'request_for_date' => $worksheet->workDate,
+            'checkin' => $worksheet->checkinWorkSheet,
+            'checkout' => $worksheet->checkoutWorkSheet,
             'reason' => $request->reason,
             'request_ot_time' => $request->request_ot_time,
         ];
@@ -80,9 +80,6 @@ class RegisterOTService extends BaseService
 
         if (isset($view->status) && $view->status == 0) {
             $data = [
-                'checkin' => strtotime($view->request_for_date . $request->checkin),
-                'checkout' => strtotime($view->request_for_date . $request->checkout),
-                'actual_OT' => $view->actual_OT,
                 'request_ot_time' => $request->request_ot_time,
                 'reason' => $request->reason,
             ];

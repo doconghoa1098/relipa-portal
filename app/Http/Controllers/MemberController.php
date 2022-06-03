@@ -59,7 +59,7 @@ class MemberController extends Controller
             return new MemberResource($this->memberService->findOrFail($id));
         }
 
-        return $this->errorResponse('Unauthorized!', Response::HTTP_UNAUTHORIZED);
+        return $this->errorResponse('Unauthorized!', Response::HTTP_FORBIDDEN);
     }
 
     public function edit($id)
@@ -300,7 +300,7 @@ class MemberController extends Controller
             }
         }
 
-        return $this->errorResponse('Unauthorized!', Response::HTTP_UNAUTHORIZED);
+        return $this->errorResponse('Unauthorized!', Response::HTTP_FORBIDDEN);
     }
 
     public function destroy($id)
