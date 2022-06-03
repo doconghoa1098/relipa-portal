@@ -15,12 +15,17 @@ class RegisterOTService extends BaseService
 
     public function workSheet($id)
     {
-        return Worksheet::where('member_id',Auth::id())->findOrFail($id);
+       // return Worksheet::where('member_id',Auth::id())->findOrFail($id);
+        return  Worksheet::where('member_id', Auth::id())->find($id);
     }
 
     public function getForm($id)
     {
 
+        $workSheet = $this->workSheet($id);
+        if (empty($workSheet)) {
+            return [];
+        };
         $in_office = $this->workSheet($id)->in_office;
         $time = explode(':', $in_office);
         $timeDefault = explode(':', "10:00");
@@ -47,6 +52,9 @@ class RegisterOTService extends BaseService
     {
 
         $worksheet = $this->getForm($id);
+        if (empty($worksheet)) {
+            return '403_FORBIDDEN';
+        };
         $in_office = $this->workSheet($id)->in_office;
         $time = explode(':', $in_office);
         $timeDefault = explode(':', "10:00");
@@ -76,7 +84,14 @@ class RegisterOTService extends BaseService
 
     public function update($request, $id)
     {
-        $view = $this->getForm($id);
+        $worksheet = $this->getForm($id);
+        if (empty($worksheet)) {
+            return '403_FORBIDDEN';
+        };
+
+        $view = $this->model->where('request_for_date', $worksheet->workDate)
+        ->where('request_type', 5)
+        ->first();
 
         if (isset($view->status) && $view->status == 0) {
             $data = [

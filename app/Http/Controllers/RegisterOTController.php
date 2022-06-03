@@ -47,9 +47,13 @@ class RegisterOTController extends Controller
      */
     public function create($id)
     {
-        $formForget = new RegisterOTResource($this->registerOTService->getForm($id));
 
-        return $this->successResponse($formForget);
+        $formOT = new RegisterOTResource($this->registerOTService->getForm($id));
+        if (empty($formOT->resource)) {
+            return $this->errorResponse('Unauthorized!', Response::HTTP_FORBIDDEN);
+        };
+
+        return $this->successResponse($formOT);
     }
     /**
      * @OA\post(
@@ -92,13 +96,16 @@ class RegisterOTController extends Controller
      *   @OA\Response(response=500, description="Internal server error")
      * )
      */
-    public function store(Request $request, $id)
+    public function store(RegisterOTFormRequest $request, $id)
     {
         $registerOT = $this->registerOTService->create($request, $id);
 
-        if (empty($registerOT))
-        {
-            return $this->errorResponse('No more requests in day!', Response::HTTP_BAD_REQUEST);
+        if ($registerOT === "403_FORBIDDEN") {
+            return $this->errorResponse('Unauthorized!', Response::HTTP_FORBIDDEN);
+        };
+
+        if (empty($registerOT)) {
+            return $this->errorResponse('No more request in day', Response::HTTP_BAD_REQUEST);
         };
 
         return $this->successResponse($registerOT, 'Register overtime successfully');
@@ -148,13 +155,19 @@ class RegisterOTController extends Controller
      */
     public function updateRegisterOT(RegisterOTFormRequest $request, $id)
     {
+
         $registerOT = $this->registerOTService->update($request, $id);
+
+        if ($registerOT === "403_FORBIDDEN") {
+            return $this->errorResponse('Unauthorized!', Response::HTTP_FORBIDDEN);
+        };
 
         if (empty($registerOT)) {
             return $this->errorResponse('The request cannot be edited once the manager/admin has confirmed/approved ', Response::HTTP_BAD_REQUEST);
         };
 
-        return $this->successResponse([], 'Update register forget check-In/check-Out successfully');
+        return $this->successResponse([], 'Update register overtime successfully');
+
     }
 
     public function destroy($id)
