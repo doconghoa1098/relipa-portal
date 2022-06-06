@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\RegisterForgetController;
+use App\Http\Controllers\RegisterLeaveController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,10 @@ Route::prefix('/members')->group( function() {
     Route::get('/register-forget/{id}',[RegisterForgetController::class,'viewForget'])->name('forget.view');
     Route::post('/register-forget/{id}',[RegisterForgetController::class,'createForget'])->name('forget.create');
     Route::put('/register-forget/edit/{id}',[RegisterForgetController::class,'updateForget'])->name('forget.update');
+
+    Route::get('/register-leave/{id}',[RegisterLeaveController::class,'viewLeave'])->name('leave.view');
+    Route::post('/register-leave/{id}',[RegisterLeaveController::class,'createLeave'])->name('leave.create');
+    Route::put('/register-leave/edit/{id}',[RegisterLeaveController::class,'updateLeave'])->name('leave.update');
 });
 
 
