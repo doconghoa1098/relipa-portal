@@ -15,7 +15,6 @@ class RegisterOTService extends BaseService
 
     public function workSheet($id)
     {
-       // return Worksheet::where('member_id',Auth::id())->findOrFail($id);
         return  Worksheet::where('member_id', Auth::id())->find($id);
     }
 
@@ -67,7 +66,6 @@ class RegisterOTService extends BaseService
             'request_ot_time' => $request->request_ot_time,
         ];
 
-        // return $data;
         return $this->model->fill($data)->save();
     }
 
@@ -92,9 +90,10 @@ class RegisterOTService extends BaseService
                 'request_ot_time' => $request->request_ot_time,
                 'reason' => $request->reason,
             ];
+
             return $this->findOrFail($view->id)->fill($data)->save();
-            // return $this->update($viewform->id, $data);
         }
+        
         return [];
     }
 }
