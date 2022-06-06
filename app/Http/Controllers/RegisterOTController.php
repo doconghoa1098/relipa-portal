@@ -104,6 +104,10 @@ class RegisterOTController extends Controller
             return $this->errorResponse('Unauthorized!', Response::HTTP_FORBIDDEN);
         };
 
+        if ($registerOT === "validator"){
+            return $this->errorResponse('Your overtime is more than actual overtime!', Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
         if (empty($registerOT)) {
             return $this->errorResponse('No more request in day', Response::HTTP_BAD_REQUEST);
         };
@@ -162,6 +166,10 @@ class RegisterOTController extends Controller
             return $this->errorResponse('Unauthorized!', Response::HTTP_FORBIDDEN);
         };
 
+        if ($registerOT === "validator"){
+            return $this->errorResponse('Your overtime is more than actual overtime!', Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+        
         if (empty($registerOT)) {
             return $this->errorResponse('The request cannot be edited once the manager/admin has confirmed/approved ', Response::HTTP_BAD_REQUEST);
         };

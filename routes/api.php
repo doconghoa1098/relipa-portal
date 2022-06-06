@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\RegisterOTController;
+use App\Http\Controllers\RegisterForgetController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,13 +27,19 @@ Route::group(['middleware' => 'api'], function ($router) {
 Route::prefix('/members')->group( function() {
     Route::get('/edit/{id}',[MemberController::class,'show'])->name('members.edit');
     Route::put('/update/{id}',[MemberController::class,'update'])->name('members.update');
+
+    Route::get('/register-forget/{id}',[RegisterForgetController::class,'viewForget'])->name('forget.view');
+    Route::post('/register-forget/{id}',[RegisterForgetController::class,'createForget'])->name('forget.create');
+    Route::put('/register-forget/edit/{id}',[RegisterForgetController::class,'updateForget'])->name('forget.update');
+
+    Route::prefix('/register-ot')->group( function() {
+        Route::get('/{id}',[RegisterOTController::class,'create'])->name('register-ot.create');
+        Route::post('/{id}',[RegisterOTController::class,'store'])->name('register-ot.store');
+        Route::put('/edit/{id}',[RegisterOTController::class,'updateRegisterOT'])->name('register-ot.update');
+    });
 });
 
-Route::prefix('/register-ot')->group( function() {
-    Route::get('/{id}',[RegisterOTController::class,'create'])->name('register-ot.create');
-    Route::post('/{id}',[RegisterOTController::class,'store'])->name('register-ot.store');
-    Route::put('/edit/{id}',[RegisterOTController::class,'updateRegisterOT'])->name('register-ot.update');
-});
+
 
 
 

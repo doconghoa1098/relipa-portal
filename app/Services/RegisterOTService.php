@@ -26,15 +26,8 @@ class RegisterOTService extends BaseService
         if (empty($workSheet)) {
             return [];
         };
-        $in_office = $this->workSheet($id)->in_office;
-        $time = explode(':', $in_office);
-        $timeDefault = explode(':', "10:00");
-        $actualOT = ($time[0] * 3600 + $time[1] * 60) - ($timeDefault[0] * 3600 - $timeDefault[1] * 60);
-
-        if ($actualOT > 0) {
-            $actual_OT = date("H:i", $actualOT);
-        }
-
+        $in_office = $workSheet->in_office;
+        $actual_OT = gmdate("H:i",(strtotime($in_office) - strtotime('10:00')));
         $workDate = $this->workSheet($id)->work_date;
         $view = $this->model->where('request_for_date', $workDate)
         ->where('request_type', 5)
@@ -56,24 +49,20 @@ class RegisterOTService extends BaseService
             return '403_FORBIDDEN';
         };
         $in_office = $this->workSheet($id)->in_office;
-        $time = explode(':', $in_office);
-        $timeDefault = explode(':', "10:00");
-        $actualOT = ($time[0] * 3600 + $time[1] * 60) - ($timeDefault[0] * 3600 - $timeDefault[1] * 60);
-        if ($actualOT > 0) {
-            $actual_OT = date("H:i", $actualOT);
-        }
-
+        $actual_OT = gmdate("H:i",(strtotime($in_office) - strtotime('10:00')));
         $requestOfDay = $this->model->where('request_for_date', $worksheet->workDate)->pluck('request_type')->toArray();
-        if (in_array(5, $requestOfDay) || $request->request_ot_time > $actual_OT) {
+        if (in_array(5, $requestOfDay)) {
             return [];
+        }else if($request->request_ot_time > $actual_OT){
+            return 'validator';
         }
 
         $data = [
             'member_id' => Auth::user()->id,
             'request_type' => 5,
             'request_for_date' => $worksheet->workDate,
-            'checkin' => $worksheet->checkinWorkSheet,
-            'checkout' => $worksheet->checkoutWorkSheet,
+            'checkin' => strtotime(  $worksheet->workDate . $worksheet->checkinWorkSheet),
+            'checkout' => strtotime(  $worksheet->workDate . $worksheet->checkoutWorkSheet),
             'reason' => $request->reason,
             'request_ot_time' => $request->request_ot_time,
         ];
@@ -93,7 +82,12 @@ class RegisterOTService extends BaseService
         ->where('request_type', 5)
         ->first();
 
+        $in_office = $this->workSheet($id)->in_office;
+        $actual_OT = gmdate("H:i",(strtotime($in_office) - strtotime('10:00')));
         if (isset($view->status) && $view->status == 0) {
+            if($request->request_ot_time > $actual_OT){
+                return 'validator';
+            }
             $data = [
                 'request_ot_time' => $request->request_ot_time,
                 'reason' => $request->reason,

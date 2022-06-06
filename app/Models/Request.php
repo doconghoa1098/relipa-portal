@@ -21,8 +21,11 @@ class Request extends Model
         'request_ot_time',
         'checkin',
         'checkout',
-        'error_count',
         'reason',
         'status',
+        'manager_confirmed_status',
+        'admin_approved_status',
+        'error_count',
+        'special_reason',
     ];
 }

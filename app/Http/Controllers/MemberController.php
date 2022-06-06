@@ -18,21 +18,6 @@ class MemberController extends Controller
         $this->memberService = $memberService;
     }
 
-    public function index()
-    {
-        //
-    }
-
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
     /**
      * @OA\Get(
      *   path="/api/members/edit/{id}",
@@ -65,19 +50,13 @@ class MemberController extends Controller
     {
         if (Auth::user()->id == $id) {
 
-         $memberInfo =  new MemberResource($this->memberService->findOrFail($id));
+            $memberInfo =  new MemberResource($this->memberService->findOrFail($id));
 
-         return $this->successResponse($memberInfo);
+            return $this->successResponse($memberInfo);
         }
 
         return $this->errorResponse('Unauthorized!', Response::HTTP_FORBIDDEN);
     }
-
-    public function edit($id)
-    {
-        //
-    }
-
 
     /**
      * @OA\Put(
@@ -95,17 +74,17 @@ class MemberController extends Controller
      *       )
      *   ),
      *   @OA\Parameter(
-     *       name="avatar",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="file"
-     *       )
-     *   ),
-     *   @OA\Parameter(
      *       name="bearer",
      *       in="query",
      *       @OA\Schema(
      *           type="string"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="avatar",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="file"
      *       )
      *   ),
      *   @OA\Parameter(
@@ -127,7 +106,7 @@ class MemberController extends Controller
      *       name="nick_name",
      *       in="query",
      *       @OA\Schema(
-     *           type="text",
+     *           type="string",
      *           example="long"
      *       )
      *   ),
@@ -167,7 +146,7 @@ class MemberController extends Controller
      *       name="identity_card_place",
      *       in="query",
      *       @OA\Schema(
-     *           type="date",
+     *           type="string",
      *           example="Việt Nam"
      *       )
      *   ),
@@ -239,7 +218,7 @@ class MemberController extends Controller
      *       name="academic_level",
      *       in="query",
      *       @OA\Schema(
-     *           type="date",
+     *           type="string",
      *           example="12/12"
      *       )
      *   ),
@@ -299,7 +278,7 @@ class MemberController extends Controller
      *           example="0359146004"
      *       )
      *   ),
-
+     *
      *   @OA\Response(response=200, description="Successful operation"),
      *   @OA\Response(response=403, description="Forbidden"),
      *   @OA\Response(response=404, description="Not found"),
@@ -309,19 +288,14 @@ class MemberController extends Controller
 
     public function update(MemberFormRequest $request, $id)
     {
-        if(Auth::check()){
-            if(Auth::user()->id == $id){
-        $this->memberService->updateMember($id, $request);
+        if (Auth::check()) {
+            if (Auth::user()->id == $id) {
+                $this->memberService->updateMember($id, $request);
 
-        return $this->successResponse(null, 'Update member successfully!');
+                return $this->successResponse(null, 'Update member successfully!');
             }
         }
 
         return $this->errorResponse('Unauthorized!', Response::HTTP_FORBIDDEN);
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }
