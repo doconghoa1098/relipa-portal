@@ -73,7 +73,7 @@ class AuthController extends Controller
      */
 
     /**
-     * @OA\DELETE(
+     * @OA\Delete(
      *   path="/api/logout",
      *   summary="Logout",
      *   operationId="Logout",
@@ -116,10 +116,10 @@ class AuthController extends Controller
     }
 
     /**
-     * @OA\PUT(
+     * @OA\Put(
      *   path="/api/change-pass/{id}",
-     *   summary="ChangePass",
-     *   operationId="ChangePass",
+     *   summary="changePassword",
+     *   operationId="changePassword",
      *   tags={"Auth"},
      *   security={{"bearerAuth": {}}},
      *  

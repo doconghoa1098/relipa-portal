@@ -57,7 +57,7 @@ class RegisterForgetController extends Controller
     }
 
     /**
-     * @OA\post(
+     * @OA\Post(
      *   path="/api/members/register-forget/{id}",
      *   summary="Create register forget from worksheet ID",
      *   tags={"Register Forget"},
@@ -133,7 +133,7 @@ class RegisterForgetController extends Controller
     }
 
     /**
-     * @OA\put(
+     * @OA\Put(
      *   path="/api/members/register-forget/edit/{id}",
      *   summary="Edit register forget from worksheet ID",
      *   tags={"Register Forget"},
