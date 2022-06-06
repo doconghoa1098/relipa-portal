@@ -23,7 +23,7 @@ class RegisterOTController extends Controller
      *   path="/api/register-ot/{id}",
      *   summary="Detail register overtime",
      *   tags={"Register overtime"},
-     *   operationId="create",
+     *   operationId="viewRegisterOT",
      *   security={{"bearerAuth": {}}},
      *   @OA\Parameter(
      *       name="bearer",
@@ -45,7 +45,7 @@ class RegisterOTController extends Controller
      *   @OA\Response(response=500, description="Internal server error")
      * )
      */
-    public function create($id)
+    public function viewRegisterOT($id)
     {
 
         $formOT = new RegisterOTResource($this->registerOTService->getForm($id));
@@ -56,11 +56,11 @@ class RegisterOTController extends Controller
         return $this->successResponse($formOT);
     }
     /**
-     * @OA\post(
+     * @OA\Post(
      *   path="/api/register-ot/{id}",
      *   summary="Create register overtime",
      *   tags={"Register overtime"},
-     *   operationId="store",
+     *   operationId="createRegisterOT",
      *   security={{"bearerAuth": {}}},
      *   @OA\Parameter(
      *       name="id",
@@ -96,7 +96,7 @@ class RegisterOTController extends Controller
      *   @OA\Response(response=500, description="Internal server error")
      * )
      */
-    public function store(RegisterOTFormRequest $request, $id)
+    public function createRegisterOT(RegisterOTFormRequest $request, $id)
     {
         $registerOT = $this->registerOTService->create($request, $id);
 
@@ -116,7 +116,7 @@ class RegisterOTController extends Controller
     }
 
     /**
-     * @OA\put(
+     * @OA\Put(
      *   path="/api/register-ot/edit/{id}",
      *   summary="Edit register overtime",
      *   tags={"Register overtime"},
@@ -169,7 +169,7 @@ class RegisterOTController extends Controller
         if ($registerOT === "validator"){
             return $this->errorResponse('Your overtime is more than actual overtime!', Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-        
+
         if (empty($registerOT)) {
             return $this->errorResponse('The request cannot be edited once the manager/admin has confirmed/approved ', Response::HTTP_BAD_REQUEST);
         };
