@@ -32,7 +32,7 @@ Route::prefix('/members')->group(function () {
     Route::post('/register-forget/{id}', [RegisterForgetController::class, 'createForget'])->name('forget.create');
     Route::put('/register-forget/edit/{id}', [RegisterForgetController::class, 'updateForget'])->name('forget.update');
 
-    Route::get('/register-ot/{id}', [RegisterOTController::class, 'viewRegisterOT'])->name('register-ot.view');
+    Route::get('/register-ot/{id}', [RegisterOTController::class, 'viewRegisterOT'])->name('register-ot.view'); 
     Route::post('/register-ot/{id}', [RegisterOTController::class, 'createRegisterOT'])->name('register-ot.create');
     Route::put('/register-ot/edit/{id}', [RegisterOTController::class, 'updateRegisterOT'])->name('register-ot.update');
 });

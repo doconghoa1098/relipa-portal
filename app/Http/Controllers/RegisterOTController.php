@@ -60,7 +60,7 @@ class RegisterOTController extends Controller
      *   path="/api/register-ot/{id}",
      *   summary="Create register overtime",
      *   tags={"Register overtime"},
-     *   operationId="createRegisterOT",
+     *   operationId="createRegisterOT", 
      *   security={{"bearerAuth": {}}},
      *   @OA\Parameter(
      *       name="id",
