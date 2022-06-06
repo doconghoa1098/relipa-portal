@@ -20,35 +20,6 @@ class MemberController extends Controller
 
     /**
      * @OA\Get(
-     *   path="/api/members",
-     *   summary="Show Members",
-     *   operationId="index",
-     *   tags={"Members"},
-     *   @OA\Response(response=200, description="Successful operation"),
-     *   @OA\Response(response=403, description="Forbidden"),
-     *   @OA\Response(response=404, description="Not found"),
-     *   @OA\Response(response=500, description="Internal server error")
-     * )
-     */
-    public function index()
-    {
-        $users = MemberResource::collection($this->memberService->get());
-
-        return $this->successResponse($users);
-    }
-
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * @OA\Get(
      *   path="/api/members/edit/{id}",
      *   summary="Detail members",
      *   tags={"Members"},
@@ -79,32 +50,27 @@ class MemberController extends Controller
     {
         if (Auth::user()->id == $id) {
 
-            return new MemberResource($this->memberService->findOrFail($id));
+            $memberInfo =  new MemberResource($this->memberService->findOrFail($id));
+
+            return $this->successResponse($memberInfo);
         }
 
         return $this->errorResponse('Unauthorized!', Response::HTTP_UNAUTHORIZED);
     }
 
-    public function edit($id)
-    {
-        //
-    }
-
-
     /**
      * @OA\Put(
-     *     path="/api/members/update/1",
+     *     path="/api/members/update/{id}",
      *     summary="Updates a member",
      *     tags={"Members"},
      *     operationId="update",
      *     security={{"bearerAuth": {}}},
      *
-
      *   @OA\Parameter(
-     *       name="avatar",
-     *       in="query",
+     *       name="id",
+     *       in="path",
      *       @OA\Schema(
-     *           type="file"
+     *           type="integer"
      *       )
      *   ),
      *   @OA\Parameter(
@@ -112,6 +78,13 @@ class MemberController extends Controller
      *       in="query",
      *       @OA\Schema(
      *           type="string"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="avatar",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="file"
      *       )
      *   ),
      *   @OA\Parameter(
@@ -133,7 +106,7 @@ class MemberController extends Controller
      *       name="nick_name",
      *       in="query",
      *       @OA\Schema(
-     *           type="text",
+     *           type="string",
      *           example="long"
      *       )
      *   ),
@@ -173,7 +146,7 @@ class MemberController extends Controller
      *       name="identity_card_place",
      *       in="query",
      *       @OA\Schema(
-     *           type="date",
+     *           type="string",
      *           example="Việt Nam"
      *       )
      *   ),
@@ -245,7 +218,7 @@ class MemberController extends Controller
      *       name="academic_level",
      *       in="query",
      *       @OA\Schema(
-     *           type="date",
+     *           type="string",
      *           example="12/12"
      *       )
      *   ),
@@ -305,7 +278,7 @@ class MemberController extends Controller
      *           example="0359146004"
      *       )
      *   ),
-
+     * 
      *   @OA\Response(response=200, description="Successful operation"),
      *   @OA\Response(response=403, description="Forbidden"),
      *   @OA\Response(response=404, description="Not found"),
@@ -315,19 +288,14 @@ class MemberController extends Controller
 
     public function update(MemberFormRequest $request, $id)
     {
-        if(Auth::check()){
-            if(Auth::user()->id == $id){
-        $this->memberService->updateMember($id, $request);
+        if (Auth::check()) {
+            if (Auth::user()->id == $id) {
+                $this->memberService->updateMember($id, $request);
 
-        return $this->successResponse(null, 'Update member successfully!');
+                return $this->successResponse(null, 'Update member successfully!');
             }
         }
 
         return $this->errorResponse('Unauthorized!', Response::HTTP_UNAUTHORIZED);
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }
