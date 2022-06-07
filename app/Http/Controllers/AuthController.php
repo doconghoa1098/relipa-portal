@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Member;
 use App\Http\Requests\AuthPostRequest;
 use App\Http\Requests\AuthPutRequest;
-use Illuminate\Http\JsonResponse;
+use App\Http\Resources\MemberResource;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,7 +22,6 @@ class AuthController extends Controller
     {
         $this->middleware('auth:api', ['except' => ['login']]);
     }
-
 
     /**
      * @OA\Post(
@@ -104,45 +103,12 @@ class AuthController extends Controller
 
     protected function createNewToken($token, $auth)
     {
-
         return $this->successResponse([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 300,
-            'id' => $auth->id,
             'role' => $auth->memberId->role_id,
-            'full_name' => $auth->full_name,
-            'avatar_official' => $auth->avatar_official,
-            'avatar' => $auth->avatar,
-            'gender' => $auth->gender,
-            'nick_name' => $auth->nick_name,
-            'birth_date' => $auth->birth_date,
-            'email' => $auth->email,
-            'other_email' => $auth->other_email,
-            'identity_number' => $auth->identity_number,
-            'identity_card_date' => $auth->identity_card_date,
-            'identity_card_place' => $auth->identity_card_place,
-            'skype' => $auth->skype,
-            'facebook' => $auth->facebook,
-            'passport_number' => $auth->passport_number,
-            'passport_expiration' => $auth->passport_expiration,
-            'nationality' => $auth->nationality,
-            'bank_name' => $auth->bank_name,
-            'bank_account' => $auth->bank_account,
-            'marital_status' => $auth->marital_status,
-            'academic_level' => $auth->academic_level,
-            'permanent_address' => $auth->permanent_address,
-            'temporary_address' => $auth->temporary_address,
-            'tax_identification' => $auth->tax_identification,
-            'healthcare_provider' => $auth->healthcare_provider,
-            'emergency_contact_name' => $auth->emergency_contact_name,
-            'emergency_contact_relationship' => $auth->emergency_contact_relationship,
-            'emergency_contact_number' => $auth->emergency_contact_number,
-            'member_code' => $auth->member_code,
-            'start_date_official' => $auth->start_date_official,
-            'phone' => $auth->phone,
-            'created_at' => $auth->created_at,
-            'updated_at' => $auth->updated_at,
+            'member' => new MemberResource($auth)
         ], 'login succes');
     }
 
