@@ -20,7 +20,7 @@ class RegisterOTController extends Controller
     }
     /**
      * @OA\Get(
-     *   path="/api/register-ot/{id}",
+     *   path="/api/members/register-ot/{id}",
      *   summary="Detail register overtime",
      *   tags={"Register overtime"},
      *   operationId="viewRegisterOT",
@@ -57,10 +57,10 @@ class RegisterOTController extends Controller
     }
     /**
      * @OA\Post(
-     *   path="/api/register-ot/{id}",
+     *   path="/api/members/register-ot/{id}",
      *   summary="Create register overtime",
      *   tags={"Register overtime"},
-     *   operationId="createRegisterOT", 
+     *   operationId="createRegisterOT",
      *   security={{"bearerAuth": {}}},
      *   @OA\Parameter(
      *       name="id",
@@ -117,7 +117,7 @@ class RegisterOTController extends Controller
 
     /**
      * @OA\Put(
-     *   path="/api/register-ot/edit/{id}",
+     *   path="/api/members/register-ot/edit/{id}",
      *   summary="Edit register overtime",
      *   tags={"Register overtime"},
      *   operationId="updateRegisterOT",
