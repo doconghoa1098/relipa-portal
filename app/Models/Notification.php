@@ -12,6 +12,8 @@ class Notification extends Model
 
     protected $table = 'notifications';
 
+    protected $dates = ['published_date'];
+
     protected $fillable = [
         'published_date',
         'subject',
