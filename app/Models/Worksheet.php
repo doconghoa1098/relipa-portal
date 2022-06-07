@@ -13,8 +13,8 @@ class Worksheet extends Model
     protected $table = "worksheets";
 
     public $timestamps = FALSE;
-
-    protected $dates = ['work_date', 'checkin', 'checkout'];
+    
+    protected $dates = ['work_date', 'checkin', 'checkout', 'checkin_original', 'checkout_original'];
 
     protected $fillable = [
         'id',

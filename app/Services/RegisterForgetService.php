@@ -84,6 +84,7 @@ class RegisterForgetService extends BaseService
 
             return $viewform->fill($data)->save();
         }
+        
         return [];
     }
 }

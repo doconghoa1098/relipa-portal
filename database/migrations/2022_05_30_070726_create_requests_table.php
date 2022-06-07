@@ -37,7 +37,7 @@ class CreateRequestsTable extends Migration
             $table->dateTime('admin_approved_at')->nullable();
             $table->string('admin_approved_comment',100)->nullable();
             $table->tinyInteger('error_count')->default(0);
-            $table->tinyInteger('special_reason')->nullable();
+            $table->tinyInteger('special_reason')->nullable(); 
             $table->timestamps();
             $table->softDeletes();
         });

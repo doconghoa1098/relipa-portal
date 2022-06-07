@@ -55,7 +55,7 @@ class MemberController extends Controller
             return $this->successResponse($memberInfo);
         }
 
-        return $this->errorResponse('Unauthorized!', Response::HTTP_UNAUTHORIZED);
+        return $this->errorResponse('Unauthorized!', Response::HTTP_FORBIDDEN);
     }
 
     /**
@@ -278,7 +278,7 @@ class MemberController extends Controller
      *           example="0359146004"
      *       )
      *   ),
-     * 
+     *
      *   @OA\Response(response=200, description="Successful operation"),
      *   @OA\Response(response=403, description="Forbidden"),
      *   @OA\Response(response=404, description="Not found"),
@@ -296,6 +296,6 @@ class MemberController extends Controller
             }
         }
 
-        return $this->errorResponse('Unauthorized!', Response::HTTP_UNAUTHORIZED);
+        return $this->errorResponse('Unauthorized!', Response::HTTP_FORBIDDEN);
     }
 }
