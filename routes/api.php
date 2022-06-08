@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\RegisterOTController;
 use App\Http\Controllers\RegisterForgetController;
+use App\Http\Controllers\RegisterLateEarlyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,13 +33,15 @@ Route::prefix('/members')->group(function () {
     Route::post('/register-forget/{id}', [RegisterForgetController::class, 'createForget'])->name('forget.create');
     Route::put('/register-forget/edit/{id}', [RegisterForgetController::class, 'updateForget'])->name('forget.update');
 
-    Route::get('/register-ot/{id}', [RegisterOTController::class, 'viewRegisterOT'])->name('register-ot.view'); 
+    Route::get('/register-ot/{id}', [RegisterOTController::class, 'viewRegisterOT'])->name('register-ot.view');
     Route::post('/register-ot/{id}', [RegisterOTController::class, 'createRegisterOT'])->name('register-ot.create');
     Route::put('/register-ot/edit/{id}', [RegisterOTController::class, 'updateRegisterOT'])->name('register-ot.update');
 });
 
+Route::prefix('/worksheets')
+    ->middleware(['checkAuth'])
+    ->group(function () {
 
-
-
-
-// Route::apiResource('members', MemberController::class);
+        Route::post('/register-late-early/create', [RegisterLateEarlyController::class, 'createRegisterLateEarly'])->name('register-late-early.create');
+        Route::put('/register-late-early/update', [RegisterLateEarlyController::class, 'updateRegisterLateEarly'])->name('register-late-early.update');
+    });
