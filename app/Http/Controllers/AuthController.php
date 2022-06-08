@@ -25,7 +25,7 @@ class AuthController extends Controller
      * @OA\Post(
      *   path="/api/login",
      *   summary="Login",
-     *   operationId="login",
+     *   operationId="login", 
      *   tags={"Auth"},
      *   security={
      *       {"ApiKeyAuth": {}}
@@ -35,7 +35,7 @@ class AuthController extends Controller
      *       in="query",
      *       @OA\Schema(
      *           type="string",
-     *           example="anhhn@vnext.vn"  
+     *           example="anhhn@vnext.vn"
      *       )
      *   ),
      *   @OA\Parameter(
