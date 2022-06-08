@@ -25,7 +25,7 @@ class AuthController extends Controller
      * @OA\Post(
      *   path="/api/login",
      *   summary="Login",
-     *   operationId="login",
+     *   operationId="login", 
      *   tags={"Auth"},
      *   security={
      *       {"ApiKeyAuth": {}}
@@ -35,7 +35,7 @@ class AuthController extends Controller
      *       in="query",
      *       @OA\Schema(
      *           type="string",
-     *           example="anhhn@vnext.vn"  
+     *           example="anhhn@vnext.vn"
      *       )
      *   ),
      *   @OA\Parameter(
@@ -105,8 +105,10 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 300,
+            'id' => $auth->id,
+            'email' => $auth->email,
+            'full_name' => $auth->full_name,
             'role' => $auth->memberId->role_id,
-            'member' => new MemberResource($auth)
         ], 'login succes');
     }
 
