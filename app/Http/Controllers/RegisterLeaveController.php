@@ -25,7 +25,7 @@ class RegisterLeaveController extends Controller
      *   tags={"Register Leave"},
      *   operationId="viewLeave",
      *   security={{"bearerAuth": {}}},
-     * 
+     *
      *   @OA\Parameter(
      *       name="bearer",
      *       in="query",
@@ -46,7 +46,7 @@ class RegisterLeaveController extends Controller
      *   @OA\Response(response=500, description="Internal server error")
      * )
      */
-    public function viewForget($id)
+    public function viewLeave($id)
     {
         $formLeave = new RegisterLeaveResource($this->registerLeaveService->getForm($id));
         if (empty($formLeave->resource)) {
@@ -63,7 +63,7 @@ class RegisterLeaveController extends Controller
      *   tags={"Register Leave"},
      *   operationId="createLeave",
      *   security={{"bearerAuth": {}}},
-     * 
+     *
      *   @OA\Parameter(
      *       name="id",
      *       in="path",
@@ -110,7 +110,7 @@ class RegisterLeaveController extends Controller
      *           example="Ngày đầu đi làm nên lấy vân tay muộn"
      *       )
      *   ),
-     * 
+     *
      *   @OA\Response(response=200, description="Successful operation"),
      *   @OA\Response(response=403, description="Forbidden"),
      *   @OA\Response(response=404, description="Not found"),
@@ -187,7 +187,7 @@ class RegisterLeaveController extends Controller
      *           example="Ngày đầu đi làm nên lấy vân tay muộn"
      *       )
      *   ),
-     * 
+     *
      *   @OA\Response(response=200, description="Successful operation"),
      *   @OA\Response(response=403, description="Forbidden"),
      *   @OA\Response(response=404, description="Not found"),

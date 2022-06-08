@@ -26,16 +26,18 @@ class RegisterLeaveService extends BaseService
             return [];
         };
         $workDate = $workSheet->work_date;
-        $viewform = $this->model->where('request_for_date', $workDate)
+        $view = $this->model->where('request_for_date', $workDate)
             ->where('request_type', 2)
             ->orWhere('request_type', 3)
             ->first() ?? (object) [];
 
-        $viewform->workDate = $workDate->format('Y-m-d');
-        $viewform->checkInWorkSheet = $workSheet->checkin->format('H:i');
-        $viewform->checkOutWorkSheet = $workSheet->checkout->format('H:i');
-
-        return $viewform;
+        $view->workDate = $workDate->format('Y-m-d');
+        $view->checkInWorkSheet = $workSheet->checkin_original->format("H:i");
+        $view->checkOutWorkSheet = $workSheet->checkout_original->format("H:i");
+        $view->workTime = $workSheet->late->format("H:i");
+        $view->lackTime = $workSheet->early->format("H:i");
+        $view->in_office = $workSheet->in_office->format("H:i");
+        return $view;
     }
 
     public function create($id, $request)
@@ -46,7 +48,7 @@ class RegisterLeaveService extends BaseService
         };
         $requestOfDay = $this->model->where('request_for_date', $workSheet->workDate)->pluck('request_type')->toArray();
 
-        if (in_array(1, $requestOfDay)) {
+        if (in_array(2, $requestOfDay) || in_array(3, $requestOfDay) ) {
             return [];
         }
 

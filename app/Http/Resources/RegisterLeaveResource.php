@@ -24,6 +24,9 @@ class RegisterLeaveResource extends JsonResource
             'checkout' => isset($this->checkout) ? $this->checkout->format('H:i') : null,
             'special_reason' => isset($this->special_reason) ? $this->special_reason : null,
             'reason' => isset($this->reason) ? $this->reason : null,
+            'workTime' => isset($this->workTime) ? $this->workTime : null,
+            'lackTime' => isset($this->lackTime) ? $this->lackTime : null,
+            'in_office' => isset($this->in_office) ? $this->in_office : null,
         ];
     }
 }
