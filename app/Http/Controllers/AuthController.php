@@ -35,7 +35,7 @@ class AuthController extends Controller
      *       in="query",
      *       @OA\Schema(
      *           type="string",
-     *           example="anhhn@vnext.vn"
+     *           example="anhhn@vnext.vn"  
      *       )
      *   ),
      *   @OA\Parameter(
@@ -43,7 +43,7 @@ class AuthController extends Controller
      *       in="query",
      *       @OA\Schema(
      *           type="string",
-     *           example="123456"
+     *           example="123456" 
      *       )
      *   ),
      * 
