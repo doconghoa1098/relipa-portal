@@ -27,13 +27,6 @@ class MemberController extends Controller
      *   security={{"bearerAuth": {}}},
      *
      *   @OA\Parameter(
-     *       name="bearer",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="string"
-     *       )
-     *   ),
-     *   @OA\Parameter(
      *       name="id",
      *       in="path",
      *       @OA\Schema(
@@ -71,13 +64,6 @@ class MemberController extends Controller
      *       in="path",
      *       @OA\Schema(
      *           type="integer"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="bearer",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="string"
      *       )
      *   ),
      *   @OA\Parameter(

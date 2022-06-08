@@ -77,14 +77,6 @@ class AuthController extends Controller
      *   tags={"Auth"},
      *   security={{"bearerAuth": {}}},
      *  
-     *   @OA\Parameter(
-     *       name="bearer",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="string"
-     *       )
-     *   ),
-     * 
      *   @OA\Response(response=200, description="Successful operation"),
      *   @OA\Response(response=400, description="Bad Request"),
      *   @OA\Response(response=403, description="Forbidden"),
@@ -120,13 +112,6 @@ class AuthController extends Controller
      *   tags={"Auth"},
      *   security={{"bearerAuth": {}}},
      *  
-     *   @OA\Parameter(
-     *       name="bearer",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="string"
-     *       )
-     *   ),
      *   @OA\Parameter(
      *       name="old_password",
      *       in="query",
