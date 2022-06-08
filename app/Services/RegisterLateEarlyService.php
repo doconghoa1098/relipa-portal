@@ -21,7 +21,7 @@ class RegisterLateEarlyService extends BaseService
 
         $request = $this->model->where('request_for_date', 'like', $valueRequest['request_for_date'])
             ->where('member_id', Auth::user()->id)
-            ->where('request_type', 1)
+            ->where('request_type', 4)
             ->doesntExist();
 
         if ($request) {
