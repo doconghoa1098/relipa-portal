@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\RegisterOTController;
 use App\Http\Controllers\RegisterForgetController;
@@ -37,6 +38,8 @@ Route::prefix('/members')->group(function () {
     Route::post('/register-ot/{id}', [RegisterOTController::class, 'createRegisterOT'])->name('register-ot.create');
     Route::put('/register-ot/edit/{id}', [RegisterOTController::class, 'updateRegisterOT'])->name('register-ot.update');
 });
+
+Route::apiResource('/', HomeController::class)->middleware('checkAuth');
 
 Route::prefix('/worksheets')
     ->middleware(['checkAuth'])

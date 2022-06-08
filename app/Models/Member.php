@@ -97,4 +97,9 @@ class Member extends Authenticatable implements JWTSubject
     {
         return $this->hasOne(MemberRole::class, 'member_id');
     }
+
+    public function divisions()
+    {
+        return $this->belongsToMany(Division::class,'division_member');
+    }
 }
