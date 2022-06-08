@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Resources\NotificationResource;
 use App\Services\HomeService;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\JsonResponse;
 
 class HomeController extends Controller
 {
@@ -30,13 +27,6 @@ class HomeController extends Controller
      *   operationId="index",
      *   security={{"bearerAuth": {}}},
      *
-     *   @OA\Parameter(
-     *       name="bearer",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="string"
-     *       )
-     *   ),
      *   @OA\Response(response=200, description="Successful operation"),
      *   @OA\Response(response=403, description="Forbidden"),
      *   @OA\Response(response=404, description="Not found"),
