@@ -105,8 +105,10 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 300,
+            'id' => $auth->id,
+            'email' => $auth->email,
+            'full_name' => $auth->full_name,
             'role' => $auth->memberId->role_id,
-            'member' => new MemberResource($auth)
         ], 'login succes');
     }
 
