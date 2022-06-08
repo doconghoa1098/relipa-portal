@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'api'], function ($router) {
     Route::post('/login', [AuthController::class, 'login']);
     Route::delete('/logout', [AuthController::class, 'logout']);
-    Route::put('/change-pass/{id}', [AuthController::class, 'changePassword']);
+    Route::put('/change-pass', [AuthController::class, 'changePassword']);
 });
 
 Route::prefix('/members')->group(function () {

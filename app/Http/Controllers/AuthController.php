@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use App\Models\Member;
 use App\Http\Requests\AuthPostRequest;
 use App\Http\Requests\AuthPutRequest;
@@ -37,7 +35,7 @@ class AuthController extends Controller
      *       in="query",
      *       @OA\Schema(
      *           type="string",
-     *           example="anhhn@vnext.vn"
+     *           example="anhhn@vnext.vn"  
      *       )
      *   ),
      *   @OA\Parameter(
@@ -45,7 +43,7 @@ class AuthController extends Controller
      *       in="query",
      *       @OA\Schema(
      *           type="string",
-     *           example="123456"
+     *           example="123456" 
      *       )
      *   ),
      * 
@@ -114,7 +112,7 @@ class AuthController extends Controller
 
     /**
      * @OA\Put(
-     *   path="/api/change-pass/{id}",
+     *   path="/api/change-pass",
      *   summary="changePassword",
      *   operationId="changePassword",
      *   tags={"Auth"},
@@ -159,7 +157,7 @@ class AuthController extends Controller
      *   @OA\Response(response=500, description="Internal server error")
      * )
      */
-    public function changePassword(AuthPutRequest $request, $memberId)
+    public function changePassword(AuthPutRequest $request)
     {
         $memberId = auth()->user()->id;
         $member = Member::where('id', $memberId)->first();
