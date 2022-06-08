@@ -11,11 +11,14 @@ class Request extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'requests';
+
     protected $dates = ['checkin', 'checkout'];
-    protected $fillable = [        
+
+    protected $fillable = [
         'member_id',
         'request_type',
         'request_for_date',
+        'request_ot_time',
         'checkin',
         'checkout',
         'reason',
@@ -23,5 +26,6 @@ class Request extends Model
         'manager_confirmed_status',
         'admin_approved_status',
         'error_count',
+        'special_reason',
     ];
 }

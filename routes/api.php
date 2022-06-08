@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\RegisterOTController;
 use App\Http\Controllers\RegisterForgetController;
 use App\Http\Controllers\RegisterLeaveController;
 use Illuminate\Http\Request;
@@ -24,9 +25,9 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::put('/change-pass/{id}', [AuthController::class, 'changePassword']);
 });
 
-Route::prefix('/members')->group( function() {
-    Route::get('/edit/{id}',[MemberController::class,'show'])->name('edit');
-    Route::put('/update/{id}',[MemberController::class,'update'])->name('update');
+Route::prefix('/members')->group(function () {
+    Route::get('/edit/{id}', [MemberController::class, 'show'])->name('members.edit');
+    Route::put('/update/{id}', [MemberController::class, 'update'])->name('members.update');
 
     Route::get('/register-forget/{id}',[RegisterForgetController::class,'viewForget'])->name('forget.view');
     Route::post('/register-forget/{id}',[RegisterForgetController::class,'createForget'])->name('forget.create');
@@ -35,7 +36,13 @@ Route::prefix('/members')->group( function() {
     Route::get('/register-leave/{id}',[RegisterLeaveController::class,'viewLeave'])->name('leave.view');
     Route::post('/register-leave/{id}',[RegisterLeaveController::class,'createLeave'])->name('leave.create');
     Route::put('/register-leave/edit/{id}',[RegisterLeaveController::class,'updateLeave'])->name('leave.update');
+
+    Route::get('/register-ot/{id}', [RegisterOTController::class, 'viewRegisterOT'])->name('register-ot.view');
+    Route::post('/register-ot/{id}', [RegisterOTController::class, 'createRegisterOT'])->name('register-ot.create');
+    Route::put('/register-ot/edit/{id}', [RegisterOTController::class, 'updateRegisterOT'])->name('register-ot.update');
 });
+
+
 
 
 

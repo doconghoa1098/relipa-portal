@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Member;
 use App\Http\Requests\AuthPostRequest;
 use App\Http\Requests\AuthPutRequest;
-use Illuminate\Http\JsonResponse;
+use App\Http\Resources\MemberResource;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,7 +22,6 @@ class AuthController extends Controller
     {
         $this->middleware('auth:api', ['except' => ['login']]);
     }
-
 
     /**
      * @OA\Post(
@@ -73,7 +72,7 @@ class AuthController extends Controller
      */
 
     /**
-     * @OA\DELETE(
+     * @OA\Delete(
      *   path="/api/logout",
      *   summary="Logout",
      *   operationId="Logout",
@@ -104,22 +103,20 @@ class AuthController extends Controller
 
     protected function createNewToken($token, $auth)
     {
-
         return $this->successResponse([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
-            'id' => $auth->id,
-            'email' => $auth->email,
+            'expires_in' => auth()->factory()->getTTL() * 300,
             'role' => $auth->memberId->role_id,
+            'member' => new MemberResource($auth)
         ], 'login succes');
     }
 
     /**
-     * @OA\PUT(
+     * @OA\Put(
      *   path="/api/change-pass/{id}",
-     *   summary="ChangePass",
-     *   operationId="ChangePass",
+     *   summary="changePassword",
+     *   operationId="changePassword",
      *   tags={"Auth"},
      *   security={{"bearerAuth": {}}},
      *  
