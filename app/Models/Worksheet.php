@@ -14,7 +14,15 @@ class Worksheet extends Model
 
     public $timestamps = FALSE;
     
-    protected $dates = ['work_date', 'checkin', 'checkout', 'checkin_original', 'checkout_original'];
+    protected $dates = [
+        'work_date', 
+        'checkin', 
+        'checkout', 
+        'checkin_original', 
+        'checkout_original',
+        'late',
+        'early',
+    ];
 
     protected $fillable = [
         'id',

@@ -25,13 +25,7 @@ class RegisterOTController extends Controller
      *   tags={"Register overtime"},
      *   operationId="viewRegisterOT",
      *   security={{"bearerAuth": {}}},
-     *   @OA\Parameter(
-     *       name="bearer",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="string"
-     *       )
-     *   ),
+     * 
      *   @OA\Parameter(
      *       name="id",
      *       in="path",
@@ -67,13 +61,6 @@ class RegisterOTController extends Controller
      *       in="path",
      *       @OA\Schema(
      *           type="integer"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="bearer",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="string"
      *       )
      *   ),
      *   @OA\Parameter(
@@ -130,13 +117,6 @@ class RegisterOTController extends Controller
      *       )
      *   ),
      *
-     *   @OA\Parameter(
-     *       name="bearer",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="string"
-     *       )
-     *   ),
      *   @OA\Parameter(
      *       name="request_ot_time",
      *       in="query",
