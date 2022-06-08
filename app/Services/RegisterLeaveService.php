@@ -42,25 +42,29 @@ class RegisterLeaveService extends BaseService
 
     public function create($id, $request)
     {
-        $workSheet = $this->getForm($id);
-        if (empty($workSheet)) {
+        $worksheet = $this->getForm($id);
+        if (empty($worksheet)) {
             return '403_FORBIDDEN';
         };
-        $requestOfDay = $this->model->where('request_for_date', $workSheet->workDate)->pluck('request_type')->toArray();
+        $requestOfDay = $this->model->where('request_for_date', $worksheet->workDate)->pluck('request_type')->toArray();
 
+        // $leave_quota =
         if (in_array(2, $requestOfDay) || in_array(3, $requestOfDay) ) {
             return [];
         }
 
         $data = [
             'member_id' => Auth::id(),
-            'request_type' => 1,
-            'request_for_date' =>  $workSheet->workDate,
-            'checkin' => strtotime($request->request_for_date . $request->checkin),
-            'checkout' => strtotime($request->request_for_date . $request->checkout),
-            'special_reason' => $request->special_reason,
+            'request_type' => $request->request_type,
+            'request_for_date' =>  $worksheet->workDate,
+            'checkin' => strtotime(  $worksheet->workDate . $worksheet->checkinWorkSheet),
+            'checkout' => strtotime(  $worksheet->workDate . $worksheet->checkoutWorkSheet),
             'reason' => $request->reason,
+            'range' => $request->range,
+            'leave_all_day' => $request->leave_all_day,
         ];
+
+
 
         return $this->store($data);
     }
