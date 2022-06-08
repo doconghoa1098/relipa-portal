@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterForgetFormRequest;
-use App\Http\Resources\RegisterForgetResource;
 use App\Services\RegisterForgetService;
 use Illuminate\Http\Response;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class RegisterForgetController extends Controller
 {
@@ -19,49 +16,19 @@ class RegisterForgetController extends Controller
     }
 
     /**
-     * @OA\Get(
-     *   path="/api/members/register-forget/{id}",
-     *   summary="Viewform to create or update from worksheet ID",
-     *   tags={"Register Forget"},
-     *   operationId="viewForget",
-     *   security={{"bearerAuth": {}}},
-     * 
-     *   @OA\Parameter(
-     *       name="id",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="integer"
-     *       )
-     *   ),
-     *   @OA\Response(response=200, description="Successful operation"),
-     *   @OA\Response(response=403, description="Forbidden"),
-     *   @OA\Response(response=404, description="Not found"),
-     *   @OA\Response(response=500, description="Internal server error")
-     * )
-     */
-    public function viewForget($id)
-    {
-        $formForget = new RegisterForgetResource($this->registerForgetService->getForm($id));
-        if (empty($formForget->resource)) {
-            return $this->errorResponse('Unauthorized!', Response::HTTP_FORBIDDEN);
-        };
-
-        return $this->successResponse($formForget);
-    }
-
-    /**
      * @OA\Post(
-     *   path="/api/members/register-forget/{id}",
-     *   summary="Create register forget from worksheet ID",
+     *   path="/api/worksheets/register-forget/create",
+     *   summary="Create register forget from worksheet",
      *   tags={"Register Forget"},
-     *   operationId="createForget",
+     *   operationId="createRegisterForget",
      *   security={{"bearerAuth": {}}},
      * 
      *   @OA\Parameter(
-     *       name="id",
-     *       in="path",
+     *       name="request_for_date",
+     *       in="query",
      *       @OA\Schema(
-     *           type="integer"
+     *           type="date",
+     *           example="2022-06-01"
      *       )
      *   ),
      *   @OA\Parameter(
@@ -103,35 +70,29 @@ class RegisterForgetController extends Controller
      *   @OA\Response(response=500, description="Internal server error")
      * )
      */
-    public function createForget(RegisterForgetFormRequest $request, $id)
+    public function createRegisterForget(RegisterForgetFormRequest $request)
     {
-        $registerForget = $this->registerForgetService->create($id, $request);
+        if ($this->registerForgetService->checkRequestQuota($request['request_for_date'])) {
+            return $this->registerForgetService->create($request);
+        }
 
-        if ($registerForget === "403_FORBIDDEN") {
-            return $this->errorResponse('Unauthorized!', Response::HTTP_FORBIDDEN);
-        };
-
-        if (empty($registerForget)) {
-            return $this->errorResponse('No more request in day', Response::HTTP_BAD_REQUEST);
-        };
-
-        return $this->successResponse($registerForget, 'Register forget check-In/check-Out successfully');
+        return $this->successResponse("You have run out of requests for the month !");
     }
 
     /**
      * @OA\Put(
-     *   path="/api/members/register-forget/edit/{id}",
-     *   summary="Edit register forget from worksheet ID",
+     *   path="/api/worksheets/register-forget/update",
+     *   summary="Edit register forget from worksheet",
      *   tags={"Register Forget"},
-     *   operationId="updateForget",
+     *   operationId="updateRegisterForget",
      *   security={{"bearerAuth": {}}},
      *
      *   @OA\Parameter(
-     *       name="id",
-     *       in="path",
+     *       name="request_for_date",
+     *       in="query",
      *       @OA\Schema(
-     *           type="integer",
-     *           example="1"
+     *           type="date",
+     *           example="2022-06-01"
      *       )
      *   ),
      *   @OA\Parameter(
@@ -173,18 +134,12 @@ class RegisterForgetController extends Controller
      *   @OA\Response(response=500, description="Internal server error")
      * )
      */
-    public function updateForget(RegisterForgetFormRequest $request, $id)
+    public function updateRegisterForget(RegisterForgetFormRequest $request)
     {
-        $registerForget = $this->registerForgetService->updateRegisterForget($id, $request);
+        if ($this->registerForgetService->checkRequestQuota($request['request_for_date'])) {
+            return $this->registerForgetService->updateLateEarly($request);
+        }
 
-        if ($registerForget === "403_FORBIDDEN") {
-            return $this->errorResponse('Unauthorized!', Response::HTTP_FORBIDDEN);
-        };
-
-        if (empty($registerForget)) {
-            return $this->errorResponse('The request cannot be edited once the manager/admin has confirmed/approved ', Response::HTTP_BAD_REQUEST);
-        };
-
-        return $this->successResponse([], 'Update register forget check-In/check-Out successfully');
+        return $this->successResponse("You have run out of requests for the month !");
     }
 }
