@@ -27,7 +27,7 @@ class RegisterLateEarlyService extends BaseService
         if ($request) {
             $this->store($valueRequest);
 
-            return $this->successResponse(null, "Create request forget successfully !");
+            return $this->successResponse(null, "Create request late/early successfully !");
         }
 
         return $this->errorResponse("Only 1 request of the same type is allowed per day !", Response::HTTP_UNAUTHORIZED);
@@ -53,10 +53,10 @@ class RegisterLateEarlyService extends BaseService
                 $updateRequest->fill($valueRequest);
                 $updateRequest->save();
 
-                return $this->successResponse(null, "Update request forget successfully !");
+                return $this->successResponse(null, "Update request late/early successfully !");
             }
 
-            return $this->errorResponse("Request forget does not exist", Response::HTTP_NOT_FOUND);
+            return $this->errorResponse("Request late/early does not exist", Response::HTTP_NOT_FOUND);
         }
 
         return $this->errorResponse("Your request is in confirmed or approved status, so it cannot be edited !", Response::HTTP_UNAUTHORIZED);
