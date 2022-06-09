@@ -16,6 +16,7 @@ class DivisionFactory extends Factory
     {
         $managerMember = DB::table('members')->pluck('id');
         $id = $this->faker->unique()->randomElement($managerMember);
+        
         return [
             'member_id' => $id,
             'division_name' => $this->faker->unique()->randomElement(['D1', 'D2', 'D3', 'D4', 'D5', 'D6']),

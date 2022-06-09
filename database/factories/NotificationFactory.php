@@ -18,6 +18,7 @@ class NotificationFactory extends Factory
 
         $divisionId = DB::table('divisions')->pluck('id');
         $createBy = DB::table('members')->pluck('created_by');
+
         return [
             'published_date' => $this->faker->date(),
             'subject' => $this->faker->name,
