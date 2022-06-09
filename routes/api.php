@@ -25,9 +25,9 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::put('/change-pass', [AuthController::class, 'changePassword']);
 });
 
-Route::prefix('/members')->group(function () {
-    Route::get('/edit/{id}', [MemberController::class, 'show'])->name('members.edit');
-    Route::put('/update/{id}', [MemberController::class, 'update'])->name('members.update');
+Route::prefix('/members')->middleware(['checkAuth'])->group(function () {
+    Route::get('/edit', [MemberController::class, 'show'])->name('members.edit');
+    Route::put('/update', [MemberController::class, 'update'])->name('members.update');
 
     Route::get('/register-ot/{id}', [RegisterOTController::class, 'viewRegisterOT'])->name('register-ot.view');
     Route::post('/register-ot/{id}', [RegisterOTController::class, 'createRegisterOT'])->name('register-ot.create');
