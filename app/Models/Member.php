@@ -54,6 +54,7 @@ class Member extends Authenticatable implements JWTSubject
         'academic_level',
         'tax_identification',
         'healthcare_provider',
+        'insurance_number',
     ];
 
     /**
