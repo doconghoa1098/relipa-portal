@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\RegisterOTController;
+use App\Http\Controllers\RegisterForgetController;
+use App\Http\Controllers\RegisterLateEarlyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,12 +22,25 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'api'], function ($router) {
     Route::post('/login', [AuthController::class, 'login']);
     Route::delete('/logout', [AuthController::class, 'logout']);
-    Route::put('/change-pass/{id}', [AuthController::class, 'changePassword']);    
+    Route::put('/change-pass', [AuthController::class, 'changePassword']);
 });
 
-Route::prefix('/members')->group( function() {
-    Route::get('/edit/{id}',[MemberController::class,'show'])->name('edit');
-    Route::post('/update/{id}',[MemberController::class,'update'])->name('update');
+Route::prefix('/members')->middleware(['checkAuth'])->group(function () {
+    Route::get('/edit', [MemberController::class, 'show'])->name('members.edit');
+    Route::put('/update', [MemberController::class, 'update'])->name('members.update');
 });
 
-// Route::apiResource('members', MemberController::class);
+Route::prefix('/worksheets')->middleware(['checkAuth'])->group(function () {
+
+    Route::post('/register-forget/create', [RegisterForgetController::class, 'createRegisterForget'])->name('register-forget.create');
+    Route::put('/register-forget/update', [RegisterForgetController::class, 'updateRegisterForget'])->name('register-forget.update');
+
+    Route::post('/register-late-early/create', [RegisterLateEarlyController::class, 'createRegisterLateEarly'])->name('register-late-early.create');
+    Route::put('/register-late-early/update', [RegisterLateEarlyController::class, 'updateRegisterLateEarly'])->name('register-late-early.update');
+
+    Route::post('/register-ot/create', [RegisterOTController::class, 'createRegisterOT'])->name('register-ot.create');
+    Route::put('/register-ot/update', [RegisterOTController::class, 'updateRegisterOT'])->name('register-ot.update');
+
+
+
+});

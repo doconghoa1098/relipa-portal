@@ -2,12 +2,15 @@
 
 namespace App\Services;
 
+use App\Models\MemberRequestQuota;
 use App\Traits\UploadableTrait;
+use App\Traits\ResfulResourceTrait;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 abstract class BaseService
 {
-
-    use UploadableTrait;
+    use UploadableTrait, ResfulResourceTrait;
 
     protected $model;
 
@@ -27,7 +30,6 @@ abstract class BaseService
 
     public function get()
     {
-
         return $this->model->latest()->get();
     }
 
@@ -56,5 +58,30 @@ abstract class BaseService
         $this->findOrFail($id);
 
         return $this->model->delete();
+    }
+
+    public function storeMemberRequestQuota($value = [])
+    {
+        $memberRequestQuota = new MemberRequestQuota();
+        $memberRequestQuota->fill($value);
+
+        return $memberRequestQuota->save();
+    }
+
+    public function checkRequestQuota($date)
+    {
+        $dateRequest = Carbon::createFromFormat('Y-m-d', $date)->format('Y-m');
+        $checkExistRequestQuota = MemberRequestQuota::where('month', $dateRequest);
+
+        if ($checkExistRequestQuota->doesntExist()) {
+            $value = [
+                'member_id' => Auth::user()->id,
+                'month' => $dateRequest
+            ];
+
+            $this->storeMemberRequestQuota($value);
+        }
+
+        return $checkExistRequestQuota->where('remain', '>', 0)->first();
     }
 }
