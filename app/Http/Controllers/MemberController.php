@@ -20,52 +20,33 @@ class MemberController extends Controller
 
     /**
      * @OA\Get(
-     *   path="/api/members/edit/{id}",
+     *   path="/api/members/edit",
      *   summary="Detail members",
      *   tags={"Members"},
      *   operationId="show",
      *   security={{"bearerAuth": {}}},
      *
-     *   @OA\Parameter(
-     *       name="id",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="integer"
-     *       )
-     *   ),
      *   @OA\Response(response=200, description="Successful operation"),
      *   @OA\Response(response=403, description="Forbidden"),
      *   @OA\Response(response=404, description="Not found"),
      *   @OA\Response(response=500, description="Internal server error")
      * )
      */
-    public function show($id)
+    public function show()
     {
-        if (Auth::user()->id == $id) {
+        $memberInfo =  new MemberResource($this->memberService->findOrFail(Auth::id()));
 
-            $memberInfo =  new MemberResource($this->memberService->findOrFail($id));
-
-            return $this->successResponse($memberInfo);
-        }
-
-        return $this->errorResponse('Unauthorized!', Response::HTTP_FORBIDDEN);
+        return $this->successResponse($memberInfo);
     }
 
     /**
      * @OA\Put(
-     *     path="/api/members/update/{id}",
+     *     path="/api/members/update",
      *     summary="Updates a member",
      *     tags={"Members"},
      *     operationId="update",
      *     security={{"bearerAuth": {}}},
      *
-     *   @OA\Parameter(
-     *       name="id",
-     *       in="path",
-     *       @OA\Schema(
-     *           type="integer"
-     *       )
-     *   ),
      *   @OA\Parameter(
      *       name="avatar",
      *       in="query",
@@ -272,14 +253,12 @@ class MemberController extends Controller
      * )
      */
 
-    public function update(MemberFormRequest $request, $id)
+    public function update(MemberFormRequest $request)
     {
         if (Auth::check()) {
-            if (Auth::user()->id == $id) {
-                $this->memberService->updateMember($id, $request);
+            $this->memberService->updateMember(Auth::id(), $request);
 
-                return $this->successResponse(null, 'Update member successfully!');
-            }
+            return $this->successResponse(null, 'Update member successfully!');
         }
 
         return $this->errorResponse('Unauthorized!', Response::HTTP_FORBIDDEN);

@@ -4,8 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Request;
-use App\Models\Worksheet;
-use Carbon\Carbon;
+use Illuminate\Http\Response;
 
 class RegisterForgetService extends BaseService
 {
@@ -14,77 +13,56 @@ class RegisterForgetService extends BaseService
         return Request::class;
     }
 
-    public function workSheet($id)
+    public function create($request)
     {
-        return  Worksheet::where('member_id', Auth::id())->find($id);
-    }
+        $valueRequest = array_map('trim', $request->all());
+        $valueRequest['member_id'] = Auth::user()->id;
+        $valueRequest['request_type'] = 1;
+        $valueRequest['checkin'] = strtotime($request->request_for_date . $request->checkin);
+        $valueRequest['checkout'] = strtotime($request->request_for_date . $request->checkout);
 
-    public function getForm($id)
-    {
-        $workSheet = $this->workSheet($id);
-        if (empty($workSheet)) {
-            return [];
-        };
-        $workDate = $workSheet->work_date;
-        $viewform = $this->model->where('request_for_date', $workDate)
+        $request = $this->model->where('request_for_date', 'like', $valueRequest['request_for_date'])
+            ->where('member_id', Auth::user()->id)
             ->where('request_type', 1)
-            ->first() ?? (object) [];
+            ->doesntExist();
 
-        $viewform->workDate = $workDate->format('Y-m-d');
-        $viewform->checkInWorkSheet = $workSheet->checkin->format('H:i');
-        $viewform->checkOutWorkSheet = $workSheet->checkout->format('H:i');
+        if ($request) {
+            $this->store($valueRequest);
 
-        return $viewform;
-    }
-
-    public function create($id, $request)
-    {
-        $workSheet = $this->getForm($id);
-        if (empty($workSheet)) {
-            return '403_FORBIDDEN';
-        };
-        $requestOfDay = $this->model->where('request_for_date', $workSheet->workDate)->pluck('request_type')->toArray();
-
-        if (in_array(1, $requestOfDay)) {
-            return [];
+            return $this->successResponse(null, "Create request forget check-In/check-Out successfully !");
         }
 
-        $data = [
-            'member_id' => Auth::id(),
-            'request_type' => 1,
-            'request_for_date' =>  $workSheet->workDate,
-            'checkin' => strtotime($request->request_for_date . $request->checkin),
-            'checkout' => strtotime($request->request_for_date . $request->checkout),
-            'special_reason' => $request->special_reason,
-            'reason' => $request->reason,
-        ];
-
-        return $this->store($data);
+        return $this->errorResponse("Only 1 request of the same type is allowed per day !", Response::HTTP_UNAUTHORIZED);
     }
 
-    public function updateRegisterForget($id, $request)
+    public function updateLateEarly($request)
     {
-        $workSheet = $this->getForm($id);
-        if (empty($workSheet)) {
-            return '403_FORBIDDEN';
-        };
+        $valueRequest = array_map('trim', $request->all());
+        $valueRequest['checkin'] = strtotime($request->request_for_date . $request->checkin);
+        $valueRequest['checkout'] = strtotime($request->request_for_date . $request->checkout);
 
-        $viewform = $this->model->where('request_for_date', $workSheet->workDate)
-                                ->where('request_type', 1)
-                                ->first();
+        $request = $this->model->where('request_for_date', 'like', $valueRequest['request_for_date'])
+            ->where('member_id', Auth::user()->id)
+            ->where('request_type', 1)
+            ->whereIn('status', [1, 2])
+            ->doesntExist();
 
-        if (isset($viewform->status) && $viewform->status == 0) {
+        if ($request) {
+            $updateRequest = $this->model->where('request_for_date', 'like', $valueRequest['request_for_date'])
+                ->where('member_id', Auth::user()->id)
+                ->where('request_type', 1)
+                ->first();
 
-            $data = [
-                'checkin' => strtotime($viewform->request_for_date . $request->checkin),
-                'checkout' => strtotime($viewform->request_for_date . $request->checkout),
-                'special_reason' => $request->special_reason,
-                'reason' => $request->reason,
-            ];
+            if ($updateRequest) {
+                $updateRequest->fill($valueRequest);
+                $updateRequest->save();
 
-            return $viewform->fill($data)->save();
+                return $this->successResponse(null, "Update request forget check-In/check-Out successfully !");
+            }
+
+            return $this->errorResponse("Request forget check-In/check-Out does not exist", Response::HTTP_NOT_FOUND);
         }
-        
-        return [];
+
+        return $this->errorResponse("Your request is in confirmed or approved status, so it cannot be edited !", Response::HTTP_UNAUTHORIZED);
     }
 }
