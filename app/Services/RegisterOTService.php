@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Request;
 use App\Models\Worksheet;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class RegisterOTService extends BaseService
@@ -12,88 +13,56 @@ class RegisterOTService extends BaseService
     {
         return Request::class;
     }
-
-    public function workSheet($id)
+    
+    public function create($request)
     {
-        return  Worksheet::where('member_id', Auth::id())->find($id);
-    }
+        $valueRequest = array_map('trim', $request->all());
+        $valueRequest['member_id'] = Auth::user()->id;
+        $valueRequest['request_type'] = 5;
+        $valueRequest['checkin'] = strtotime($request->request_for_date . $request->checkin);
+        $valueRequest['checkout'] = strtotime($request->request_for_date . $request->checkout);
+        $valueRequest['request_ot_time'] = $request->request_overtime;
 
-    public function getForm($id)
-    {
+        $request = $this->model->where('request_for_date', 'like', $valueRequest['request_for_date'])
+            ->where('member_id', Auth::user()->id)
+            ->where('request_type', 5)
+            ->doesntExist();
 
-        $workSheet = $this->workSheet($id);
-        if (empty($workSheet)) {
-            return [];
-        };
-        $in_office = $workSheet->in_office;
-        $actual_OT = gmdate("H:i",(strtotime($in_office) - strtotime('10:00')));
-        $workDate = $this->workSheet($id)->work_date;
-        $view = $this->model->where('request_for_date', $workDate)
-        ->where('request_type', 5)
-        ->first() ?? (object) [];
+        if ($request) {
+            $this->store($valueRequest);
 
-        $view->workDate = $workDate->format('Y-m-d');
-        $view->checkinWorkSheet = $this->workSheet($id)->checkin_original->format('H:i');
-        $view->checkoutWorkSheet = $this->workSheet($id)->checkout_original->format('H:i');
-        $view->actual_OT = $actual_OT;
-
-        return $view;
-    }
-
-    public function create($request, $id)
-    {
-
-        $worksheet = $this->getForm($id);
-        if (empty($worksheet)) {
-            return '403_FORBIDDEN';
-        };
-        $in_office = $this->workSheet($id)->in_office;
-        $actual_OT = gmdate("H:i",(strtotime($in_office) - strtotime('10:00')));
-        $requestOfDay = $this->model->where('request_for_date', $worksheet->workDate)->pluck('request_type')->toArray();
-        if (in_array(5, $requestOfDay)) {
-            return [];
-        }else if($request->request_ot_time > $actual_OT){
-            return 'validator';
+            return $this->successResponse(null, "Create request overtime successfully !");
         }
 
-        $data = [
-            'member_id' => Auth::user()->id,
-            'request_type' => 5,
-            'request_for_date' => $worksheet->workDate,
-            'checkin' => strtotime(  $worksheet->workDate . $worksheet->checkinWorkSheet),
-            'checkout' => strtotime(  $worksheet->workDate . $worksheet->checkoutWorkSheet),
-            'reason' => $request->reason,
-            'request_ot_time' => $request->request_ot_time,
-        ];
-
-        return $this->model->fill($data)->save();
+        return $this->errorResponse("Only 1 request of the same type is allowed per day !", Response::HTTP_UNAUTHORIZED);
     }
 
-    public function update($request, $id)
+    public function updateOvertime($request)
     {
-        $worksheet = $this->getForm($id);
-        if (empty($worksheet)) {
-            return '403_FORBIDDEN';
-        };
+        $valueRequest = array_map('trim', $request->all());
 
-        $view = $this->model->where('request_for_date', $worksheet->workDate)
-        ->where('request_type', 5)
-        ->first();
+        $request = $this->model->where('request_for_date', 'like', $valueRequest['request_for_date'])
+            ->where('member_id', Auth::user()->id)
+            ->where('request_type', 5)
+            ->whereIn('status', [1, 2])
+            ->doesntExist();
 
-        $in_office = $this->workSheet($id)->in_office;
-        $actual_OT = gmdate("H:i",(strtotime($in_office) - strtotime('10:00')));
-        if (isset($view->status) && $view->status == 0) {
-            if($request->request_ot_time > $actual_OT){
-                return 'validator';
+        if ($request) {
+            $updateRequest = $this->model->where('request_for_date', 'like', $valueRequest['request_for_date'])
+                ->where('member_id', Auth::user()->id)
+                ->where('request_type', 5)
+                ->first();
+
+            if ($updateRequest) {
+                $updateRequest->fill($valueRequest);
+                $updateRequest->save();
+
+                return $this->successResponse(null, "Update request overtime successfully !");
             }
-            $data = [
-                'request_ot_time' => $request->request_ot_time,
-                'reason' => $request->reason,
-            ];
 
-            return $this->findOrFail($view->id)->fill($data)->save();
+            return $this->errorResponse("Request overtime does not exist", Response::HTTP_NOT_FOUND);
         }
-        
-        return [];
+
+        return $this->errorResponse("Your request is in confirmed or approved status, so it cannot be edited !", Response::HTTP_UNAUTHORIZED);
     }
 }
