@@ -21,7 +21,8 @@ class HomeService extends BaseService
         $orderBy = $request->get('sort');
         $divisionId = Member::where('id', auth()->id())->with('divisions')->first();
         $divisionId = $divisionId->divisions->first()->id;
-        $query = Notification::whereJsonContains('published_to', [$divisionId]);
+        $query = Notification::whereJsonContains('published_to', [$divisionId])
+            ->orwhereJsonContains('published_to', ["all"]);
         if ($orderBy) {
             $query->orderBy('id', $orderBy);
         }
