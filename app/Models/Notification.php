@@ -12,6 +12,8 @@ class Notification extends Model
 
     protected $table = 'notifications';
 
+    protected $dates = ['published_date'];
+
     protected $fillable = [
         'published_date',
         'subject',
@@ -21,4 +23,20 @@ class Notification extends Model
         'published_to',
         'created_by',
     ];
+
+    public function authorInfo()
+    {
+        return $this->belongsTo(Member::class, 'created_by');
+    }
+
+    public function getPublishedToAttribute()
+    {
+        if ($this->attributes['published_to'] !== '["all"]') {
+            $publishedTo = json_decode($this->attributes['published_to']);
+
+            return Division::select('division_name')->whereIn('id', $publishedTo)->get();
+        }
+
+        return $this->attributes['published_to'];
+    }
 }

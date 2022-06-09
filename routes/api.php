@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\RegisterOTController;
 use App\Http\Controllers\RegisterForgetController;
@@ -29,6 +30,8 @@ Route::prefix('/members')->middleware(['checkAuth'])->group(function () {
     Route::get('/edit', [MemberController::class, 'show'])->name('members.edit');
     Route::put('/update', [MemberController::class, 'update'])->name('members.update');
 });
+
+Route::apiResource('/', HomeController::class)->middleware('checkAuth');
 
 Route::prefix('/worksheets')->middleware(['checkAuth'])->group(function () {
 
