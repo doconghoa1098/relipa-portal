@@ -13,12 +13,7 @@ class RegisterOTService extends BaseService
     {
         return Request::class;
     }
-
-    public function workSheet($id)
-    {
-        return  Worksheet::where('member_id', Auth::id())->find($id);
-    }
-
+    
     public function create($request)
     {
         $valueRequest = array_map('trim', $request->all());

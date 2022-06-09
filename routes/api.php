@@ -28,8 +28,6 @@ Route::group(['middleware' => 'api'], function ($router) {
 Route::prefix('/members')->middleware(['checkAuth'])->group(function () {
     Route::get('/edit', [MemberController::class, 'show'])->name('members.edit');
     Route::put('/update', [MemberController::class, 'update'])->name('members.update');
-
-
 });
 
 Route::prefix('/worksheets')->middleware(['checkAuth'])->group(function () {
@@ -42,4 +40,7 @@ Route::prefix('/worksheets')->middleware(['checkAuth'])->group(function () {
 
     Route::post('/register-ot/create', [RegisterOTController::class, 'createRegisterOT'])->name('register-ot.create');
     Route::put('/register-ot/update', [RegisterOTController::class, 'updateRegisterOT'])->name('register-ot.update');
+
+
+
 });
