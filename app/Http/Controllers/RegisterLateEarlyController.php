@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RegisterForgetFormRequest;
-use App\Services\RegisterForgetService;
+use App\Http\Requests\RegisterLateEarlyFormRequest;
+use App\Services\RegisterLateEarlyService;
 use Illuminate\Http\Response;
 
-class RegisterForgetController extends Controller
+class RegisterLateEarlyController extends Controller
 {
-    protected $registerForgetService;
+    protected $registerLateEarlyService;
 
-    public function __construct(RegisterForgetService $registerForgetService)
+    public function __construct(RegisterLateEarlyService $registerLateEarlyService)
     {
-        $this->registerForgetService = $registerForgetService;
+        $this->registerLateEarlyService = $registerLateEarlyService;
     }
 
     /**
      * @OA\Post(
-     *   path="/api/worksheets/register-forget/create",
-     *   summary="Create register forget from worksheet",
-     *   tags={"Register Forget"},
-     *   operationId="createRegisterForget",
+     *   path="/api/worksheets/register-late-early/create",
+     *   summary="Create register late early from worksheet",
+     *   tags={"Register Late Early"},
+     *   operationId="createRegisterLateEarly",
      *   security={{"bearerAuth": {}}},
      * 
      *   @OA\Parameter(
@@ -32,27 +32,19 @@ class RegisterForgetController extends Controller
      *       )
      *   ),
      *   @OA\Parameter(
-     *       name="checkin",
+     *       name="date_cover_up",
      *       in="query",
      *       @OA\Schema(
-     *           type="time",
-     *           example="09:35"
+     *           type="date",
+     *           example="2022/06/12"
      *       )
      *   ),
      *   @OA\Parameter(
-     *       name="checkout",
+     *       name="overtime",
      *       in="query",
      *       @OA\Schema(
      *           type="time",
-     *           example="17:35"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="special_reason",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="integer",
-     *           example="1"
+     *           example="00:16"
      *       )
      *   ),
      *   @OA\Parameter(
@@ -60,7 +52,7 @@ class RegisterForgetController extends Controller
      *       in="query",
      *       @OA\Schema(
      *           type="string",
-     *           example="Ngày đầu đi làm nên lấy vân tay muộn"
+     *           example="Em xin làm bù ngày ___ cho thời gian thiếu ngày ___ "
      *       )
      *   ),
      * 
@@ -70,10 +62,11 @@ class RegisterForgetController extends Controller
      *   @OA\Response(response=500, description="Internal server error")
      * )
      */
-    public function createRegisterForget(RegisterForgetFormRequest $request)
+
+    public function createRegisterLateEarly(RegisterLateEarlyFormRequest $request)
     {
-        if ($this->registerForgetService->checkRequestQuota($request['request_for_date'])) {
-            return $this->registerForgetService->create($request);
+        if ($this->registerLateEarlyService->checkRequestQuota($request['request_for_date'])) {
+            return $this->registerLateEarlyService->create($request);
         }
 
         return $this->successResponse("You have run out of requests for the month !");
@@ -81,42 +74,34 @@ class RegisterForgetController extends Controller
 
     /**
      * @OA\Put(
-     *   path="/api/worksheets/register-forget/update",
-     *   summary="Edit register forget from worksheet",
-     *   tags={"Register Forget"},
-     *   operationId="updateRegisterForget",
+     *   path="/api/worksheets/register-late-early/update",
+     *   summary="Update register late early from worksheet",
+     *   tags={"Register Late Early"},
+     *   operationId="updateRegisterLateEarly",
      *   security={{"bearerAuth": {}}},
-     *
+     * 
      *   @OA\Parameter(
      *       name="request_for_date",
      *       in="query",
      *       @OA\Schema(
      *           type="date",
-     *           example="2022-06-01"
+     *           example="2022-06-01",
      *       )
      *   ),
      *   @OA\Parameter(
-     *       name="checkin",
+     *       name="date_cover_up",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="date",
+     *           example="2022/06/12"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="overtime",
      *       in="query",
      *       @OA\Schema(
      *           type="time",
-     *           example="09:35"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="checkout",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="time",
-     *           example="17:35"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="special_reason",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="integer",
-     *           example="1"
+     *           example="00:16"
      *       )
      *   ),
      *   @OA\Parameter(
@@ -124,7 +109,7 @@ class RegisterForgetController extends Controller
      *       in="query",
      *       @OA\Schema(
      *           type="string",
-     *           example="Ngày đầu đi làm nên lấy vân tay muộn"
+     *           example="Em xin làm bù ngày"
      *       )
      *   ),
      * 
@@ -134,10 +119,10 @@ class RegisterForgetController extends Controller
      *   @OA\Response(response=500, description="Internal server error")
      * )
      */
-    public function updateRegisterForget(RegisterForgetFormRequest $request)
+    public function updateRegisterLateEarly(RegisterLateEarlyFormRequest $request)
     {
-        if ($this->registerForgetService->checkRequestQuota($request['request_for_date'])) {
-            return $this->registerForgetService->updateLateEarly($request);
+        if ($this->registerLateEarlyService->checkRequestQuota($request['request_for_date'])) {
+            return $this->registerLateEarlyService->updateLateEarly($request);
         }
 
         return $this->successResponse("You have run out of requests for the month !");

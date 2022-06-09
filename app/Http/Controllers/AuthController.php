@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use App\Models\Member;
 use App\Http\Requests\AuthPostRequest;
 use App\Http\Requests\AuthPutRequest;
@@ -27,7 +25,7 @@ class AuthController extends Controller
      * @OA\Post(
      *   path="/api/login",
      *   summary="Login",
-     *   operationId="login",
+     *   operationId="login", 
      *   tags={"Auth"},
      *   security={
      *       {"ApiKeyAuth": {}}
@@ -45,7 +43,7 @@ class AuthController extends Controller
      *       in="query",
      *       @OA\Schema(
      *           type="string",
-     *           example="123456"
+     *           example="123456" 
      *       )
      *   ),
      * 
@@ -79,14 +77,6 @@ class AuthController extends Controller
      *   tags={"Auth"},
      *   security={{"bearerAuth": {}}},
      *  
-     *   @OA\Parameter(
-     *       name="bearer",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="string"
-     *       )
-     *   ),
-     * 
      *   @OA\Response(response=200, description="Successful operation"),
      *   @OA\Response(response=400, description="Bad Request"),
      *   @OA\Response(response=403, description="Forbidden"),
@@ -107,26 +97,21 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 300,
+            'id' => $auth->id,
+            'email' => $auth->email,
+            'full_name' => $auth->full_name,
             'role' => $auth->memberId->role_id,
-            'member' => new MemberResource($auth)
         ], 'login succes');
     }
 
     /**
      * @OA\Put(
-     *   path="/api/change-pass/{id}",
+     *   path="/api/change-pass",
      *   summary="changePassword",
      *   operationId="changePassword",
      *   tags={"Auth"},
      *   security={{"bearerAuth": {}}},
      *  
-     *   @OA\Parameter(
-     *       name="bearer",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="string"
-     *       )
-     *   ),
      *   @OA\Parameter(
      *       name="old_password",
      *       in="query",
@@ -159,7 +144,7 @@ class AuthController extends Controller
      *   @OA\Response(response=500, description="Internal server error")
      * )
      */
-    public function changePassword(AuthPutRequest $request, $memberId)
+    public function changePassword(AuthPutRequest $request)
     {
         $memberId = auth()->user()->id;
         $member = Member::where('id', $memberId)->first();

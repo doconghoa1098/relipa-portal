@@ -27,5 +27,8 @@ class Request extends Model
         'admin_approved_status',
         'error_count',
         'special_reason',
+        'leave_start',
+        'leave_end',
+        'leave_all_day',
     ];
 }

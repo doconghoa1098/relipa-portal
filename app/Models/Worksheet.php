@@ -22,7 +22,7 @@ class Worksheet extends Model
         'checkout_original',
         'late',
         'early',
-        'in_office'
+        'in_office',
     ];
 
     protected $fillable = [
