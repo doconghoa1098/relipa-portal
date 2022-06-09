@@ -40,6 +40,7 @@ class MemberResource extends JsonResource
             'temporary_address' => $this->temporary_address,
             'tax_identification' => $this->tax_identification,
             'healthcare_provider' => $this->healthcare_provider,
+            'insurance_number' => $this->insurance_number,
             'emergency_contact_name' => $this->emergency_contact_name,
             'emergency_contact_relationship' => $this->emergency_contact_relationship,
             'emergency_contact_number' => $this->emergency_contact_number,
