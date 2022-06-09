@@ -17,7 +17,7 @@ class CreateLeaveQuotasTable extends Migration
             $table->id();
             $table->bigInteger('member_id');
             $table->string('year');
-            $table->float('quota');
+            $table->float('quota')->default(3);
             $table->float('paid_leave');
             $table->float('unpaid_leave');
             $table->float('remain');

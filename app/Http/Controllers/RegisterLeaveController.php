@@ -73,7 +73,7 @@ class RegisterLeaveController extends Controller
      */
     public function createLeave(RegisterLeaveFormRequest $request)
     {
-        if ($this->registerLeaveService->checkRequestQuota($request['request_for_date'])) {
+        if ($this->registerLeaveService->checkLeaveQuota($request)) {
             return $this->registerLeaveService->createLeave($request);
         }
 
@@ -136,7 +136,7 @@ class RegisterLeaveController extends Controller
      */
     public function updateLeave(RegisterLeaveFormRequest $request)
     {
-        if ($this->registerLeaveService->checkRequestQuota($request['request_for_date'])) {
+        if ($this->registerLeaveService->checkLeaveQuota($request)) {
             return $this->registerLeaveService->updateLeave($request);
         }
 
