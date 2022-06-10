@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Notification;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class NotificationResource extends JsonResource
@@ -18,7 +17,7 @@ class NotificationResource extends JsonResource
         return [
             'id' => $this->id,
             'subject' => $this->subject,
-            'created_by' => Notification::find($this->id)->authorInfo->full_name,
+            'created_by' => $this->created_by,
             'published_to' => $this->published_to,
             'published_date' => $this->published_date->format('d-m-Y'),
             'attachment' => $this->attachment,
