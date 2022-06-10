@@ -23,6 +23,8 @@ class HomeService extends BaseService
         $divisionId = $divisionId->divisions->first()->id;
         $query = Notification::whereJsonContains('published_to', [$divisionId])
             ->orwhereJsonContains('published_to', ["all"]);
+        $query->created_by = Notification::find(auth()->id())->authorInfo->full_name;
+
         if ($orderBy) {
             $query->orderBy('id', $orderBy);
         }
