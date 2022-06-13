@@ -13,10 +13,11 @@ class MemberService extends BaseService
 
     public function updateMember($id, $request)
     {
+        
         $members = $this->findOrFail($id);
-        $members->fill($request->all());
         $members->avatar_official = $this->upload($members, 'avatar_official', $request);
         $members->avatar = $this->upload($members, 'avatar', $request);
+        $members->fill($request->all());
 
         return  $members->save();
     }
