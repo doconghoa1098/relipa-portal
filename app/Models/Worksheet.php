@@ -14,17 +14,6 @@ class Worksheet extends Model
 
     public $timestamps = FALSE;
 
-    protected $dates = [
-        'work_date',
-        'checkin',
-        'checkout',
-        'checkin_original',
-        'checkout_original',
-        'late',
-        'early',
-        'in_office',
-    ];
-
     protected $fillable = [
         'id',
         'member_id',
@@ -44,5 +33,4 @@ class Worksheet extends Model
         'unpaid_leave',
         'note'
     ];
-
 }

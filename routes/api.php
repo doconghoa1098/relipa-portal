@@ -7,6 +7,7 @@ use App\Http\Controllers\RegisterOTController;
 use App\Http\Controllers\RegisterForgetController;
 use App\Http\Controllers\RegisterLeaveController;
 use App\Http\Controllers\RegisterLateEarlyController;
+use App\Http\Controllers\WorkSheetController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -40,6 +41,9 @@ Route::prefix('/home')->middleware(['checkAuth'])->group(function () {
 
 Route::prefix('/worksheets')->middleware(['checkAuth'])->group(function () {
 
+    Route::get('/', [WorkSheetController::class, 'index']);
+    Route::get('/{id}/{type}', [WorkSheetController::class, 'getRequest']);
+    
     Route::post('/register-forget/create', [RegisterForgetController::class, 'createRegisterForget'])->name('register-forget.create');
     Route::put('/register-forget/update', [RegisterForgetController::class, 'updateRegisterForget'])->name('register-forget.update');
 
