@@ -21,8 +21,8 @@ class DatabaseSeeder extends Seeder
 
         //Member::factory(10)->create();
         // Notification::factory(10)->create();
-        Request::factory(10)->create();
-        // Worksheet::factory(10)->create();
+        // Request::factory(10)->create();
+        Worksheet::factory(10)->create();
 
     }
 }
