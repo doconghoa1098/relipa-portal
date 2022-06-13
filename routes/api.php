@@ -41,7 +41,7 @@ Route::prefix('/home')->middleware(['checkAuth'])->group(function () {
 
 Route::prefix('/worksheets')->middleware(['checkAuth'])->group(function () {
 
-    Route::get('/', [WorkSheetController::class, 'index']);
+    Route::get('/', [WorkSheetController::class, 'indexWorksheet']);
     Route::get('/{id}/{type}', [WorkSheetController::class, 'getRequest']);
     
     Route::post('/register-forget/create', [RegisterForgetController::class, 'createRegisterForget'])->name('register-forget.create');

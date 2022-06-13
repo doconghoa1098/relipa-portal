@@ -21,7 +21,7 @@ class WorkSheetController extends Controller
      *   path="/api/worksheets",
      *   summary="View worksheet",
      *   tags={"Worksheets"},
-     *   operationId="index",
+     *   operationId="indexWorksheet",
      *   security={{"bearerAuth": {}}},
      *
      *   @OA\Parameter(
@@ -55,7 +55,7 @@ class WorkSheetController extends Controller
      *   @OA\Response(response=500, description="Internal server error")
      * )
      */
-    public function index(WorkSheetRequest $request)
+    public function indexWorksheet(WorkSheetRequest $request)
     {
         $worksheet = $this->worksheetService->list($request,  Auth::id());
 
