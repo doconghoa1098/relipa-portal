@@ -13,7 +13,7 @@ class RegisterOTService extends BaseService
     {
         return Request::class;
     }
-    
+
     public function create($request)
     {
         $valueRequest = array_map('trim', $request->all());
@@ -21,7 +21,7 @@ class RegisterOTService extends BaseService
         $valueRequest['request_type'] = 5;
         $valueRequest['checkin'] = strtotime($request->request_for_date . $request->checkin);
         $valueRequest['checkout'] = strtotime($request->request_for_date . $request->checkout);
-        $valueRequest['request_ot_time'] = $request->request_overtime;
+        $valueRequest['request_ot_time'] = $request->request_ot_time;
 
         $request = $this->model->where('request_for_date', 'like', $valueRequest['request_for_date'])
             ->where('member_id', Auth::user()->id)
