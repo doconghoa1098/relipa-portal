@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\NotificationResource;
 use App\Services\HomeService;
 use Illuminate\Http\Request;
 
@@ -21,7 +20,7 @@ class HomeController extends Controller
      */
     /**
      * @OA\Get(
-     *   path="/api",
+     *   path="/api/home",
      *   summary="Home",
      *   tags={"Home"},
      *   operationId="index",
@@ -35,7 +34,6 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        return NotificationResource::collection($this->service->home($request));
+        return $this->service->home($request);
     }
-    
 }

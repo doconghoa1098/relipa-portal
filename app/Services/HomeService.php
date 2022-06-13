@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Resources\NotificationResource;
 use App\Models\Member;
 use App\Models\Notification;
 use App\Services\BaseService;
@@ -23,12 +24,11 @@ class HomeService extends BaseService
         $divisionId = $divisionId->divisions->first()->id;
         $query = Notification::whereJsonContains('published_to', [$divisionId])
             ->orwhereJsonContains('published_to', ["all"]);
-        $query->created_by = Notification::find(auth()->id())->authorInfo->full_name;
-
+        
         if ($orderBy) {
             $query->orderBy('id', $orderBy);
         }
 
-        return $query->paginate($limit);
+        return NotificationResource::collection($query->paginate($limit));
     }
 }
