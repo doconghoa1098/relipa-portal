@@ -36,4 +36,9 @@ class HomeController extends Controller
     {
         return $this->service->home($request);
     }
+
+    public function show($id)
+    {
+        return $this->service->showNotice($id);
+    }
 }

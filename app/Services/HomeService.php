@@ -6,6 +6,7 @@ use App\Http\Resources\NotificationResource;
 use App\Models\Member;
 use App\Models\Notification;
 use App\Services\BaseService;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
 
 
@@ -30,5 +31,27 @@ class HomeService extends BaseService
         }
 
         return NotificationResource::collection($query->paginate($limit));
+    }
+    public function showNotice($id)
+    {
+        $member = Member::where('id', auth()->id())->with('divisions')->first();
+        $divisionName = $member->divisions->first()->division_name;
+        $notice = Notification::findOrFail($id);
+        $publishedTo = $notice->published_to;
+
+        $array = [];
+        if ($publishedTo != '["all"]') {
+            foreach ($publishedTo as $val) {
+                array_push($array, $val->division_name);
+            }
+        }
+
+        if (in_array($divisionName, $array) || $publishedTo == '["all"]') {
+
+            return new NotificationResource($notice);
+        } else {
+
+            return $this->errorResponse(trans('message.error'),  Response::HTTP_FORBIDDEN);
+        }
     }
 }
