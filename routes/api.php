@@ -31,9 +31,13 @@ Route::prefix('/members')->middleware(['checkAuth'])->group(function () {
     Route::put('/update', [MemberController::class, 'update'])->name('members.update');
 });
 
-Route::apiResource('/home', HomeController::class)->only([
-    'index', 'show'
-])->middleware('checkAuth');
+Route::prefix('/home')->middleware(['checkAuth'])->group(function () {
+    Route::get('/', [HomeController::class, 'index']);
+    Route::get('/{id}', [HomeController::class, 'showNotification']);
+});
+// Route::apiResource('/home', HomeController::class)->only([
+//     'index', 'show'
+// ])->middleware('checkAuth');
 
 Route::prefix('/worksheets')->middleware(['checkAuth'])->group(function () {
 

@@ -37,7 +37,30 @@ class HomeController extends Controller
         return $this->service->home($request);
     }
 
-    public function show($id)
+    /**
+     * @OA\Get(
+     *   path="/api/home/{id}",
+     *   summary="Detail notification",
+     *   tags={"Home"},
+     *   operationId="showNotification",
+     *   security={{"bearerAuth": {}}},
+     *
+     *   @OA\Parameter(
+     *       name="id",
+     *       description="Notification id",
+     *       required=true,
+     *       in="path",
+     *       @OA\Schema(
+     *           type="integer"
+     *       )
+     *   ),
+     *   @OA\Response(response=200, description="Successful operation"),
+     *   @OA\Response(response=403, description="Forbidden"),
+     *   @OA\Response(response=404, description="Not found"),
+     *   @OA\Response(response=500, description="Internal server error")
+     * )
+     */
+    public function showNotification($id)
     {
         return $this->service->showNotice($id);
     }
