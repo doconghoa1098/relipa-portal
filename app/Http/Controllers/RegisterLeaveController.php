@@ -33,6 +33,14 @@ class RegisterLeaveController extends Controller
      *       )
      *   ),
      *   @OA\Parameter(
+     *       name="request_for_date",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="time",
+     *           example="2022-06-10"
+     *       )
+     *   ),
+     *   @OA\Parameter(
      *       name="checkin",
      *       in="query",
      *       @OA\Schema(
@@ -49,12 +57,44 @@ class RegisterLeaveController extends Controller
      *       )
      *   ),
      *   @OA\Parameter(
-     *       name="special_reason",
+     *       name="leave_start",
      *       in="query",
      *       @OA\Schema(
-     *           type="integer",
-     *           example="1"
+     *           type="time",
+     *           example="10:30"
      *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="leave_end",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="time",
+     *           example="17:30"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="leave_time",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="time",
+     *           example="05:30"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="leave_all_day",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="interger",
+     *           example="0"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *         description="paid",
+     *         in="query",
+     *         name="request_type",
+     *         @OA\Schema(type="radio"),
+     *         @OA\Examples(example="int", value="2", summary="paid"),
+     *         @OA\Examples(example="uuid", value="3", summary="unpaid"),
      *   ),
      *   @OA\Parameter(
      *       name="reason",
@@ -73,11 +113,7 @@ class RegisterLeaveController extends Controller
      */
     public function createLeave(RegisterLeaveFormRequest $request)
     {
-        if ($this->registerLeaveService->checkLeaveQuota($request)) {
-            return $this->registerLeaveService->createLeave($request);
-        }
-
-        return $this->successResponse("You have run out of requests for the month !");
+        return $this->registerLeaveService->createLeave($request);
     }
 
     /**
@@ -93,6 +129,14 @@ class RegisterLeaveController extends Controller
      *       in="query",
      *       @OA\Schema(
      *           type="string"
+     *       )
+     *   ),
+    *    @OA\Parameter(
+     *       name="request_for_date",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="time",
+     *           example="2022-06-10"
      *       )
      *   ),
      *   @OA\Parameter(
@@ -112,12 +156,44 @@ class RegisterLeaveController extends Controller
      *       )
      *   ),
      *   @OA\Parameter(
-     *       name="special_reason",
+     *       name="leave_start",
      *       in="query",
      *       @OA\Schema(
-     *           type="integer",
-     *           example="1"
+     *           type="time",
+     *           example="10:30"
      *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="leave_end",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="time",
+     *           example="17:30"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="leave_time",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="time",
+     *           example="05:30"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="leave_all_day",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="interger",
+     *           example="0"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *         description="paid",
+     *         in="query",
+     *         name="request_type",
+     *         @OA\Schema(type="radio"),
+     *         @OA\Examples(example="int", value="2", summary="paid"),
+     *         @OA\Examples(example="uuid", value="3", summary="unpaid"),
      *   ),
      *   @OA\Parameter(
      *       name="reason",
@@ -136,10 +212,6 @@ class RegisterLeaveController extends Controller
      */
     public function updateLeave(RegisterLeaveFormRequest $request)
     {
-        if ($this->registerLeaveService->checkLeaveQuota($request)) {
-            return $this->registerLeaveService->updateLeave($request);
-        }
-
-        return $this->successResponse("You have run out of requests for the month !");
+        return $this->registerLeaveService->updateLeave($request);
     }
 }

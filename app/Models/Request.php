@@ -30,5 +30,6 @@ class Request extends Model
         'leave_start',
         'leave_end',
         'leave_all_day',
+        'leave_time',
     ];
 }

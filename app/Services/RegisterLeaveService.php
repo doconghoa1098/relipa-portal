@@ -28,7 +28,6 @@ class RegisterLeaveService extends BaseService
             ->where('member_id', Auth::user()->id)
             ->whereIn('request_type', [2, 3])
             ->doesntExist();
-
         if ($request) {
             $this->store($valueRequest);
 
@@ -41,7 +40,11 @@ class RegisterLeaveService extends BaseService
     public function updateLeave($request)
     {
         $valueRequest = array_map('trim', $request->all());
-
+        $valueRequest['request_type'] = $request->request_type;
+        $valueRequest['leave_time'] = $request->leave_time ?? "";
+        $valueRequest['leave_start'] = $request->leave_start ?? "";
+        $valueRequest['leave_end'] = $request->leave_end ?? "";
+        $valueRequest['reason'] = $request->reason ?? "";
         $request = $this->model->where('request_for_date', 'like', $valueRequest['request_for_date'])
             ->where('member_id', Auth::user()->id)
             ->whereIn('request_type', [2, 3])
@@ -65,36 +68,5 @@ class RegisterLeaveService extends BaseService
         }
 
         return $this->errorResponse("Your request is in confirmed or approved status, so it cannot be edited !", Response::HTTP_UNAUTHORIZED);
-    }
-
-
-    public function storeLeaveQuota($value = [])
-    {
-        $LeaveQuota = new LeaveQuota();
-        $LeaveQuota->fill($value);
-
-        return $LeaveQuota->save();
-    }
-
-    public function checkLeaveQuota($request)
-    {
-        dd($request);
-        $date = $request['request_for_date'];
-        $dateRequest = Carbon::createFromFormat('Y-m-d', $date)->format('Y');
-        $checkExistRequestQuota = LeaveQuota::where('year', $dateRequest);
-
-        if ($checkExistRequestQuota->doesntExist()) {
-            $value = [
-                'member_id' => Auth::user()->id,
-                'year' => $dateRequest,
-                'paid_leave' => $request->paid_leave,
-                'unpaid_leave' => $request->unpaid_leave,
-                'remain' => $request->remain,
-            ];
-
-            $this->storeLeaveQuota($value);
-        }
-
-        return $checkExistRequestQuota->where('remain', '>', 0)->first();
     }
 }
