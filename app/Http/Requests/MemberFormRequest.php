@@ -8,6 +8,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 use App\Traits\ResfulResourceTrait;
+use Illuminate\Support\Facades\Auth;
 
 class MemberFormRequest extends FormRequest
 {
@@ -39,7 +40,7 @@ class MemberFormRequest extends FormRequest
             'other_email' => [
                 'required',
                 'email',
-                Rule::unique('members')->ignore($this->id),
+                Rule::unique('members')->ignore(Auth::id()),
             ],
             'identity_number' => 'required|numeric|digits_between:9,12',
             'identity_card_date' => 'required|date',

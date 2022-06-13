@@ -54,6 +54,7 @@ class Member extends Authenticatable implements JWTSubject
         'academic_level',
         'tax_identification',
         'healthcare_provider',
+        'insurance_number',
     ];
 
     /**
@@ -96,5 +97,10 @@ class Member extends Authenticatable implements JWTSubject
     public function memberId()
     {
         return $this->hasOne(MemberRole::class, 'member_id');
+    }
+
+    public function divisions()
+    {
+        return $this->belongsToMany(Division::class,'division_member');
     }
 }

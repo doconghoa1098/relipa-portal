@@ -34,6 +34,30 @@ class RegisterOTController extends Controller
      *       )
      *   ),
      *   @OA\Parameter(
+     *       name="request_for_date",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="date",
+     *           example="2022-06-09"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="checkin",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="date",
+     *           example="06:00"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="checkout",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="date",
+     *           example="17:30"
+     *       )
+     *   ),
+     *   @OA\Parameter(
      *       name="reason",
      *       in="query",
      *       @OA\Schema(
@@ -59,6 +83,14 @@ class RegisterOTController extends Controller
      *   operationId="updateRegisterOT",
      *   security={{"bearerAuth": {}}},
      *
+     *   @OA\Parameter(
+     *       name="request_for_date",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="date",
+     *           example="2022-06-09"
+     *       )
+     *   ),
      *   @OA\Parameter(
      *       name="request_ot_time",
      *       in="query",

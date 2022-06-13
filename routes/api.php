@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\RegisterOTController;
 use App\Http\Controllers\RegisterForgetController;
+use App\Http\Controllers\RegisterLeaveController;
 use App\Http\Controllers\RegisterLateEarlyController;
 use App\Http\Controllers\WorkSheetController;
 use Illuminate\Http\Request;
@@ -29,6 +31,12 @@ Route::group(['middleware' => 'api'], function ($router) {
 Route::prefix('/members')->middleware(['checkAuth'])->group(function () {
     Route::get('/edit', [MemberController::class, 'show'])->name('members.edit');
     Route::put('/update', [MemberController::class, 'update'])->name('members.update');
+
+});
+
+Route::prefix('/home')->middleware(['checkAuth'])->group(function () {
+    Route::get('/', [HomeController::class, 'index']);
+    Route::get('/{id}', [HomeController::class, 'showNotification']);
 });
 
 Route::prefix('/worksheets')->middleware(['checkAuth'])->group(function () {
@@ -45,6 +53,7 @@ Route::prefix('/worksheets')->middleware(['checkAuth'])->group(function () {
     Route::post('/register-ot/create', [RegisterOTController::class, 'createRegisterOT'])->name('register-ot.create');
     Route::put('/register-ot/update', [RegisterOTController::class, 'updateRegisterOT'])->name('register-ot.update');
 
-
+    Route::post('/register-leave/create',[RegisterLeaveController::class,'createLeave'])->name('leave.create');
+    Route::put('/register-leave/update',[RegisterLeaveController::class,'updateLeave'])->name('leave.update');
 
 });
