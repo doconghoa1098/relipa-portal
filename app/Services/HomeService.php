@@ -19,7 +19,6 @@ class HomeService extends BaseService
 
     public function home($request)
     {
-        $limit = $request->get('limit') ?? config('common.default_page_size');
         $orderBy = $request->get('sort');
         $divisionId = Member::where('id', auth()->id())->with('divisions')->first();
         $divisionId = $divisionId->divisions->first()->id;
@@ -30,7 +29,7 @@ class HomeService extends BaseService
             $query->orderBy('id', $orderBy);
         }
 
-        return NotificationResource::collection($query->paginate($limit));
+        return NotificationResource::collection($query->get());
     }
     public function showNotice($id)
     {
