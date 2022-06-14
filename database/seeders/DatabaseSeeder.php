@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         //Member::factory(10)->create();
         // Notification::factory(10)->create();
         // Request::factory(10)->create();
-        Worksheet::factory(1000)->create();
+        Worksheet::factory(2000)->create();
 
     }
 }

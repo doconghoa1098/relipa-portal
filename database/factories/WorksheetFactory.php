@@ -15,8 +15,8 @@ class WorksheetFactory extends Factory
     public function definition()
     {
         static $id = 0;
-        static $day = 30;
-        static $month = 5;
+        static $day = 1;
+        static $month = 1;
         static $year = 2022;
         $workDate = $year.'-'.$month.'-'.$day;
         if ($id == 11) {
