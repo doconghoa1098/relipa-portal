@@ -32,8 +32,10 @@ class WorkSheetService extends BaseService
         } else {
             $worksheet = $worksheet->orderBy('work_date', 'desc');
         }
+        
+        $data = WorksheetResource::collection($worksheet->get());
 
-        return WorksheetResource::collection($worksheet->paginate(15));
+        return $this->successResponse($data);
     }
 
     public function getRequest($id, $type)
