@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\WorkSheetRequest;
-use App\Services\WorkSheetService;
+use App\Services\WorksheetService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,7 +11,7 @@ class WorkSheetController extends Controller
 {
     protected $worksheetService;
 
-    public function __construct(WorkSheetService $worksheetService)
+    public function __construct(WorksheetService $worksheetService)
     {
         $this->worksheetService = $worksheetService;
     }
@@ -57,9 +57,7 @@ class WorkSheetController extends Controller
      */
     public function indexWorksheet(WorkSheetRequest $request)
     {
-        $worksheet = $this->worksheetService->list($request,  Auth::id());
-
-        return $worksheet;
+        return  $this->worksheetService->list($request,  Auth::id());
     }
 
     /**

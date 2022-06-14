@@ -26,7 +26,7 @@ class HomeService extends BaseService
             ->orwhereJsonContains('published_to', ["all"]);
         
         if ($orderBy) {
-            $query->orderBy('id', $orderBy);
+            $query->orderBy('published_date', $orderBy);
         }
 
         return NotificationResource::collection($query->get());
