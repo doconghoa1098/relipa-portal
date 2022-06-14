@@ -19,10 +19,10 @@ class WorksheetFactory extends Factory
         static $month = 5;
         static $year = 2022;
         $workDate = $year.'-'.$month.'-'.$day;
-        if ($id == 101) {
+        if ($id == 11) {
             $id = 1;
         }
-        if ($id == 100) {
+        if ($id == 10) {
             $day++;
         }
         if ($month % 2 != 0) {
@@ -57,7 +57,7 @@ class WorksheetFactory extends Factory
         $lack = strtotime($timework) - strtotime($worktime);
 
         return [
-            'member_id' => $id++ < 100 ? $id : $id=1,
+            'member_id' => $id++ < 10 ? $id : $id=1,
             'work_date' => $workDate,
             'checkin' => (date('D',strtotime($workDate)) != 'Sat' && date('D',strtotime($workDate)) != 'Sun') ? date('Y-m-d H:i:s', $start) : null,
             'checkin_original' => (date('D',strtotime($workDate)) != 'Sat' && date('D',strtotime($workDate)) != 'Sun') ? date('Y-m-d H:i:s', $checkin) : null,
