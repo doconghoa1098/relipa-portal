@@ -8,7 +8,7 @@ use App\Models\Worksheet;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Response;
 
-class WorkSheetService extends BaseService
+class WorksheetService extends BaseService
 {
     public function getModel()
     {
@@ -32,10 +32,10 @@ class WorkSheetService extends BaseService
         } else {
             $worksheet = $worksheet->orderBy('work_date', 'desc');
         }
-        
-        $data = WorksheetResource::collection($worksheet->get());
 
-        return $this->successResponse($data);
+        $perpage = $request->perpage ?? 10;
+
+        return WorksheetResource::collection($worksheet->paginate(((int) $perpage)));
     }
 
     public function getRequest($id, $type)
