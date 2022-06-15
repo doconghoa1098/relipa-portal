@@ -30,11 +30,11 @@ class WorkSheetRequest extends FormRequest
     public function rules()
     {
         return [
-            'end_date' => 'nullable|date',
-            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|before_or_equal:today',
+            'start_date' => 'nullable|date|before:end_date',
             'month' => [
                 'nullable',
-                Rule::in(["This month", "Last month", "This year", "All"])
+                Rule::in(["this_month", "last_month", "this_year", "all"])
             ],
             'work_date' => [
                 'nullable',
