@@ -40,7 +40,7 @@ class WorkSheetRequest extends FormRequest
                 'nullable',
                 Rule::in(["asc", "desc"])
             ],
-            'perpage' => 'numeric'
+            'perpage' => 'nullable|numeric'
         ];
     }
 
