@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NotificationRequest;
 use App\Services\HomeService;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,7 @@ class HomeController extends Controller
      *   security={{"bearerAuth": {}}},
      *
      *   @OA\Parameter(
-     *       name="published_date",
+     *       name="sort",
      *       in="query",
      *       @OA\Schema(
      *           type="string",
@@ -48,7 +49,7 @@ class HomeController extends Controller
      *   @OA\Response(response=500, description="Internal server error")
      * )
      */
-    public function index(Request $request)
+    public function index(NotificationRequest $request)
     {
         return $this->service->home($request);
     }
