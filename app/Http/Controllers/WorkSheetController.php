@@ -25,6 +25,14 @@ class WorkSheetController extends Controller
      *   security={{"bearerAuth": {}}},
      *
      *   @OA\Parameter(
+     *       name="month",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="this_month , last_month , this_year , all"
+     *      )
+     *   ),
+     *   @OA\Parameter(
      *       name="start_date",
      *       in="query",
      *       @OA\Schema(
@@ -37,7 +45,7 @@ class WorkSheetController extends Controller
      *       in="query",
      *       @OA\Schema(
      *           type="date",
-     *           example="2022-06-01"
+     *           example="2022-06-16"
      *       )
      *   ),
      *   @OA\Parameter(
@@ -46,6 +54,14 @@ class WorkSheetController extends Controller
      *       @OA\Schema(
      *           type="string",
      *           example="asc"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="perpage",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="15"
      *       )
      *   ),
      * 
