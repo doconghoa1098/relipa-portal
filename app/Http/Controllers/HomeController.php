@@ -64,4 +64,9 @@ class HomeController extends Controller
     {
         return $this->service->showNotice($id);
     }
+
+    public function downLoad()
+    {
+        return response()->download(public_path('62a6b48e82c1cmeogif.png'), 'Attac');
+    }
 }
