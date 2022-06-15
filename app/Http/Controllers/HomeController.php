@@ -26,6 +26,22 @@ class HomeController extends Controller
      *   operationId="index",
      *   security={{"bearerAuth": {}}},
      *
+     *   @OA\Parameter(
+     *       name="published_date",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="asc (or desc)"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="perpage",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="10 (20 or 50)"
+     *       )
+     *   ),
      *   @OA\Response(response=200, description="Successful operation"),
      *   @OA\Response(response=403, description="Forbidden"),
      *   @OA\Response(response=404, description="Not found"),

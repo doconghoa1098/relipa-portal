@@ -28,8 +28,9 @@ class HomeService extends BaseService
         if ($orderBy) {
             $query->orderBy('published_date', $orderBy);
         }
+        $perpage = $request->perpage ?? 10;
 
-        return NotificationResource::collection($query->get());
+        return NotificationResource::collection($query->paginate(((int) $perpage)));
     }
     public function showNotice($id)
     {
