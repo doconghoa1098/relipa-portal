@@ -39,7 +39,8 @@ class WorkSheetRequest extends FormRequest
             'work_date' => [
                 'nullable',
                 Rule::in(["asc", "desc"])
-            ]
+            ],
+            'perpage' => 'numeric'
         ];
     }
 
