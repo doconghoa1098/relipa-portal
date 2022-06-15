@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CheckLog;
 use App\Models\Division;
 use App\Models\DivisionMember;
 use App\Models\Member;
@@ -24,9 +25,11 @@ class DatabaseSeeder extends Seeder
         // Member::factory(300)->create();
         // Notification::factory(300)->create();
         // Request::factory(300)->create();
-        // Worksheet::factory(300)->create();
+        Worksheet::factory(1650)->create();
+        // Worksheet::factory(100)->create();
         // Division::factory(6)->create();
-        // DivisionMember::factory(300)->create();
+        // DivisionMember::factory(110)->create();
+        // CheckLog::factory(4030)->create();
     }
 }
 
