@@ -8,8 +8,8 @@ trait UploadableTrait
     protected function upload($model, $file, $request)
     {
         if ($request->has($file)) {
-            $image = $request->file($file)->storeAs( 'public/uploads/members', uniqid() . $request->$file->getClientOriginalName() );
             $avatar = uniqid() .'-'. $request->$file->getClientOriginalName();
+            $request->file($file)->storeAs( 'public/uploads/members', $avatar );
         } else {
             $avatar = $model->$file;
         }
