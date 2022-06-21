@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\URL;
 
 class MemberResource extends JsonResource
 {
@@ -17,8 +18,8 @@ class MemberResource extends JsonResource
         return [
             'id' => $this->id,
             'full_name' => $this->full_name,
-            'avatar_official' => $this->avatar_official,
-            'avatar' => $this->avatar,
+            'avatar_official' => URL::to('/storage/uploads/members/'.$this->avatar_official),
+            'avatar' => URL::to('/storage/uploads/members/'.$this->avatar),
             'gender' => $this->gender,
             'nick_name' => $this->nick_name,
             'birth_date' => $this->birth_date,

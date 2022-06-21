@@ -9,7 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 use App\Traits\ResfulResourceTrait;
 
-class WorkSheetRequest extends FormRequest
+class NotificationRequest extends FormRequest
 {
     use ResfulResourceTrait;
     /**
@@ -30,13 +30,7 @@ class WorkSheetRequest extends FormRequest
     public function rules()
     {
         return [
-            'end_date' => 'nullable|date|before_or_equal:today',
-            'start_date' => 'nullable|date|before:end_date',
-            'month' => [
-                'nullable',
-                Rule::in(["this_month", "last_month", "this_year", "all"])
-            ],
-            'work_date' => [
+            'sort' => [
                 'nullable',
                 Rule::in(["asc", "desc"])
             ],

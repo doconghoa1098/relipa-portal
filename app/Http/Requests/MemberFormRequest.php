@@ -33,8 +33,8 @@ class MemberFormRequest extends FormRequest
     {
 
         return [
-            'avatar' => 'mimes:jpg,png|max:4096|dimensions:max_width=300,max_height=300',
-            'avatar_official' => 'mimes:jpg,png|max:4096|dimensions:max_width=500,max_height=500',
+            'avatar' => 'mimes:jpg,png|max:4096|dimensions:min_width=300,min_height=300',
+            'avatar_official' => 'mimes:jpg,png|max:4096|dimensions:min_width=500,min_height=500',
             'gender' => 'required',
             'birth_date' => 'required|date',
             'other_email' => [
