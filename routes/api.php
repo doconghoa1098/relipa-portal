@@ -37,7 +37,8 @@ Route::prefix('/members')->middleware(['checkAuth'])->group(function () {
 Route::prefix('/home')->middleware(['checkAuth'])->group(function () {
     Route::get('/', [HomeController::class, 'index']);
     Route::get('/{id}', [HomeController::class, 'showNotification']);
-    Route::get('/file/download', [HomeController::class, 'downLoad']);
+    Route::get('/download/{file}', [HomeController::class, 'downLoad']);   
+    Route::put('/notice/update/{id}', [HomeController::class, 'updateNotice']);
 });
 
 Route::prefix('/worksheets')->middleware(['checkAuth'])->group(function () {

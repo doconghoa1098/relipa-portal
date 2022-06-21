@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Services\HomeService;
+use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -65,8 +67,25 @@ class HomeController extends Controller
         return $this->service->showNotice($id);
     }
 
-    public function downLoad()
+    public function downLoad($file)
     {
-        return response()->download(public_path('62a6b48e82c1cmeogif.png'), 'Attac');
+        $isFile = $this->service->isFileAttachment($file);
+
+        if ($isFile && Storage::exists('public/uploads/notifications/' . $file)) {
+
+            return Storage::download('public/uploads/notifications/' . $file);
+        }
+
+        return $this->errorResponse('The file you requested does not exist !', Response::HTTP_NOT_FOUND);
+    }
+
+    public function updateNotice($id, Request $request)
+    {
+        if ($this->service->updateNotification($id, $request)) {
+
+            return $this->successResponse(null, 'Update noti successfully!');
+        }
+
+        return $this->errorResponse('Unauthorized !', Response::HTTP_FORBIDDEN);
     }
 }
