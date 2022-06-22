@@ -7,8 +7,6 @@ use App\Models\Member;
 use App\Models\Notification;
 use App\Services\BaseService;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Http\Request;
-
 
 class HomeService extends BaseService
 {
@@ -19,15 +17,15 @@ class HomeService extends BaseService
 
     public function home($request)
     {
-        $orderBy = $request->get('sort');
         $divisionId = Member::where('id', auth()->id())->with('divisions')->first();
         $divisionId = $divisionId->divisions->first()->id;
         $query = Notification::whereJsonContains('published_to', [$divisionId])
             ->orwhereJsonContains('published_to', ["all"]);
-        
-        if ($orderBy) {
-            $query->orderBy('published_date', $orderBy);
-        }
+
+        $query->orderBy('published_date', $request->get('sort') ?? 'desc')
+            ->orderBy('subject', $request->get('sortSubject') ?? 'asc')
+            ->orderBy('created_by', $request->get('sortAuthor') ?? 'desc')
+            ->orderBy('published_to', $request->get('sortTo') ?? 'asc');
         $perpage = $request->perpage ?? 10;
 
         return NotificationResource::collection($query->paginate(((int) $perpage)));
@@ -53,5 +51,26 @@ class HomeService extends BaseService
 
             return $this->errorResponse(trans('message.error'),  Response::HTTP_FORBIDDEN);
         }
+    }
+
+    public function updateNotification($id, $request)
+    {
+        $notice = $this->findOrFail($id);
+        $notice->fill($request->all());
+        $notice->attachment = $this->uploadNotice($notice, 'attachment', $request);
+
+        return  $notice->update();
+    }
+
+    public function isFileAttachment($file)
+    {
+        $divisionId = Member::where('id', auth()->id())->with('divisions')->first();
+        $divisionId = $divisionId->divisions->first()->id;
+        $query = Notification::whereJsonContains('published_to', [$divisionId])
+            ->orwhereJsonContains('published_to', ["all"])
+            ->pluck('attachment')
+            ->toArray();
+
+        return in_array($file, $query);
     }
 }

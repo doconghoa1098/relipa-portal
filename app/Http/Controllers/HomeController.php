@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\NotificationRequest;
 use App\Services\HomeService;
+use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -32,7 +34,31 @@ class HomeController extends Controller
      *       in="query",
      *       @OA\Schema(
      *           type="string",
-     *           example="asc (or desc)"
+     *           example="desc"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="sortSubject",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="asc"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="sortAuthor",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="desc"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="sortTo",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="asc"
      *       )
      *   ),
      *   @OA\Parameter(
@@ -40,7 +66,7 @@ class HomeController extends Controller
      *       in="query",
      *       @OA\Schema(
      *           type="string",
-     *           example="10 (20 or 50)"
+     *           example="10 (20 or 50 or 100)"
      *       )
      *   ),
      *   @OA\Response(response=200, description="Successful operation"),
@@ -80,5 +106,27 @@ class HomeController extends Controller
     public function showNotification($id)
     {
         return $this->service->showNotice($id);
+    }
+
+    public function downLoad($file)
+    {
+        $isFile = $this->service->isFileAttachment($file);
+
+        if ($isFile && Storage::exists('public/uploads/notifications/' . $file)) {
+
+            return Storage::download('public/uploads/notifications/' . $file);
+        }
+
+        return $this->errorResponse('The file you requested does not exist !', Response::HTTP_NOT_FOUND);
+    }
+
+    public function updateNotice($id, Request $request)
+    {
+        if ($this->service->updateNotification($id, $request)) {
+
+            return $this->successResponse(null, 'Update noti successfully!');
+        }
+
+        return $this->errorResponse('Unauthorized !', Response::HTTP_FORBIDDEN);
     }
 }

@@ -16,4 +16,16 @@ trait UploadableTrait
 
         return $avatar;
     }
+
+    protected function uploadNotice($model, $image, $request)
+    {
+        if ($request->has($image)) {
+            $attachment = uniqid() .'-'. $request->$image->getClientOriginalName();
+            $request->file($image)->storeAs( 'public/uploads/notifications', $attachment );
+        } else {
+            $attachment = $model->$image;
+        }
+
+        return $attachment;
+    }
 }

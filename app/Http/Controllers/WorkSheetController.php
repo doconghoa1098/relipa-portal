@@ -61,7 +61,7 @@ class WorkSheetController extends Controller
      *       in="query",
      *       @OA\Schema(
      *           type="string",
-     *           example="15"
+     *           example="30 or 50 or 100"
      *       )
      *   ),
      * 
