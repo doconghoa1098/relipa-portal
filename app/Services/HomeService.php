@@ -17,15 +17,15 @@ class HomeService extends BaseService
 
     public function home($request)
     {
-        $orderBy = $request->get('sort');
         $divisionId = Member::where('id', auth()->id())->with('divisions')->first();
         $divisionId = $divisionId->divisions->first()->id;
         $query = Notification::whereJsonContains('published_to', [$divisionId])
             ->orwhereJsonContains('published_to', ["all"]);
 
-        if ($orderBy) {
-            $query->orderBy('published_date', $orderBy);
-        }
+        $query->orderBy('published_date', $request->get('sort') ?? 'desc')
+            ->orderBy('subject', $request->get('sortSubject') ?? 'asc')
+            ->orderBy('created_by', $request->get('sortAuthor') ?? 'desc')
+            ->orderBy('published_to', $request->get('sortTo') ?? 'asc');
         $perpage = $request->perpage ?? 10;
 
         return NotificationResource::collection($query->paginate(((int) $perpage)));

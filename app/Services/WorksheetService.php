@@ -21,7 +21,7 @@ class WorksheetService extends BaseService
         $worksheet = $this->model->where('member_id', $member_id);
 
         if ( !empty($request['month']) ) {
-            $month = strtotime($this->model->where('member_id', $member_id)->latest('work_date')->first()->work_date);
+            $month = time();
 
             $list = ( $request['month'] == "this_month") ? date('Y-m', $month) : 
                     (( $request['month'] == "last_month") ? date('Y-m', strtotime("-1 month", $month)) : 

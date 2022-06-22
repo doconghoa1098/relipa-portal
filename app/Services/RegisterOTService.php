@@ -44,7 +44,7 @@ class RegisterOTService extends BaseService
         $request = $this->model->where('request_for_date', 'like', $valueRequest['request_for_date'])
             ->where('member_id', Auth::user()->id)
             ->where('request_type', 5)
-            ->whereIn('status', [1, 2])
+            ->whereIn('status', [-1, 1, 2])
             ->doesntExist();
 
         if ($request) {

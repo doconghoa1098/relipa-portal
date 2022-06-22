@@ -34,7 +34,31 @@ class HomeController extends Controller
      *       in="query",
      *       @OA\Schema(
      *           type="string",
-     *           example="asc (or desc)"
+     *           example="desc"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="sortSubject",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="asc"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="sortAuthor",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="desc"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="sortTo",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="string",
+     *           example="asc"
      *       )
      *   ),
      *   @OA\Parameter(
@@ -42,7 +66,7 @@ class HomeController extends Controller
      *       in="query",
      *       @OA\Schema(
      *           type="string",
-     *           example="10 (20 or 50)"
+     *           example="10 (20 or 50 or 100)"
      *       )
      *   ),
      *   @OA\Response(response=200, description="Successful operation"),

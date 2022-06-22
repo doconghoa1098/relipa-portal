@@ -31,7 +31,7 @@ class WorkSheetRequest extends FormRequest
     {
         return [
             'end_date' => 'nullable|date|before_or_equal:today',
-            'start_date' => 'nullable|date|before:end_date',
+            'start_date' => 'nullable|date|before_or_equal:end_date',
             'month' => [
                 'nullable',
                 Rule::in(["this_month", "last_month", "this_year", "all"])
@@ -40,7 +40,7 @@ class WorkSheetRequest extends FormRequest
                 'nullable',
                 Rule::in(["asc", "desc"])
             ],
-            'perpage' => 'nullable|numeric'
+            'perpage' => 'nullable|numeric|in:30,50,100'
         ];
     }
 

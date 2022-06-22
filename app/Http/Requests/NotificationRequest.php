@@ -34,7 +34,19 @@ class NotificationRequest extends FormRequest
                 'nullable',
                 Rule::in(["asc", "desc"])
             ],
-            'perpage' => 'nullable|numeric'
+            'sortSubject' => [
+                'nullable',
+                Rule::in(["asc", "desc"])
+            ],
+            'sortAuthor' => [
+                'nullable',
+                Rule::in(["asc", "desc"])
+            ],
+            'sortTo' => [
+                'nullable',
+                Rule::in(["asc", "desc"])
+            ],
+            'perpage' => 'nullable|numeric|in:10,20,50,100',
         ];
     }
 

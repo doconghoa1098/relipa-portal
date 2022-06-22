@@ -29,7 +29,7 @@ class RegisterLeaveFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'special_reason' => 'nullable|numeric|in:0,1,2',
+            'special_reason' => 'required|numeric|in:0,1,2,3',
             'reason'  => 'required',
         ];
     }
