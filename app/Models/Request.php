@@ -21,6 +21,8 @@ class Request extends Model
         'request_ot_time',
         'checkin',
         'checkout',
+        'compensation_date',
+        'compensation_time',
         'reason',
         'status',
         'manager_confirmed_status',
