@@ -30,7 +30,8 @@ class RegisterOTFormRequest extends FormRequest
     {
         return [
             'reason' => 'required',
-            'request_ot_time' => 'required|date_format:H:i',
+            'actual_ot' => 'required|date_format:H:i',
+            'request_ot_time' => 'required|date_format:H:i|before_or_equal:actual_ot',
         ];
     }
 

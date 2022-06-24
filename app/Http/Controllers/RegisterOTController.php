@@ -27,13 +27,6 @@ class RegisterOTController extends Controller
      *   security={{"bearerAuth": {}}},
      *
      *   @OA\Parameter(
-     *       name="request_ot_time",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="date"
-     *       )
-     *   ),
-     *   @OA\Parameter(
      *       name="request_for_date",
      *       in="query",
      *       @OA\Schema(
@@ -42,28 +35,30 @@ class RegisterOTController extends Controller
      *       )
      *   ),
      *   @OA\Parameter(
-     *       name="checkin",
+     *       name="request_ot_time",
      *       in="query",
      *       @OA\Schema(
-     *           type="date",
-     *           example="06:00"
+     *           type="time",
+     *           example="00:30"
      *       )
      *   ),
      *   @OA\Parameter(
-     *       name="checkout",
+     *       name="actual_ot",
      *       in="query",
      *       @OA\Schema(
-     *           type="date",
-     *           example="17:30"
+     *           type="time",
+     *           example="00:40"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="reason",
      *       in="query",
      *       @OA\Schema(
-     *           type="string"
+     *           type="string",
+     *           example="Khách hàng yêu cầu deploy nên OT"
      *       )
      *   ),
+     * 
      *   @OA\Response(response=200, description="Successful operation"),
      *   @OA\Response(response=403, description="Forbidden"),
      *   @OA\Response(response=404, description="Not found"),
@@ -95,14 +90,24 @@ class RegisterOTController extends Controller
      *       name="request_ot_time",
      *       in="query",
      *       @OA\Schema(
-     *           type="date"
+     *           type="time",
+     *           example="00:30"
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="actual_ot",
+     *       in="query",
+     *       @OA\Schema(
+     *           type="time",
+     *           example="00:40"
      *       )
      *   ),
      *   @OA\Parameter(
      *       name="reason",
      *       in="query",
      *       @OA\Schema(
-     *           type="string"
+     *           type="string",
+     *           example="Khách hàng yêu cầu deploy nên OT "
      *       )
      *   ),
      *   @OA\Response(response=200, description="Successful operation"),
@@ -113,13 +118,6 @@ class RegisterOTController extends Controller
      */
     public function updateRegisterOT(RegisterOTFormRequest $request)
     {
-
         return $this->registerOTService->updateOvertime($request);
-
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }

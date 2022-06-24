@@ -19,9 +19,6 @@ class RegisterOTService extends BaseService
         $valueRequest = array_map('trim', $request->all());
         $valueRequest['member_id'] = Auth::user()->id;
         $valueRequest['request_type'] = 5;
-        $valueRequest['checkin'] = strtotime($request->request_for_date . $request->checkin);
-        $valueRequest['checkout'] = strtotime($request->request_for_date . $request->checkout);
-        $valueRequest['request_ot_time'] = $request->request_ot_time;
 
         $request = $this->model->where('request_for_date', 'like', $valueRequest['request_for_date'])
             ->where('member_id', Auth::user()->id)
