@@ -38,6 +38,8 @@ class RegisterLateEarlyService extends BaseService
     public function updateLateEarly($request)
     {
         $valueRequest = array_map('trim', $request->all());
+        $valueRequest['compensation_date'] = $valueRequest['date_cover_up'];
+        $valueRequest['compensation_time'] = $valueRequest['overtime'];
 
         $request = $this->model->where('request_for_date', 'like', $valueRequest['request_for_date'])
             ->where('member_id', Auth::user()->id)

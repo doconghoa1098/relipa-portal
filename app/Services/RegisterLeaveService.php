@@ -20,9 +20,6 @@ class RegisterLeaveService extends BaseService
     {
         $valueRequest = array_map('trim', $request->all());
         $valueRequest['member_id'] = Auth::user()->id;
-        $valueRequest['request_type'] = $request->request_type;
-        $valueRequest['checkin'] = strtotime($request->request_for_date . $request->checkin);
-        $valueRequest['checkout'] = strtotime($request->request_for_date . $request->checkout);
 
         $request = $this->model->where('request_for_date', 'like', $valueRequest['request_for_date'])
             ->where('member_id', Auth::user()->id)
@@ -40,11 +37,7 @@ class RegisterLeaveService extends BaseService
     public function updateLeave($request)
     {
         $valueRequest = array_map('trim', $request->all());
-        $valueRequest['request_type'] = $request->request_type;
-        $valueRequest['leave_time'] = $request->leave_time ?? "";
-        $valueRequest['leave_start'] = $request->leave_start ?? "";
-        $valueRequest['leave_end'] = $request->leave_end ?? "";
-        $valueRequest['reason'] = $request->reason ?? "";
+
         $request = $this->model->where('request_for_date', 'like', $valueRequest['request_for_date'])
             ->where('member_id', Auth::user()->id)
             ->whereIn('request_type', [2, 3])

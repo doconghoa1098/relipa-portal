@@ -3,11 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterLeaveFormRequest;
-use App\Http\Resources\RegisterLeaveResource;
 use App\Services\RegisterLeaveService;
-use Illuminate\Http\Response;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class RegisterLeaveController extends Controller
 {
@@ -26,13 +22,6 @@ class RegisterLeaveController extends Controller
      *   security={{"bearerAuth": {}}},
      *
      *   @OA\Parameter(
-     *       name="bearer",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="string"
-     *       )
-     *   ),
-     *   @OA\Parameter(
      *       name="request_for_date",
      *       in="query",
      *       @OA\Schema(
@@ -41,27 +30,18 @@ class RegisterLeaveController extends Controller
      *       )
      *   ),
      *   @OA\Parameter(
-     *       name="checkin",
+     *       name="leave_all_day",
      *       in="query",
-     *       @OA\Schema(
-     *           type="time",
-     *           example="09:35"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="checkout",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="time",
-     *           example="17:35"
-     *       )
+     *       @OA\Schema(type="radio"),
+     *       @OA\Examples(example="int", value="0", summary="No check"),
+     *       @OA\Examples(example="uuid", value="1", summary="Checked"),
      *   ),
      *   @OA\Parameter(
      *       name="leave_start",
      *       in="query",
      *       @OA\Schema(
      *           type="time",
-     *           example="10:30"
+     *           example="17:00"
      *       )
      *   ),
      *   @OA\Parameter(
@@ -77,15 +57,7 @@ class RegisterLeaveController extends Controller
      *       in="query",
      *       @OA\Schema(
      *           type="time",
-     *           example="05:30"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="leave_all_day",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="interger",
-     *           example="0"
+     *           example="00:30"
      *       )
      *   ),
      *   @OA\Parameter(
@@ -123,15 +95,8 @@ class RegisterLeaveController extends Controller
      *   tags={"Register Leave"},
      *   operationId="updateLeave",
      *   security={{"bearerAuth": {}}},
-     *
+     * 
      *   @OA\Parameter(
-     *       name="bearer",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="string"
-     *       )
-     *   ),
-    *    @OA\Parameter(
      *       name="request_for_date",
      *       in="query",
      *       @OA\Schema(
@@ -140,27 +105,18 @@ class RegisterLeaveController extends Controller
      *       )
      *   ),
      *   @OA\Parameter(
-     *       name="checkin",
+     *       name="leave_all_day",
      *       in="query",
-     *       @OA\Schema(
-     *           type="time",
-     *           example="09:35"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="checkout",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="time",
-     *           example="17:35"
-     *       )
+     *       @OA\Schema(type="radio"),
+     *       @OA\Examples(example="int", value="0", summary="No check"),
+     *       @OA\Examples(example="uuid", value="1", summary="Checked"),
      *   ),
      *   @OA\Parameter(
      *       name="leave_start",
      *       in="query",
      *       @OA\Schema(
      *           type="time",
-     *           example="10:30"
+     *           example="17:00"
      *       )
      *   ),
      *   @OA\Parameter(
@@ -176,15 +132,7 @@ class RegisterLeaveController extends Controller
      *       in="query",
      *       @OA\Schema(
      *           type="time",
-     *           example="05:30"
-     *       )
-     *   ),
-     *   @OA\Parameter(
-     *       name="leave_all_day",
-     *       in="query",
-     *       @OA\Schema(
-     *           type="interger",
-     *           example="0"
+     *           example="00:30"
      *       )
      *   ),
      *   @OA\Parameter(
