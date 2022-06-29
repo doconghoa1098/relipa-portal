@@ -74,7 +74,14 @@ class WorksheetService extends BaseService
 
     public function findRequest($date, $type)
     {
-        return Request::where('member_id', Auth::user()->id)
+        if ($type == 2 || $type == 3) {
+            return Request::where('member_id', Auth::id())
+                ->where('request_for_date', $date)
+                ->whereIn('request_type', [2, 3])
+                ->first();
+        }
+
+        return Request::where('member_id', Auth::id())
             ->where('request_for_date', $date)
             ->where('request_type', $type)
             ->first();
