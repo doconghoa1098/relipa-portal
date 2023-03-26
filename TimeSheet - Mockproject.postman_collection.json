@@ -1,0 +1,1213 @@
+{
+	"info": {
+		"_postman_id": "d6dda89f-ee86-4af5-a321-aac2ad9cd749",
+		"name": "TimeSheet - Mockproject",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21158355"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "admin@vnext.vn",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/login",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changePassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "old_password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "new_password",
+									"value": "1234567",
+									"type": "text"
+								},
+								{
+									"key": "new_password_confirmation",
+									"value": "1234567",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/change-pass",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"change-pass"
+							],
+							"query": [
+								{
+									"key": "_method",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/logout",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Home",
+			"item": [
+				{
+					"name": "View",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjU3Mjc0Njc2LCJleHAiOjE2NTcyNzgyNzYsIm5iZiI6MTY1NzI3NDY3NiwianRpIjoiTTFkano2NDNPek5HcG42ZSIsInN1YiI6IjEiLCJwcnYiOiI4NjY1YWU5Nzc1Y2YyNmY2YjhlNDk2Zjg2ZmE1MzZkNjhkZDcxODE4In0.s58RtOyU7W181OhdqiD4H48r9HyEkNzNyJAG68gVU9M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/home",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"home"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "asc",
+									"disabled": true
+								},
+								{
+									"key": "sortSubject",
+									"value": "desc",
+									"disabled": true
+								},
+								{
+									"key": "sortAuthor",
+									"value": "asc",
+									"disabled": true
+								},
+								{
+									"key": "sortTo",
+									"value": "desc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjU3Mjc0Njc2LCJleHAiOjE2NTcyNzgyNzYsIm5iZiI6MTY1NzI3NDY3NiwianRpIjoiTTFkano2NDNPek5HcG42ZSIsInN1YiI6IjEiLCJwcnYiOiI4NjY1YWU5Nzc1Y2YyNmY2YjhlNDk2Zjg2ZmE1MzZkNjhkZDcxODE4In0.s58RtOyU7W181OhdqiD4H48r9HyEkNzNyJAG68gVU9M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "_method",
+									"value": "put",
+									"type": "text"
+								},
+								{
+									"key": "published_date",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "subject",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "message",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "attachment",
+									"type": "file",
+									"src": "/home/anhhn/Downloads/[FR] PHP.xlsx"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/home/notice/update/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"home",
+								"notice",
+								"update",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/home/download/62c803c3a1aee-[FR] PHP.xlsx",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"home",
+								"download",
+								"62c803c3a1aee-[FR] PHP.xlsx"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Member",
+			"item": [
+				{
+					"name": "View Detail",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjU3Mjc1MDAyLCJleHAiOjE2NTcyNzg2MDIsIm5iZiI6MTY1NzI3NTAwMiwianRpIjoiMHNyRzM3NVVvbG1SbkpLMyIsInN1YiI6IjIiLCJwcnYiOiI4NjY1YWU5Nzc1Y2YyNmY2YjhlNDk2Zjg2ZmE1MzZkNjhkZDcxODE4In0.BErdj1jyRJOTUuGuLVGQkCCyddUwvxmOKSh2PDc6s1Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/members/edit/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"members",
+								"edit",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTY1NTY5NjMzNSwiZXhwIjoxNjU1Njk5OTM1LCJuYmYiOjE2NTU2OTYzMzUsImp0aSI6Im5SUXdBODNwampqdFloOHUiLCJzdWIiOjEsInBydiI6Ijg2NjVhZTk3NzVjZjI2ZjZiOGU0OTZmODZmYTUzNmQ2OGRkNzE4MTgifQ.G6Yi9YN7iYxJivcXAqCDK0VF9f31GVLVMpXAwAAm6MM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "_method",
+									"value": "PUT",
+									"type": "text"
+								},
+								{
+									"key": "full_name",
+									"value": "Do Hoa",
+									"type": "text"
+								},
+								{
+									"key": "avatar_official",
+									"type": "file",
+									"src": "/C:/Users/Admin/Desktop/Image/b1_function.png"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/C:/Users/DOHOA/Desktop/imgpsh_fullsize_anim.png"
+								},
+								{
+									"key": "gender",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "nick_name",
+									"value": "hoadc",
+									"type": "text"
+								},
+								{
+									"key": "birth_date",
+									"value": "1998/10/10",
+									"type": "text"
+								},
+								{
+									"key": "other_email",
+									"value": "hoadc@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "identity_number",
+									"value": "123456789",
+									"type": "text"
+								},
+								{
+									"key": "identity_card_date",
+									"value": "2018/10/10",
+									"type": "text"
+								},
+								{
+									"key": "identity_card_place",
+									"value": "Nam Dinh",
+									"type": "text"
+								},
+								{
+									"key": "skype",
+									"value": "doconghoa",
+									"type": "text"
+								},
+								{
+									"key": "nationality",
+									"value": "VietNam",
+									"type": "text"
+								},
+								{
+									"key": "bank_name",
+									"value": "TPBANK",
+									"type": "text"
+								},
+								{
+									"key": "bank_account",
+									"value": "DO CONG HOA",
+									"type": "text"
+								},
+								{
+									"key": "marital_status",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "academic_level",
+									"value": "university",
+									"type": "text"
+								},
+								{
+									"key": "permanent_address",
+									"value": "Nam Dinh",
+									"type": "text"
+								},
+								{
+									"key": "temporary_address",
+									"value": "Ha Noi",
+									"type": "text"
+								},
+								{
+									"key": "emergency_contact_name",
+									"value": "Hoa",
+									"type": "text"
+								},
+								{
+									"key": "emergency_contact_relationship",
+									"value": "Do Hoa",
+									"type": "text"
+								},
+								{
+									"key": "emergency_contact_number",
+									"value": "123456789",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "0988596440",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/members/update/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"members",
+								"update",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Register Forget",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTY1NTk1MDY1OCwiZXhwIjoxNjU1OTU0MjU4LCJuYmYiOjE2NTU5NTA2NTgsImp0aSI6ImNhZWxCOHhqQWxYREFRUlMiLCJzdWIiOjEsInBydiI6Ijg2NjVhZTk3NzVjZjI2ZjZiOGU0OTZmODZmYTUzNmQ2OGRkNzE4MTgifQ.n1wT4JsbMfiQGU4QqWV7sZjvUx8H7n4ypbkIGWnbRGo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "request_for_date",
+									"value": "2022-01-03",
+									"description": "k chỉnh sửa dc, FE gửi kèm lên qua formData",
+									"type": "text"
+								},
+								{
+									"key": "checkin",
+									"value": "08:30",
+									"type": "text"
+								},
+								{
+									"key": "checkout",
+									"value": "17:30",
+									"type": "text"
+								},
+								{
+									"key": "reason",
+									"value": "xe hong nen muon 2",
+									"type": "text"
+								},
+								{
+									"key": "special_reason",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/worksheets/register-forget/create",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"worksheets",
+								"register-forget",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTY1NTk1MDY1OCwiZXhwIjoxNjU1OTU0MjU4LCJuYmYiOjE2NTU5NTA2NTgsImp0aSI6ImNhZWxCOHhqQWxYREFRUlMiLCJzdWIiOjEsInBydiI6Ijg2NjVhZTk3NzVjZjI2ZjZiOGU0OTZmODZmYTUzNmQ2OGRkNzE4MTgifQ.n1wT4JsbMfiQGU4QqWV7sZjvUx8H7n4ypbkIGWnbRGo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "request_for_date",
+									"value": "2022-01-03",
+									"type": "text"
+								},
+								{
+									"key": "checkin",
+									"value": "09:00",
+									"type": "text"
+								},
+								{
+									"key": "checkout",
+									"value": "18:30",
+									"type": "text"
+								},
+								{
+									"key": "reason",
+									"value": "ssssaadwqf",
+									"type": "text"
+								},
+								{
+									"key": "special_reason",
+									"value": "3",
+									"description": "0( không chọn)-  1 (checkbox 1) -2(checkbox 2) - 3 ( cả 2 checkbox)",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/worksheets/register-forget/update",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"worksheets",
+								"register-forget",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Register Late Early",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTY1NjA1MzM4NSwiZXhwIjoxNjU2MDU2OTg1LCJuYmYiOjE2NTYwNTMzODUsImp0aSI6IkRHN2FTbzlXeXp1anNIVVkiLCJzdWIiOjEsInBydiI6Ijg2NjVhZTk3NzVjZjI2ZjZiOGU0OTZmODZmYTUzNmQ2OGRkNzE4MTgifQ.1H6uoJJLN1tdu6sUPjkchK2KUcK0JJL99acIGwufCTc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "request_for_date",
+									"value": "2022-06-01",
+									"description": "k chỉnh sửa dc, y/c FE gửi kèm lên ",
+									"type": "text"
+								},
+								{
+									"key": "date_cover_up",
+									"value": "2022/06/12",
+									"description": "compensation_date",
+									"type": "text"
+								},
+								{
+									"key": "overtime",
+									"value": "00:10",
+									"description": "compensation_time, FE gửi kèm lên",
+									"type": "text"
+								},
+								{
+									"key": "reason",
+									"value": "Làm bù ngày 2022-06-01",
+									"description": "reason",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/worksheets/register-late-early/create",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"worksheets",
+								"register-late-early",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTY1NjA1MzM4NSwiZXhwIjoxNjU2MDU2OTg1LCJuYmYiOjE2NTYwNTMzODUsImp0aSI6IkRHN2FTbzlXeXp1anNIVVkiLCJzdWIiOjEsInBydiI6Ijg2NjVhZTk3NzVjZjI2ZjZiOGU0OTZmODZmYTUzNmQ2OGRkNzE4MTgifQ.1H6uoJJLN1tdu6sUPjkchK2KUcK0JJL99acIGwufCTc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "request_for_date",
+									"value": "2022-06-01",
+									"description": "k chỉnh sửa dc, y/c FE gửi kèm lên ",
+									"type": "text"
+								},
+								{
+									"key": "date_cover_up",
+									"value": "2022/06/12",
+									"description": "compensation_date",
+									"type": "text"
+								},
+								{
+									"key": "overtime",
+									"value": "00:10",
+									"description": "FE gửi kèm lên, compensation_time",
+									"type": "text"
+								},
+								{
+									"key": "reason",
+									"value": "Làm bù ngày 2022-06-01",
+									"description": "reason",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/worksheets/register-late-early/update",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"worksheets",
+								"register-late-early",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Register Leave",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTY1NjMwMjcwOSwiZXhwIjoxNjU2MzA2MzA5LCJuYmYiOjE2NTYzMDI3MDksImp0aSI6InFZc2s2YmlPeWMzdHFJR00iLCJzdWIiOjEsInBydiI6Ijg2NjVhZTk3NzVjZjI2ZjZiOGU0OTZmODZmYTUzNmQ2OGRkNzE4MTgifQ.RS_QO3uy3wl-Kf7QO_ztvIJTZ8cgx3EGrzGpQqNQPQw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "request_for_date",
+									"value": "2022-06-01",
+									"description": "k chỉnh sửa dc, y/c FE gửi kèm lên ",
+									"type": "text"
+								},
+								{
+									"key": "leave_all_day",
+									"value": "0",
+									"description": "0 - nocheck, 1- checked",
+									"type": "text"
+								},
+								{
+									"key": "leave_start",
+									"value": "17:00",
+									"type": "text"
+								},
+								{
+									"key": "leave_end",
+									"value": "17:30",
+									"type": "text"
+								},
+								{
+									"key": "leave_time",
+									"value": "00:30",
+									"type": "text"
+								},
+								{
+									"key": "request_type",
+									"value": "2",
+									"description": "2 - paid, 3 - unpaid",
+									"type": "text"
+								},
+								{
+									"key": "reason",
+									"value": "Ngày đầu đi làm nên lấy vân tay muộn",
+									"description": "reason",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/worksheets/register-leave/create",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"worksheets",
+								"register-leave",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTY1NjA1NzQyOCwiZXhwIjoxNjU2MDYxMDI4LCJuYmYiOjE2NTYwNTc0MjgsImp0aSI6Ik5YTkhuUDU2VWp1MGRhNnciLCJzdWIiOjEsInBydiI6Ijg2NjVhZTk3NzVjZjI2ZjZiOGU0OTZmODZmYTUzNmQ2OGRkNzE4MTgifQ.dpp1bZpXCcm4NsA4uhq6ZiSrOsMkbvchaS-mPbl6VFo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "request_for_date",
+									"value": "2022-06-01",
+									"description": "k chỉnh sửa dc, y/c FE gửi kèm lên ",
+									"type": "text"
+								},
+								{
+									"key": "leave_all_day",
+									"value": "1",
+									"description": "0 - nocheck, 1- checked",
+									"type": "text"
+								},
+								{
+									"key": "leave_start",
+									"value": "16:00",
+									"type": "text"
+								},
+								{
+									"key": "leave_end",
+									"value": "17:30",
+									"type": "text"
+								},
+								{
+									"key": "leave_time",
+									"value": "01:30",
+									"type": "text"
+								},
+								{
+									"key": "request_type",
+									"value": "3",
+									"description": "2 - paid, 3 - unpaid",
+									"type": "text"
+								},
+								{
+									"key": "reason",
+									"value": "2 Ngày đầu đi làm nên lấy vân tay muộn ",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/worksheets/register-leave/update",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"worksheets",
+								"register-leave",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Register OT",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTY1NjA2NDc0MCwiZXhwIjoxNjU2MDY4MzQwLCJuYmYiOjE2NTYwNjQ3NDAsImp0aSI6Ilc1eUJlNE1KWUM4aFpzQ3kiLCJzdWIiOjEsInBydiI6Ijg2NjVhZTk3NzVjZjI2ZjZiOGU0OTZmODZmYTUzNmQ2OGRkNzE4MTgifQ.nxY53M8bY1RpUd1P85ygxosXOJ2GmtKAlpClmg0lcFw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "request_for_date",
+									"value": "2022-06-01",
+									"description": "k chỉnh sửa dc, y/c FE gửi kèm lên ",
+									"type": "text"
+								},
+								{
+									"key": "actual_ot",
+									"value": "00:40",
+									"description": "k chỉnh sửa dc, y/c FE gửi kèm lên ",
+									"type": "text"
+								},
+								{
+									"key": "request_ot_time",
+									"value": "00:40",
+									"type": "text"
+								},
+								{
+									"key": "reason",
+									"value": "Khách hàng yêu cầu deploy nên OT ",
+									"description": "reason",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/worksheets/register-ot/create",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"worksheets",
+								"register-ot",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTY1NjA1NzQyOCwiZXhwIjoxNjU2MDYxMDI4LCJuYmYiOjE2NTYwNTc0MjgsImp0aSI6Ik5YTkhuUDU2VWp1MGRhNnciLCJzdWIiOjEsInBydiI6Ijg2NjVhZTk3NzVjZjI2ZjZiOGU0OTZmODZmYTUzNmQ2OGRkNzE4MTgifQ.dpp1bZpXCcm4NsA4uhq6ZiSrOsMkbvchaS-mPbl6VFo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "request_for_date",
+									"value": "2022-06-01",
+									"description": "k chỉnh sửa dc, y/c FE gửi kèm lên ",
+									"type": "text"
+								},
+								{
+									"key": "leave_all_day",
+									"value": "1",
+									"description": "0 - nocheck, 1- checked",
+									"type": "text"
+								},
+								{
+									"key": "leave_start",
+									"value": "16:00",
+									"type": "text"
+								},
+								{
+									"key": "leave_end",
+									"value": "17:30",
+									"type": "text"
+								},
+								{
+									"key": "leave_time",
+									"value": "01:30",
+									"type": "text"
+								},
+								{
+									"key": "request_type",
+									"value": "3",
+									"description": "2 - paid, 3 - unpaid",
+									"type": "text"
+								},
+								{
+									"key": "reason",
+									"value": "2 Ngày đầu đi làm nên lấy vân tay muộn ",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/worksheets/register-leave/update",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"worksheets",
+								"register-leave",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Worksheet",
+			"item": [
+				{
+					"name": "View",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTY1NjM4NzgyOSwiZXhwIjoxNjU2MzkxNDI5LCJuYmYiOjE2NTYzODc4MjksImp0aSI6IjBOVUpiVTY4Z2d4eGxyREoiLCJzdWIiOjEsInBydiI6Ijg2NjVhZTk3NzVjZjI2ZjZiOGU0OTZmODZmYTUzNmQ2OGRkNzE4MTgifQ.9ggFG0CC8aoVRMIDsPU3AmfKfoja1ibuwzr4fbECHxU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/worksheets/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"worksheets",
+								""
+							],
+							"query": [
+								{
+									"key": "month",
+									"value": "this_month",
+									"description": "this_month, last_month, this_year, all",
+									"disabled": true
+								},
+								{
+									"key": "start_date",
+									"value": "2022-06-01",
+									"disabled": true
+								},
+								{
+									"key": "end_date",
+									"value": "2022-06-16",
+									"description": "Y-m-d",
+									"disabled": true
+								},
+								{
+									"key": "work_date",
+									"value": "asc",
+									"description": "asc , desc",
+									"disabled": true
+								},
+								{
+									"key": "perpage",
+									"value": "40",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Request",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTY1NjMwMjcwOSwiZXhwIjoxNjU2MzA2MzA5LCJuYmYiOjE2NTYzMDI3MDksImp0aSI6InFZc2s2YmlPeWMzdHFJR00iLCJzdWIiOjEsInBydiI6Ijg2NjVhZTk3NzVjZjI2ZjZiOGU0OTZmODZmYTUzNmQ2OGRkNzE4MTgifQ.RS_QO3uy3wl-Kf7QO_ztvIJTZ8cgx3EGrzGpQqNQPQw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/worksheets/1491/4",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"worksheets",
+								"1491",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
