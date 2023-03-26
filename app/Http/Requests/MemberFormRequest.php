@@ -8,6 +8,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 use App\Traits\ResfulResourceTrait;
+use Illuminate\Support\Facades\Auth;
 
 class MemberFormRequest extends FormRequest
 {
@@ -32,14 +33,14 @@ class MemberFormRequest extends FormRequest
     {
 
         return [
-            'avatar' => 'mimes:jpg,png|max:4096|dimensions:max_width=300,max_height=300',
-            'avatar_official' => 'mimes:jpg,png|max:4096|dimensions:max_width=500,max_height=500',
+            'avatar' => 'mimes:jpg,png|max:4096|dimensions:min_width=300,min_height=300',
+            'avatar_official' => 'mimes:jpg,png|max:4096|dimensions:min_width=500,min_height=500',
             'gender' => 'required',
             'birth_date' => 'required|date',
             'other_email' => [
                 'required',
                 'email',
-                Rule::unique('members')->ignore($this->id),
+                Rule::unique('members')->ignore(Auth::id()),
             ],
             'identity_number' => 'required|numeric|digits_between:9,12',
             'identity_card_date' => 'required|date',
