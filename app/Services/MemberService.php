@@ -10,4 +10,14 @@ class MemberService extends BaseService
     {
         return Member::class;
     }
+
+    public function updateMember($id, $request)
+    {
+        $members = $this->findOrFail($id);
+        $members->fill($request->all());
+        $members->avatar_official = $this->upload($members, 'avatar_official', $request);
+        $members->avatar = $this->upload($members, 'avatar', $request);
+
+        return  $members->save();
+    }
 }
